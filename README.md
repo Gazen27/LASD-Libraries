@@ -1,4 +1,5 @@
 # Assignment: C++ Libraries
+![banner](https://user-images.githubusercontent.com/43990877/221266956-204cdce9-f242-49d3-b74b-828c934927bc.png)
 
 # About
 Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course,
