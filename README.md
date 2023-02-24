@@ -4,8 +4,7 @@
 ![banner](https://user-images.githubusercontent.com/43990877/221267698-2da5cf8a-aeb8-4bec-89de-88c6374ccd09.png)
 
 # About
-Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course,
-
+Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course
 at Università degli Studi di Napoli Federico II.
 
 # Languages and Tools
