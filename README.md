@@ -1,7 +1,7 @@
 ![license: MIT](https://badgen.net/badge/license/MIT/blue)
 ![status: ongoing](https://badgen.net/badge/status/ongoing/orange)
 # Assignment: C++ Libraries
-![banner](https://user-images.githubusercontent.com/43990877/221270186-bbed5b38-f638-4308-9801-67a75ecfcff6.png)
+![banner](https://user-images.githubusercontent.com/43990877/221270577-f4db8169-6315-4161-9bb6-39033de9b24b.png)
 
 # About
 Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
