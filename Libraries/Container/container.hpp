@@ -128,11 +128,11 @@ public:
   /* ************************************************************************ */
 
   // Specific member function
-  virtual void Resize(uint s) noexcept { this->size = s; }
+  virtual void Resize(uint newSize) noexcept { this->size = newSize; }
 
   /* ************************************************************************ */
 
-  // Function Clear() inherited from ClearableContainer
+  virtual void Clear() = 0;
 };
 
 /* ************************************************************************** */
