@@ -4,7 +4,7 @@
 ![banner](https://user-images.githubusercontent.com/43990877/221270577-f4db8169-6315-4161-9bb6-39033de9b24b.png)
 
 # About
-Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
+Academic assignment made for the "Algorithm and Data Structures' Laboratory" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes. [TY](www.youtube.it)
 
 # Languages and Tools
 ![cpp](https://user-images.githubusercontent.com/43990877/221264171-0ed9c86f-7cb2-405a-b44e-508965305c0c.png)
