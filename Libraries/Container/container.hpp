@@ -7,6 +7,7 @@
 namespace lasd {
 
 typedef unsigned int uint;
+typedef unsigned long ulong;
 
 /* ************************************************************************** */
 
@@ -18,7 +19,7 @@ private:
 
 protected:
 
-  uint size = 0;
+  ulong size = 0;
 
 public:
 
@@ -53,7 +54,7 @@ public:
     else { return false; }
   }
 
-  virtual uint Size() const noexcept{
+  virtual ulong Size() const noexcept{
     return this->size;
   }
 
@@ -143,7 +144,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function
-  virtual void Resize(uint newSize) noexcept { this->size = newSize; }
+  virtual void Resize(ulong newSize) noexcept { this->size = newSize; }
 
   /* ************************************************************************ */
 
