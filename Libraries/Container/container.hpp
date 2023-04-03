@@ -84,7 +84,7 @@ public:
 
   // Comparison operators
   bool operator == (const ClearableContainer&) const noexcept = delete;
-  bool operator != (const ClearableContainer&&) const noexcept = delete;
+  bool operator != (const ClearableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 
