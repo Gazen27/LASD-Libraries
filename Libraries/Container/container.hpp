@@ -23,10 +23,10 @@ protected:
 
 public:
 
-  // Constructors
+  // Default, Copy and Move constructor
   Container() = default;
   Container(const Container&) = default;
-  Container(Container&&) = default;
+  Container(Container&&) noexcept = default;
 
   // Destructor
   virtual ~Container() = default;
@@ -75,10 +75,10 @@ protected:
 
 public:
 
-  // Constructors
+  // Default, Copy and Move constructor
   ClearableContainer() = default;
   ClearableContainer(const ClearableContainer&) = default;
-  ClearableContainer(ClearableContainer&&) = default;
+  ClearableContainer(ClearableContainer&&) noexcept = default;
 
   // Destructor
   virtual ~ClearableContainer() = default;
@@ -119,10 +119,10 @@ protected:
 
 public:
 
-  // Constructor
+  // Default, Copy and Move constructor
   ResizableContainer() = default;
   ResizableContainer(const ResizableContainer&) = default;
-  ResizableContainer(ResizableContainer&&) = default;
+  ResizableContainer(ResizableContainer&&) noexcept = default;
 
   // Destructor
   virtual ~ResizableContainer() = default;
