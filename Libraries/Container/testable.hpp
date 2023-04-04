@@ -26,10 +26,10 @@ protected:
 
 public:
 
-  // Constructors
+  // Default, Copy and Move constructor
   TestableContainer() = default;
   TestableContainer(const TestableContainer&) = default;
-  TestableContainer(TestableContainer&&) = default;
+  TestableContainer(TestableContainer&&) noexcept = default;
 
   // Destructor
   virtual ~TestableContainer() = default;
