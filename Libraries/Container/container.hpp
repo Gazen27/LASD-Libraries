@@ -144,7 +144,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function
-  virtual void Resize(ulong newSize) noexcept { this->size = newSize; }
+  virtual void Resize(ulong newSize) noexcept = 0;
 
   /* ************************************************************************ */
 
