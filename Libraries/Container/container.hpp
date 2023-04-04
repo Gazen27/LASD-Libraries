@@ -100,7 +100,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function
-  virtual void Clear() = 0;
+  virtual void Clear() noexcept = 0;
 
 };
 
@@ -148,7 +148,7 @@ public:
 
   /* ************************************************************************ */
 
-  virtual void Clear() override { Resize(0); }  
+  virtual void Clear() noexcept override { Resize(0); }  
 };
 
 /* ************************************************************************** */
