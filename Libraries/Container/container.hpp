@@ -47,13 +47,13 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member functions
-
+  // Specific member function #1: Check if the container is empty
   virtual bool Empty() const noexcept{
     if(size == 0) { return true; }
     else { return false; }
   }
 
+  // Specific member function #2: Gives the actual size of the container
   virtual ulong Size() const noexcept{
     return this->size;
   }
@@ -99,7 +99,7 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member function
+  // Specific member function: Clears the container
   virtual void Clear() noexcept = 0;
 
 };
@@ -143,11 +143,12 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member function
+  // Specific member function #1: Change the size of the container
   virtual void Resize(ulong newSize) noexcept = 0;
 
   /* ************************************************************************ */
 
+  // Override function from ClearableContainer
   virtual void Clear() noexcept override { Resize(0); }  
 };
 

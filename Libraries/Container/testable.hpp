@@ -50,7 +50,7 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member function
+  // Specific member function: Check if a given element is contained
   virtual bool Exists(const Data& element) const noexcept = 0;
 
 };
