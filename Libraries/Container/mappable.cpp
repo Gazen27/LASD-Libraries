@@ -54,4 +54,22 @@ void PostOrderMappableContainer<Data>::PostOrderFold(FoldFunctor f, void* accumu
 }
 
 
+///////////////////////////////////////////////////////////// MutablePreOrderMappableContainer
+
+// Override function Map
+template <typename Data>
+void MutablePreOrderMappableContainer<Data>::Map(MutableMapFunctor mapFunctor) const{
+
+    PreOrderMap(mapFunctor);
+}
+
+
+///////////////////////////////////////////////////////////// MutablePostOrderMappableContainer
+template <typename Data>
+void MutablePostOrderMappableContainer<Data>::Map(MutableMapFunctor mapFunctor) const{
+
+    PostOrderMap(mapFunctor);
+};
+
+
 }

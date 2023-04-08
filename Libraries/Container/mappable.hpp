@@ -329,7 +329,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class MutableMappableContainer {
+class MutableMappableContainer : public virtual MappableContainer<Data>{
                                   // Must extend MappableContainer<Data>
 
 private:
@@ -342,37 +342,43 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  MutableMappableContainer() = default;
+  MutableMappableContainer(const MutableMappableContainer&) = default;
+  MutableMappableContainer(MutableMappableContainer&&) = default;
+
   // Destructor
-  // ~MutableMappableContainer() specifiers
+  virtual ~MutableMappableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  MutableMappableContainer& operator = (const MutableMappableContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  MutableMappableContainer& operator = (MutableMappableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const MutableMappableContainer&) const noexcept = delete;
+  bool operator != (const MutableMappableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  // using MutableMapFunctor = std::function<void(Data &)>;
+  using MutableMapFunctor = std::function<void(Data &)>;
 
-  // type Map(argument) specifiers;
+  virtual void Map(MutableMapFunctor) const = 0;
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class MutablePreOrderMappableContainer {
+class MutablePreOrderMappableContainer : public virtual MutableMappableContainer<Data>,
+                                          public virtual PreOrderMappableContainer<Data>{
                                           // Must extend MutableMappableContainer<Data>,
                                           //             PreOrderMappableContainer<Data>
 
@@ -386,43 +392,47 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  MutablePreOrderMappableContainer() = default;
+  MutablePreOrderMappableContainer(const MutablePreOrderMappableContainer&) = default;
+  MutablePreOrderMappableContainer(MutablePreOrderMappableContainer&&) = default;
+
   // Destructor
-  // ~MutablePreOrderMappableContainer() specifiers
+  virtual ~MutablePreOrderMappableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  MutablePreOrderMappableContainer& operator = (const MutablePreOrderMappableContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
-
+  MutablePreOrderMappableContainer& operator = (MutablePreOrderMappableContainer&&) noexcept = delete;
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const MutablePreOrderMappableContainer) const noexcept = delete;
+  bool operator != (const MutablePreOrderMappableContainer) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  // using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  // type PreOrderMap(argument) specifiers;
+  virtual void PreOrderMap(MutableMapFunctor) const = 0;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from MutableMappableContainer)
-
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
+  // Override function from MutableMappableContainer
+  virtual void Map(MutableMapFunctor) const override;
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class MutablePostOrderMappableContainer {
+class MutablePostOrderMappableContainer : public virtual MutableMappableContainer<Data>,
+                                          public virtual PostOrderMappableContainer<Data>{
                                           // Must extend MutableMappableContainer<Data>,
                                           //             PostOrderMappableContainer<Data>
 
@@ -436,36 +446,40 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  MutablePostOrderMappableContainer() = default;
+  MutablePostOrderMappableContainer(const MutablePostOrderMappableContainer&) = default;
+  MutablePostOrderMappableContainer(MutablePostOrderMappableContainer&&) = default;
+
   // Destructor
-  // ~MutablePostOrderMappableContainer() specifiers
+  virtual ~MutablePostOrderMappableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  MutablePostOrderMappableContainer& operator = (const MutablePostOrderMappableContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  MutablePostOrderMappableContainer& operator = (MutablePostOrderMappableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const MutablePostOrderMappableContainer&) const noexcept = delete;
+  bool operator != (const MutablePostOrderMappableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  // using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  // type PostOrderMap(argument) specifiers;
+  virtual void PostOrderMap(MutableMapFunctor) const = 0;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from MutableMappableContainer)
-
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
+  // Override function from MutableMappableContainer
+  virtual void Map(MutableMapFunctor) const override;
 
 };
 
