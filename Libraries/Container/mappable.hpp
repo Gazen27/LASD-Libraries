@@ -64,16 +64,16 @@ public:
   using typename FoldableContainer<Data>::FoldFunctor;
   
   // Override function from FoldableContainer
-  virtual void Fold(FoldFunctor, void *) const override;
-
+  // Fold function not declared here but specifically into PreOrder and PostOrder
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class PreOrderMappableContainer {
+class PreOrderMappableContainer : public virtual MappableContainer<Data>,
+                                  public virtual PreOrderFoldableContainer<Data>{
                                   // Must extend MappableContainer<Data>,
-                                  //             PreOrderFoldableContainer<Data>
+                                  // PreOrderFoldableContainer<Data>
 
 private:
 
@@ -85,51 +85,50 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  PreOrderMappableContainer() = default;
+  PreOrderMappableContainer(const PreOrderMappableContainer&) = default;
+  PreOrderMappableContainer(PreOrderMappableContainer&&) = default;
+
   // Destructor
-  // ~PreOrderMappableContainer() specifiers
+  virtual ~PreOrderMappableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  PreOrderMappableContainer& operator = (const PreOrderMappableContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  PreOrderMappableContainer& operator = (PreOrderMappableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (PreOrderMappableContainer&) const noexcept = delete;
+  bool operator != (PreOrderMappableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  // using typename MappableContainer<Data>::MapFunctor;
+  using typename MappableContainer<Data>::MapFunctor;
 
-  // type PreOrderMap(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MappableContainer)
-
-  // type Map(argument) specifiers; // Override MappableContainer member
+  virtual void PreOrderMap(MapFunctor) const = 0;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from FoldableContainer)
-
-  // using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  // Override function from MappableContainer
+  virtual void Map(MapFunctor) const override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from PreOrderFoldableContainer)
+  using typename FoldableContainer<Data>::FoldFunctor;
 
-  // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
+  // Override function from FoldableContainer
+  virtual void Fold(FoldFunctor, void *) const override;
 
+  // Override function from PreOrderFoldableContainer
+  virtual void PreOrderFold(FoldFunctor, void *) const override;
 };
 
 /* ************************************************************************** */
