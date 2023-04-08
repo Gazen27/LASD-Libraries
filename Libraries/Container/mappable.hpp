@@ -134,7 +134,8 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PostOrderMappableContainer {
+class PostOrderMappableContainer : public virtual MappableContainer<Data>,
+                                    public virtual PostOrderFoldableContainer<Data>{
                                   // Must extend MappableContainer<Data>,
                                   //             PostOrderFoldableContainer<Data>
 
@@ -148,50 +149,52 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  PostOrderMappableContainer() = default;
+  PostOrderMappableContainer(const PostOrderMappableContainer&) = default;
+  PostOrderMappableContainer(PostOrderMappableContainer&&) = default;
+
   // Destructor
-  // ~PostOrderMappableContainer() specifiers
+  virtual ~PostOrderMappableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  PostOrderMappableContainer& operator = (const PostOrderMappableContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  PostOrderMappableContainer& operator = (PostOrderMappableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const PostOrderMappableContainer&) const noexcept = delete;
+  bool operator != (const PostOrderMappableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 
   // Specific member function
 
-  // using typename MappableContainer<Data>::MapFunctor;
+  using typename MappableContainer<Data>::MapFunctor;
 
-  // type PostOrderMap(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MappableContainer)
-
-  // type Map(argument) specifiers; // Override MappableContainer member
+  virtual void PostOrderMap(MapFunctor) const = 0
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from FoldableContainer)
-
-  // using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  // Override function from MappableContainer
+  virtual void Map(MapFunctor) const override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from PostOrderFoldableContainer)
+  using typename FoldableContainer<Data>::FoldFunctor;
 
-  // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
+  // Override function FoldableContainer
+  virtual void Fold(FoldFunctor, void *) const override;
+
+  /* ************************************************************************ */
+
+  // Override function from PostOrderFoldableContainer
+  virtual void PostOrderFold(FoldFunctor, void *) const override;
 
 };
 
