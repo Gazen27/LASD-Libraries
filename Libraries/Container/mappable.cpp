@@ -74,11 +74,14 @@ void MutablePreOrderMappableContainer<Data>::Map(MutableMapFunctor mapFunctor) c
 
 
 ///////////////////////////////////////////////////////////// MutablePostOrderMappableContainer
+
+// Override function Map
 template <typename Data>
 void MutablePostOrderMappableContainer<Data>::Map(MutableMapFunctor mapFunctor) const{
 
     PostOrderMap(mapFunctor);
 };
 
-
 }
+
+/* ************************************************************************** */
