@@ -54,7 +54,7 @@ public:
 
   /* ************************************************************************ */
 
-  using MapFunctor = std::function<void(const Data &)>;
+  using MapFunctor = std::function<void(const Data&)>;
 
   // Specific member function
   virtual void Map(MapFunctor) const = 0;
