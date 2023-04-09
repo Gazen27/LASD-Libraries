@@ -6,6 +6,8 @@
 
 #include "mappable.hpp"
 
+typedef unsigned long ulong;
+
 /* ************************************************************************** */
 
 namespace lasd {
@@ -54,81 +56,51 @@ public:
 
   // Specific member functions
 
-  // type operator[](argument) specifiers; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
-  // type operator[](argument) specifiers; // (mutable version; concrete function must throw std::out_of_range when out of range)
+  // Non-mutable version // Concrete function must throw std::out_of_range when out of range
+  virtual const Data& operator [] (ulong) const = 0;
 
-  // type Front() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
-  // type Front() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
+  // Mutable version // Concrete function must throw std::out_of_range when out of range
+  virtual Data& operator [] (ulong) = 0;
 
-  // type Back() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
-  // type Back() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
+  // Non-mutable version // Concrete function must throw std::length_error when empty
+  virtual const Data& Front() const;
 
-  /* ************************************************************************ */
+  // Mutable version // Concrete function must throw std::length_error when empty
+  virtual Data& Front();
 
-  // Specific member function (inherited from FoldableContainer)
-
-  // using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PreOrderFoldableContainer)
-
-  // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
+  // Non-mutable version // Concrete function must throw std::length_error when empty
+  virtual const Data& Back() const;
+  
+  // Mutable version // Concrete function must throw std::length_error when empty)
+  virtual Data& Back();
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from PostOrderFoldableContainer)
+  // Override function from PreOrderMappableContainer
+  virtual void PreOrderMap(MapFunctor) const override;
 
-  // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
 
-  /* ************************************************************************ */
+  // Override function from PostOrderMappableContainer
+  virtual void PostOrderMap(MapFunctor) const override;
 
-  // Specific member function (inherited from MappableContainer)
 
-  // using typename MappableContainer<Data>::MapFunctor;
+  // Override function from MutablePreOrderMappableContainer
+  virtual void PreOrderMap(argument) const override;
 
-  // type Map(argument) specifiers; // Override MappableContainer member
 
-  /* ************************************************************************ */
+  // Override function from MutablePostOrderMappableContainer
+  virtual void PostOrderMap(argument) const override;
 
-  // Specific member function (inherited from PreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from PostOrderMappableContainer)
-
-  // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutableMappableContainer)
-
-  // using typename MutableMappableContainer<Data>::MutableMapFunctor;
-
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutablePreOrderMappableContainer)
-
-  // type PreOrderMap(argument) specifiers; // Override MutablePreOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutablePostOrderMappableContainer)
-
-  // type PostOrderMap(argument) specifiers; // Override MutablePostOrderMappableContainer member
+  // Override function from Testable
+  virtual bool Exists(const Data& element) const noexcept override;
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class SortableLinearContainer {
+class SortableLinearContainer : public virtual LinearContainer<Data>{
                                 // Must extend LinearContainer<Data>
 
 private:
@@ -141,28 +113,32 @@ protected:
 
 public:
 
+  // Default, Copy and Move constructors
+  SortableLinearContainer() = default;
+  SortableLinearContainer(const SortableLinearContainer&) = default;
+  SortableLinearContainer(SortableLinearContainer&&) = default;
+
   // Destructor
-  // ~SortableLinearContainer() specifiers
+  virtual ~SortableLinearContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  SortableLinearContainer& operator = (const SortableLinearContainer&) noexcept = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  SortableLinearContainer& operator = (SortableLinearContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is possible.
+  bool operator == (const SortableLinearContainer&) const noexcept;
+  bool operator != (const SortableLinearContainer&) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member function
-
-  // type Sort() specifiers;
+  virtual void Sort(SortableLinearContainer&) noexcept;
 
 };
 

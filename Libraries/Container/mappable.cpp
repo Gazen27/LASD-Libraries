@@ -28,7 +28,7 @@ void PreOrderMappableContainer<Data>::PreOrderFold(FoldFunctor f, void* accumula
     Map(
         [f, &accumulator](const Data element&){
 
-            f(element&, &accumulator);
+            f(element, &accumulator);
         }
     );
 }
@@ -57,7 +57,7 @@ void PostOrderMappableContainer<Data>::PostOrderFold(FoldFunctor f, void* accumu
     Map(
         [f, &accumulator](const Data element&){
 
-            f(element&, &accumulator);
+            f(element, &accumulator);
         }
     );
 }
