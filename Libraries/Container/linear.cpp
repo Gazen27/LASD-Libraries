@@ -47,22 +47,9 @@ bool LinearContainer<Data>::operator != (const LinearContainer<Data>&) const noe
 template <typename Data>
 Data LinearContainer<Data>::Front() const {
 
-    try{
-
-        if((*this).Empty()) {
-
-            throw std::length_error("Warning: empty structure!");
-        }
-        else {
-            
-            Data element = (*this)[0];
-            return element;
-        }
-
-    } catch (length_error& exc) {
+    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
         
-        cout << "Length error: " << exc.what() << endl;
-  }
+    else { return (*this)[0]; }
 
 }
 
@@ -70,37 +57,27 @@ Data LinearContainer<Data>::Front() const {
 template <typename Data>
 Data LinearContainer<Data>::Front() {
 
-    // TODO
+    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+
+    else { return (*this)[0]; }
 }
 
 // Override function Back (Non-Mutable version)
 template <typename Data>
 Data LinearContainer<Data>::Back() const {
 
-    try{
+    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
 
-        if((*this).Empty()) {
-
-            throw std::length_error("Warning: empty structure!");
-        }
-        else {
-            
-            Data element = (*this)[(*this).Size() - 1];
-            return element;
-        }
-
-    } catch (length_error& exc) {
-        
-        cout << "Length error: " << exc.what() << endl;
-  }
-
+    else { return (*this)[(*this).Size() - 1]; }
 }
 
 // Override function Back (Mutable version)
 template <typename Data>
 Data LinearContainer<Data>::Back() {
 
-    // TODO
+    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+
+    else { return (*this)[(*this).Size() - 1]; }
 }
 
 // Override function PreOrderMap (Non-Mutable version)
@@ -133,14 +110,26 @@ void LinearContainer<Data>::PostOrderMap(MapFunctor functor) const{
 template <typename Data>
 void LinearContainer<Data>::PreOrderMap(MutableMapFunctor functor) {
 
-    // TODO
+    if(!(*this).Empty()){
+
+        for(ulong i=0; i<(*this).Size(); i++){
+
+            functor((*this)[i]);
+        }
+    }
 }
 
 // Override function PostOrderMap (Mutable version)
 template <typename Data>
 void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) {
 
-    // TODO
+    if(!(*this).Empty()){
+
+        for(ulong i=(*this).Size()-1; i>0; i--){
+
+            functor((*this)[i]);
+        }
+    }
 }
 
 // Override function Exists
@@ -154,5 +143,31 @@ bool LinearContainer<Data>::Exists(const Data& element) const noexcept{
 
     return false;
 }
+
+
+/////////////////////////////////////////////////////////////////////// SortableLinearContainer
+
+// Override function Sort
+template <typename Data>
+void SortableLinearContainer<Data>::Sort(SortableLinearContainer& container) noexcept{
+
+    ulong j;
+    Data temp;
+
+    for(ulong i=1; i<(*this).Size(); i++) {
+        
+		temp = (*this)[i];
+        j=i-1;
+        
+		while(((*this)[j] > temp) && (j >= 0)) { 
+		    
+			(*this)[j+1] = (*this)[j]; 
+            j--;
+        }
+
+		(*this)[j+1] = temp;
+
+		}
+};
 
 }

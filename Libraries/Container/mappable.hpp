@@ -137,7 +137,7 @@ template <typename Data>
 class PostOrderMappableContainer : public virtual MappableContainer<Data>,
                                     public virtual PostOrderFoldableContainer<Data>{
                                   // Must extend MappableContainer<Data>,
-                                  //             PostOrderFoldableContainer<Data>
+                                  // PostOrderFoldableContainer<Data>
 
 private:
 

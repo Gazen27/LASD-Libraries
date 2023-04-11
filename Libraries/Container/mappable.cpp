@@ -26,7 +26,7 @@ template <typename Data>
 void PreOrderMappableContainer<Data>::PreOrderFold(FoldFunctor f, void* accumulator) const{
 
     Map(
-        [f, &accumulator](const Data element&){
+        [f, &accumulator](const Data& element){
 
             f(element, &accumulator);
         }
@@ -55,7 +55,7 @@ template <typename Data>
 void PostOrderMappableContainer<Data>::PostOrderFold(FoldFunctor f, void* accumulator) const{
 
     Map(
-        [f, &accumulator](const Data element&){
+        [f, &accumulator](const Data& element){
 
             f(element, &accumulator);
         }
