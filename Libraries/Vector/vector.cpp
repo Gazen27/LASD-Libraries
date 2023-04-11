@@ -1,4 +1,6 @@
 
+typedef unsigned long ulong;
+
 namespace lasd {
 
 /* ************************************************************************** */
@@ -12,7 +14,7 @@ template<typename Data>
 Vector<Data>::Vector(const ulong mySize){
 
     elements = new Data[mySize];
-    size = newSize;
+    (*this).size = mySize;
 }
 
 
@@ -28,14 +30,13 @@ Vector<Data>::Vector(const ulong mySize){
 template <typename Data>
 Vector<Data>::Vector(const Vector<Data>& oldVector){
     
-    size = oldVector.Size();
-    elements = new Data[size];
+    (*this).size = oldVector.Size();
+    elements = new Data[(*this).size];
 
-    for(int i = 0; i < size; i++){
+    for(ulong i = 0; i < (*this).size; i++){
         elements[i] = oldVector[i];
     }
 }
 
-/* ************************************************************************** */
 
 }

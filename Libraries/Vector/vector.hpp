@@ -15,7 +15,7 @@ namespace lasd {
 
 template <typename Data>
 class Vector : public virtual ResizableContainer,
-                      virtual SortableLinearContainer<Data>{
+                public virtual SortableLinearContainer<Data>{
                 // Must extend ResizableContainer,
                 // SortableLinearContainer<Data>
 
@@ -26,7 +26,6 @@ private:
 protected:
 
   using Container::size;
-  
   Data* elements = nullptr;
 
 public:
@@ -40,41 +39,41 @@ public:
   Vector(const ulong);
 
   // Specific constructor #2: Obtained from a MappableContainer
-  Vector(const MappableContainer&) noexcept;
+  Vector(const MappableContainer<Data>&) noexcept;
   
   // Specific constructor #3: Obtained from a MutableMappableContainer
-  Vector(const MutableMappableContainer&) noexcept;
+  Vector(const MutableMappableContainer<Data>&) noexcept;
 
   /* ************************************************************************ */
 
   // Copy constructor
-  Vector(const Vector<Data>&);
+  Vector(const Vector&);
 
   // Move constructor
-  Vector(Vector<Data>&&);
+  Vector(Vector&&);
 
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~Vector() = default;
+  virtual ~Vector() = default; // ????????????????
 
   /* ************************************************************************ */
 
   // Copy assignment
   // type operator=(argument) specifiers;
-  Vector& operator = (const Vector<Data>&) noexcept;
+  Vector& operator = (const Vector&) noexcept;
 
   // Move assignment
   // type operator=(argument) specifiers;
-  Vector& operator = (Vector<Data>&&) noexcept;
+  Vector& operator = (Vector&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
   // type operator==(argument) specifiers;
-  bool operator == (const Vector<Data>&) const noexcept;
+  bool operator == (const Vector&) const noexcept;
   // type operator!=(argument) specifiers;
-  bool operator != (const Vector<Data>&) const noexcept;
+  bool operator != (const Vector&) const noexcept;
 
   /* ************************************************************************ */
 
