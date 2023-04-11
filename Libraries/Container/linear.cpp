@@ -3,6 +3,8 @@
 
 /* ************************************************************************** */
 
+typedef unsigned long ulong;
+
 namespace lasd {
 
 /////////////////////////////////////////////////////////////////////// LinearContainer
@@ -13,7 +15,7 @@ bool LinearContainer<Data>::operator == (const LinearContainer<Data>& otherConta
 
     if((*this).Size() != otherContainer.Size()){
 
-        for(i=0; i<(this*).Size(); i++){
+        for(ulong i=0; i<(this*).Size(); i++){
 
             if((*this)[i] != otherContainer[i]) {return false; }
         }
@@ -30,7 +32,7 @@ bool LinearContainer<Data>::operator != (const LinearContainer<Data>&) const noe
 
     if((*this).Size() != otherContainer.Size()){
 
-        for(i=0; i<(this*).Size(); i++){
+        for(ulong i=0; i<(this*).Size(); i++){
 
             if((*this)[i] != otherContainer[i]) { return true; }
         }
@@ -105,26 +107,38 @@ Data LinearContainer<Data>::Back() {
 template <typename Data>
 void LinearContainer<Data>::PreOrderMap(MapFunctor functor) const{
 
-    // TODO
+    if(!(*this).Empty()){
+
+        for(ulong i=0; i<(*this).Size(); i++){
+
+            functor((*this)[i]);
+        }
+    }
 }
 
 // Override function PostOrderMap (Non-Mutable version)
 template <typename Data>
 void LinearContainer<Data>::PostOrderMap(MapFunctor functor) const{
 
-    // TODO
+    if(!(*this).Empty()){
+
+        for(ulong i=(*this).Size()-1; i>0; i--){
+
+            functor((*this)[i]);
+        }
+    }
 }
 
 // Override function PreOrderMap (Mutable version)
 template <typename Data>
-void LinearContainer<Data>::PreOrderMap(MutableMapFunctor functor) const{
+void LinearContainer<Data>::PreOrderMap(MutableMapFunctor functor) {
 
     // TODO
 }
 
 // Override function PostOrderMap (Mutable version)
 template <typename Data>
-void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) const{
+void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) {
 
     // TODO
 }
@@ -133,7 +147,7 @@ void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) const{
 template <typename Data>
 bool LinearContainer<Data>::Exists(const Data& element) const noexcept{
 
-    for(i=0; i<(*this).Size(); i++){
+    for(ulong i=0; i<(*this).Size(); i++){
 
         if((*this)[i] == element) { return true; }
     }
