@@ -59,10 +59,10 @@ public:
   virtual void Remove(const Data&) = 0;
 
 
-  virtual bool InsertAll(const MappableContainer&) noexcept; // Copy of the value
-  virtual bool InsertAll(MutableMappableContainer&&) noexcept; // Move of the value
+  virtual bool InsertAll(const MappableContainer<Data>&) noexcept; // Copy of the value
+  virtual bool InsertAll(MutableMappableContainer<Data>&&) noexcept; // Move of the value
  
-  virtual bool RemoveAll(const MappableContainer&) noexcept;
+  virtual bool RemoveAll(const MappableContainer<Data>&) noexcept;
   
   // type InsertSome(argument) specifiers; // Copy of the value; From MappableContainer; True if some is inserted
   // type InsertSome(argument) specifiers; // Move of the value; From MutableMappableContainer; True if some is inserted
