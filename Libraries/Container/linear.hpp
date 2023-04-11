@@ -85,11 +85,11 @@ public:
 
 
   // Override function from MutablePreOrderMappableContainer
-  virtual void PreOrderMap(argument) const override;
+  virtual void PreOrderMap(MutableMapFunctor) const override;
 
 
   // Override function from MutablePostOrderMappableContainer
-  virtual void PostOrderMap(argument) const override;
+  virtual void PostOrderMap(MutableMapFunctor) const override;
 
 
   // Override function from Testable
