@@ -76,6 +76,8 @@ public:
 
   /* ************************************************************************ */
 
+  using typename MappableContainer<Data>::MapFunctor;
+
   // Override function from PreOrderMappableContainer
   virtual void PreOrderMap(MapFunctor) const override;
 
@@ -83,6 +85,7 @@ public:
   // Override function from PostOrderMappableContainer
   virtual void PostOrderMap(MapFunctor) const override;
 
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
   // Override function from MutablePreOrderMappableContainer
   virtual void PreOrderMap(MutableMapFunctor) override;

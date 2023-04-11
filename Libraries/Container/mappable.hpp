@@ -177,7 +177,7 @@ public:
 
   using typename MappableContainer<Data>::MapFunctor;
 
-  virtual void PostOrderMap(MapFunctor) const = 0
+  virtual void PostOrderMap(MapFunctor) const = 0;
 
   /* ************************************************************************ */
 

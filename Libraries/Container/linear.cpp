@@ -15,7 +15,7 @@ bool LinearContainer<Data>::operator == (const LinearContainer<Data>& otherConta
 
     if((*this).Size() != otherContainer.Size()){
 
-        for(ulong i=0; i<(this*).Size(); i++){
+        for(ulong i=0; i<(*this).Size(); i++){
 
             if((*this)[i] != otherContainer[i]) {return false; }
         }
@@ -28,11 +28,11 @@ bool LinearContainer<Data>::operator == (const LinearContainer<Data>& otherConta
 
 // Override operator !=
 template <typename Data>
-bool LinearContainer<Data>::operator != (const LinearContainer<Data>&) const noexcept{
+bool LinearContainer<Data>::operator != (const LinearContainer<Data>& otherContainer) const noexcept{
 
     if((*this).Size() != otherContainer.Size()){
 
-        for(ulong i=0; i<(this*).Size(); i++){
+        for(ulong i=0; i<(*this).Size(); i++){
 
             if((*this)[i] != otherContainer[i]) { return true; }
         }
@@ -45,7 +45,7 @@ bool LinearContainer<Data>::operator != (const LinearContainer<Data>&) const noe
 
 // Override function Front (Non-Mutable version)
 template <typename Data>
-Data LinearContainer<Data>::Front() const {
+const Data& LinearContainer<Data>::Front() const {
 
     if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
         
@@ -55,7 +55,7 @@ Data LinearContainer<Data>::Front() const {
 
 // Override function Front (Mutable version)
 template <typename Data>
-Data LinearContainer<Data>::Front() {
+Data& LinearContainer<Data>::Front() {
 
     if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
 
@@ -64,7 +64,7 @@ Data LinearContainer<Data>::Front() {
 
 // Override function Back (Non-Mutable version)
 template <typename Data>
-Data LinearContainer<Data>::Back() const {
+const Data& LinearContainer<Data>::Back() const {
 
     if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
 
@@ -73,7 +73,7 @@ Data LinearContainer<Data>::Back() const {
 
 // Override function Back (Mutable version)
 template <typename Data>
-Data LinearContainer<Data>::Back() {
+Data& LinearContainer<Data>::Back() {
 
     if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
 
