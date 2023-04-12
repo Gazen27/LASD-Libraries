@@ -93,11 +93,8 @@ public:
   // Mutable version // throws std::out_of_range when out of range
   virtual Data& operator [] (const ulong) override;
 
-  // Override Front (Non-Mutable version) // Already defined in linearContainer
-  // Override Front (Mutable version) // Already defined in linearContainer
-  
-  // Override Back (Non-Mutable) version // Already defined in linearContainer
-  // Override Back (Mutable version) // Already defined in linearContainer
+  // Override Front (Mutable and Non-Mutable version) // Already defined in linearContainer
+  // Override Back (Mutable and Non-Mutable) version // Already defined in linearContainer
 
   /* ************************************************************************ */
 
