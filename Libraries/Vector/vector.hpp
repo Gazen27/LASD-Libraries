@@ -42,7 +42,7 @@ public:
   Vector(const MappableContainer<Data>&) noexcept;
   
   // Specific constructor #3: Obtained from a MutableMappableContainer
-  Vector(const MutableMappableContainer<Data>&) noexcept;
+  Vector(MutableMappableContainer<Data>&&) noexcept;
 
   /* ************************************************************************ */
 
@@ -81,7 +81,7 @@ public:
 
   // Override function from ResizableContainer
 
-  virtual void Resize(ulong newSize) noexcept override;
+  virtual void Resize(const ulong) noexcept override;
 
   /* ************************************************************************ */
 
