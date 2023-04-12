@@ -33,30 +33,28 @@ protected:
   struct Node {
 
     // Data
-    // ...
+    Data element;
+    Node* next = nullptr;
 
     /* ********************************************************************** */
 
-    // Specific constructors
-    // ...
-
-    /* ********************************************************************** */
+    // Specific constructor #1: Given initial value
+    Node(Data&); 
 
     // Copy constructor
-    // ...
+    Node(const Node&);
 
     // Move constructor
-    // ...
-
-    /* ********************************************************************** */
+    Node(Node&&);
 
     // Destructor
-    // ...
+    ~Node();
 
     /* ********************************************************************** */
 
     // Comparison operators
-    // ...
+    bool operator == (const Node&) const noexcept;
+    bool operator != (const Node&) const noexcept;
 
     /* ********************************************************************** */
 
@@ -66,7 +64,9 @@ protected:
 
   };
 
-  // ...
+  // Initializing head and tail
+  Node* head = nullptr;
+  Node* tail = nullptr;
 
 public:
 
@@ -75,22 +75,22 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific constructor
-  // List(argument) specifiers; // A list obtained from a MappableContainer
-  // List(argument) specifiers; // A list obtained from a MutableMappableContainer
+  // Specific constructor #1: List obtained from a MappableContainer
+  List(const MappableContainer&) noexcept;
 
-  /* ************************************************************************ */
+  // Specific constructor #2: List obtained from a MutableMappableContainer
+  List(MutableMappableContainer&&) noexcept;
+
 
   // Copy constructor
-  // List(argument) specifiers;
+  List(const List&);
 
   // Move constructor
-  // List(argument) specifiers;
+  List(List&&) noexcept;
 
-  /* ************************************************************************ */
 
   // Destructor
-  // ~List() specifiers;
+  virtual ~List();
 
   /* ************************************************************************ */
 
