@@ -50,67 +50,71 @@ public:
   Vector(const Vector&);
 
   // Move constructor
-  Vector(Vector&&);
+  Vector(Vector&&) noexcept;
 
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~Vector() = default; // ????????????????
+  virtual ~Vector();
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
   Vector& operator = (const Vector&) noexcept;
 
   // Move assignment
-  // type operator=(argument) specifiers;
   Vector& operator = (Vector&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
   bool operator == (const Vector&) const noexcept;
-  // type operator!=(argument) specifiers;
   bool operator != (const Vector&) const noexcept;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
+  // Override function from ClearableContainer
 
-  // type Clear() specifiers; // Override ClearableContainer member
   virtual void Clear() noexcept override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ResizableContainer)
+  // Override function from ResizableContainer
 
-  // type Resize(argument) specifiers; // Override ResizableContainer member
-
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from LinearContainer)
-
-  // type operator[](argument) specifiers; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
-  // type operator[](argument) specifiers; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
-
-  // type Front() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Front() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
-
-  // type Back() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Back() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
+  virtual void Resize(ulong newSize) noexcept override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from SortableLinearContainer)
+  // Override functions from LinearContainer
 
-  // type Sort() specifiers; // Override SortableLinearContainer member
+  // Non-Mutable version // throws std::out_of_range when out of range
+  virtual const Data& operator [] (ulong) const override;
+
+  // Mutable version // throws std::out_of_range when out of range
+  virtual Data& operator [] (ulong) override;
+
+  // Non-Mutable version // throws std::length_error when empty
+  virtual const Data& Front() const override;
+
+  // Mutable version // throws std::length_error when empty
+  virtual Data& Front() override;
+  
+ // Non-Mutable version // throws std::length_error when empty
+  virtual const Data& Back() const override;
+  
+  // Mutable version // throws std::length_error when empty  
+  virtual Data& Back() override;
+
+  /* ************************************************************************ */
+
+  // Override function from SortableLinearContainer
+
+  virtual void Sort(SortableLinearContainer&) noexcept override;
+  
 
 protected:
 
-  // Auxiliary functions, if necessary!
+  // Auxiliary functions, if necessary
 
 };
 
