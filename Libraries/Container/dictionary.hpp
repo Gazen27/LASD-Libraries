@@ -53,20 +53,18 @@ public:
 
   // Specific member functions
 
-  virtual void Insert(const Data&) = 0;  // Copy of the value
-  virtual void Insert(Data&&) = 0;  // Move of the value
-  
-  virtual void Remove(const Data&) = 0;
+  virtual bool Insert(const Data&) = 0;  // Copy of the value
+  virtual bool Insert(Data&&) = 0;  // Move of the value
+  virtual bool Remove(const Data&) = 0;
 
 
   virtual bool InsertAll(const MappableContainer<Data>&) noexcept; // Copy of the value
   virtual bool InsertAll(MutableMappableContainer<Data>&&) noexcept; // Move of the value
- 
   virtual bool RemoveAll(const MappableContainer<Data>&) noexcept;
   
-  // type InsertSome(argument) specifiers; // Copy of the value; From MappableContainer; True if some is inserted
-  // type InsertSome(argument) specifiers; // Move of the value; From MutableMappableContainer; True if some is inserted
-  // type RemoveSome(argument) specifiers; // From MappableContainer; True if some is removed
+  virtual bool InsertSome(const MappableContainer<Data>&) noexcept; // Copy of the value
+  virtual bool InsertSome(MutableMappableContainer<Data>&&) noexcept; // Move of the value
+  virtual bool RemoveSome(const MappableContainer<Data>&) noexcept;
 
 };
 

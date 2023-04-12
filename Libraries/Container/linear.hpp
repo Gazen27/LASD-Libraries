@@ -65,13 +65,13 @@ public:
   // Non-mutable version
   virtual const Data& Front() const;
 
-  // Mutable version // Concrete function must throw std::length_error when empty
+  // Mutable version
   virtual Data& Front();
 
-  // Non-mutable version // Concrete function must throw std::length_error when empty
+  // Non-mutable version
   virtual const Data& Back() const;
   
-  // Mutable version // Concrete function must throw std::length_error when empty)
+  // Mutable version
   virtual Data& Back();
 
   /* ************************************************************************ */

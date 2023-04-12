@@ -144,7 +144,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function #1: Change the size of the container
-  virtual void Resize(ulong newSize) noexcept = 0;
+  virtual void Resize(const ulong) noexcept = 0;
 
   /* ************************************************************************ */
 
