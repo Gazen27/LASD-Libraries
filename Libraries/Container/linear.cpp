@@ -47,7 +47,7 @@ bool LinearContainer<Data>::operator != (const LinearContainer<Data>& otherConta
 template <typename Data>
 const Data& LinearContainer<Data>::Front() const {
 
-    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
         
     else { return (*this)[0]; }
 
@@ -57,7 +57,7 @@ const Data& LinearContainer<Data>::Front() const {
 template <typename Data>
 Data& LinearContainer<Data>::Front() {
 
-    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
 
     else { return (*this)[0]; }
 }
@@ -66,7 +66,7 @@ Data& LinearContainer<Data>::Front() {
 template <typename Data>
 const Data& LinearContainer<Data>::Back() const {
 
-    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
 
     else { return (*this)[(*this).Size() - 1]; }
 }
@@ -75,7 +75,7 @@ const Data& LinearContainer<Data>::Back() const {
 template <typename Data>
 Data& LinearContainer<Data>::Back() {
 
-    if((*this).Empty()) { throw std::length_error("Warning: empty structure!"); }
+    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
 
     else { return (*this)[(*this).Size() - 1]; }
 }
@@ -143,31 +143,5 @@ bool LinearContainer<Data>::Exists(const Data& element) const noexcept{
 
     return false;
 }
-
-
-/////////////////////////////////////////////////////////////////////// SortableLinearContainer
-
-// Override function Sort
-template <typename Data>
-void SortableLinearContainer<Data>::Sort(SortableLinearContainer& container) noexcept{
-
-    ulong j;
-    Data temp;
-
-    for(ulong i=1; i<(*this).Size(); i++) {
-        
-		temp = (*this)[i];
-        j=i-1;
-        
-		while(((*this)[j] > temp) && (j >= 0)) { 
-		    
-			(*this)[j+1] = (*this)[j]; 
-            j--;
-        }
-
-		(*this)[j+1] = temp;
-
-		}
-};
 
 }

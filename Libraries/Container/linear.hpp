@@ -141,7 +141,7 @@ public:
   /* ************************************************************************ */
 
   // Specific member function
-  virtual void Sort(SortableLinearContainer&) noexcept;
+  virtual void Sort() noexcept = 0;
 
 };
 

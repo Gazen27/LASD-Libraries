@@ -149,7 +149,8 @@ public:
   /* ************************************************************************ */
 
   // Override function from ClearableContainer
-  virtual void Clear() noexcept override { Resize(0); }  
+  // Not defined here
+
 };
 
 /* ************************************************************************** */
