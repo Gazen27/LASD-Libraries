@@ -88,28 +88,22 @@ public:
   // Override functions from LinearContainer
 
   // Non-Mutable version // throws std::out_of_range when out of range
-  virtual const Data& operator [] (ulong) const override;
+  virtual const Data& operator [] (const ulong) const override;
 
   // Mutable version // throws std::out_of_range when out of range
-  virtual Data& operator [] (ulong) override;
+  virtual Data& operator [] (const ulong) override;
 
-  // Non-Mutable version // throws std::length_error when empty
-  virtual const Data& Front() const override;
-
-  // Mutable version // throws std::length_error when empty
-  virtual Data& Front() override;
+  // Override Front (Non-Mutable version) // Already defined in linearContainer
+  // Override Front (Mutable version) // Already defined in linearContainer
   
- // Non-Mutable version // throws std::length_error when empty
-  virtual const Data& Back() const override;
-  
-  // Mutable version // throws std::length_error when empty  
-  virtual Data& Back() override;
+  // Override Back (Non-Mutable) version // Already defined in linearContainer
+  // Override Back (Mutable version) // Already defined in linearContainer
 
   /* ************************************************************************ */
 
   // Override function from SortableLinearContainer
 
-  virtual void Sort(SortableLinearContainer&) noexcept override;
+  virtual void Sort() noexcept override;
   
 
 protected:

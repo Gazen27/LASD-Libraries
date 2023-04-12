@@ -40,6 +40,17 @@ Vector<Data>::Vector(const MappableContainer<Data>& otherContainer) noexcept{
 template <typename Data>
 Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
 
+    size = otherContainer.Size();
+    elements = new Data[size];
+
+    ulong index = 0;
+
+    otherContainer.Map(
+        [this, &index](const Data& e){
+
+            elements[index++] = std::move(e);
+        }
+    );
 
 }
 
@@ -98,6 +109,117 @@ Vector<Data>& Vector<Data>::operator = (Vector<Data>&& otherVector) noexcept{
 
     std::swap(size, otherVector.size);
     std::swap(elements, otherVector.elements);
+}
+
+
+// Operator ==
+template <typename Data>
+bool Vector<Data>::operator == (const Vector<Data>& otherVector) const noexcept{
+
+    if(size==otherVector.size){
+
+        for(ulong i = 0; i < size; i++){
+
+            if(elements[i] != otherVector.elements[i]){ return false; } 
+        }
+
+        return true;
+    }
+
+    else { return false; }
+}
+
+
+// Operator !=
+template <typename Data>
+bool Vector<Data>::operator != (const Vector<Data>& otherVector) const noexcept{
+
+    return !(*this) == (otherVector);
+}
+
+
+// Defining function Clear
+template <typename Data>
+void Vector<Data>::Clear() noexcept{
+
+    size = 0;
+    delete[] elements;
+    elements = nullptr;
+}
+
+
+// Defining function Resize
+template <typename Data>
+void Vector<Data>::Resize(const ulong newSize) noexcept{
+
+    if(newSize == 0) { Clear(); }
+
+    else if(newSize == size) { return; }
+
+    else{
+
+        Data* temp = new Data[newSize];
+
+        if(size > newSize){
+
+            for(ulong i = 0; i < newSize; i++){
+                std::swap(elements[i], temp[i]);
+            }
+        }
+
+        else{
+
+            for(ulong i = 0; i < size; i++){
+                std::swap(elements[i], temp[i]);
+            }
+        }
+
+        size = newSize;
+        std::swap(elements, temp);
+
+        delete[] temp;
+        temp = nullptr;
+    }
+}
+
+
+// Operator [] (Non-Mutable)
+template <typename Data>
+const Data& Vector<Data>::operator [] (const ulong index) const{
+
+    if(index >= size){ throw std::out_of_range("Error: index out of range"); }
+    else{ return elements[index]; }
+}
+
+// Operator [] (Mutable)
+template <typename Data>
+Data& Vector<Data>::operator [] (const ulong index){
+
+    if(index >= size){ throw std::out_of_range("Error: index out of range"); }
+    else{ return elements[index]; }  
+}
+
+
+// Override function Sort
+template <typename Data>
+void Vector<Data>::Sort() noexcept{
+
+    ulong j;
+    Data temp;
+
+    for(ulong i = 1; i< size; i++) {
+        
+		temp = elements[i];
+        j = i - 1;
+        
+		while((elements[j] > temp) && (j >= 0)) { 
+		    
+			elements[j+1] = elements[j]; 
+            j--;
+        }
+
+		elements[j + 1] = temp;
+	}
 }
 
 }
