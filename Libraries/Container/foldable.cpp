@@ -13,7 +13,7 @@ bool FoldableContainer<Data>::Exists(const Data& element) const noexcept{
 
     FoldFunctor f = [element](const Data& value, void * accumulator){ 
     
-        if(element == value){ accumulator = true; }
+        if(element == value){ *((bool*)accumulator) = true; }
     };
 
     bool acc = false;

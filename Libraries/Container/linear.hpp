@@ -76,20 +76,28 @@ public:
 
   /* ************************************************************************ */
 
+  // To resolve diamond problem, the following functions have been declared
+
+  using typename FoldableContainer<Data>::FoldFunctor;
+  virtual void Fold(FoldFunctor f, void* acc) const override { PreOrderFoldableContainer<Data>::Fold(f, acc); };
+
   using typename MappableContainer<Data>::MapFunctor;
+  virtual void Map(MapFunctor m) const override { PreOrderMappableContainer<Data>::Map(m); };
+  
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  virtual void Map(MutableMapFunctor m) override { MutablePreOrderMappableContainer<Data>::Map(m); };
+
+  /* ************************************************************************ */
 
   // Override function from PreOrderMappableContainer
   virtual void PreOrderMap(MapFunctor) const override;
 
-
   // Override function from PostOrderMappableContainer
   virtual void PostOrderMap(MapFunctor) const override;
 
-  using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
   // Override function from MutablePreOrderMappableContainer
   virtual void PreOrderMap(MutableMapFunctor) override;
-
 
   // Override function from MutablePostOrderMappableContainer
   virtual void PostOrderMap(MutableMapFunctor) override;

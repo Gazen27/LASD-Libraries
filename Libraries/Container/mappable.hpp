@@ -370,7 +370,7 @@ public:
 
   using MutableMapFunctor = std::function<void(Data &)>;
 
-  virtual void Map(MutableMapFunctor) const = 0;
+  virtual void Map(MutableMapFunctor) = 0;
 
 };
 
@@ -419,12 +419,12 @@ public:
 
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  virtual void PreOrderMap(MutableMapFunctor) const = 0;
+  virtual void PreOrderMap(MutableMapFunctor) = 0;
 
   /* ************************************************************************ */
 
   // Override function from MutableMappableContainer
-  virtual void Map(MutableMapFunctor) const override;
+  virtual void Map(MutableMapFunctor) override;
 
 };
 
@@ -474,12 +474,12 @@ public:
 
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
 
-  virtual void PostOrderMap(MutableMapFunctor) const = 0;
+  virtual void PostOrderMap(MutableMapFunctor) = 0;
 
   /* ************************************************************************ */
 
   // Override function from MutableMappableContainer
-  virtual void Map(MutableMapFunctor) const override;
+  virtual void Map(MutableMapFunctor) override;
 
 };
 
