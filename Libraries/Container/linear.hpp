@@ -57,10 +57,10 @@ public:
   // Specific member functions
 
   // Non-mutable version // Concrete function must throw std::out_of_range when out of range
-  virtual const Data& operator [] (ulong) const = 0;
+  virtual const Data& operator [] (const ulong) const = 0;
 
   // Mutable version // Concrete function must throw std::out_of_range when out of range
-  virtual Data& operator [] (ulong) = 0;
+  virtual Data& operator [] (const ulong) = 0;
 
   // Non-mutable version
   virtual const Data& Front() const;

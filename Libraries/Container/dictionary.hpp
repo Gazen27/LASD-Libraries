@@ -57,7 +57,6 @@ public:
   virtual bool Insert(Data&&) = 0;  // Move of the value
   virtual bool Remove(const Data&) = 0;
 
-
   virtual bool InsertAll(const MappableContainer<Data>&) noexcept; // Copy of the value
   virtual bool InsertAll(MutableMappableContainer<Data>&&) noexcept; // Move of the value
   virtual bool RemoveAll(const MappableContainer<Data>&) noexcept;
