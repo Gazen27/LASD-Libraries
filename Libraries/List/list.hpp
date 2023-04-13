@@ -189,13 +189,13 @@ public:
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
   
   // Override function from MutableMappableContainer
-  void Map(MutableMapFunctor) const override;
+  void Map(MutableMapFunctor) override;
 
   // Override function from MutablePreOrderMappableContainer
-  void PreOrderMap(MutableMapfunctor) const override;
+  void PreOrderMap(MutableMapFunctor) override;
 
   // Override function from MutablePostOrderMappableContainer
-  void PostOrderMap(MutableMapFunctor) const override;
+  void PostOrderMap(MutableMapFunctor) override;
 
 protected:
 

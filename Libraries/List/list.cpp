@@ -41,9 +41,10 @@ List<Data>::Node::Node(Node&& otherNode){
 
 // Destructor
 template <typename Data>
-List<Data>::Node::~Node(){  // ??????????????????????
+List<Data>::Node::~Node(){ /////// ??????????????????????????S
 
     next = nullptr;
+    delete (*this);
 }
 
 
@@ -125,11 +126,12 @@ List<Data>::~List(){ // ??????????????????????????????
 
     size = 0;
 
-    delete tail;
     tail = nullptr;
+    delete tail;
 
-    delete head;
     head = nullptr;
+    delete head;
+    
 }
 
 
@@ -451,7 +453,7 @@ void List<Data>::PostOrderMap(MapFunctor f) const{
 
 // Override function Map (Mutable)
 template <typename Data>
-void List<Data>::Map(MutableMapFunctor f) const{
+void List<Data>::Map(MutableMapFunctor f) {
 
     ///////// TODO
 }
@@ -459,7 +461,7 @@ void List<Data>::Map(MutableMapFunctor f) const{
 
 // Override function PreOrderMap (Mutable)
 template <typename Data>
-void List<Data>::PreOrderMap(MutableMapFunctor f) const{
+void List<Data>::PreOrderMap(MutableMapFunctor f) {
 
     ////////// TODO
 }
@@ -467,7 +469,7 @@ void List<Data>::PreOrderMap(MutableMapFunctor f) const{
 
 // Override function PostOrderMap (Mutable)
 template <typename Data>
-void List<Data>::PostOrderMap(MutableMapFunctor f) const{
+void List<Data>::PostOrderMap(MutableMapFunctor f) {
 
     ////////// TODO
 }
