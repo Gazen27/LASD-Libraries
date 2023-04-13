@@ -33,13 +33,16 @@ protected:
   struct Node {
 
     // Data
-    Data element;
+    Data key;
     Node* next = nullptr;
 
     /* ********************************************************************** */
 
-    // Specific constructor #1: Given initial value
-    Node(Data&); 
+    // Specific constructor #1: Given initial value (copy)
+    Node(const Data&); 
+
+    // Specific constructor #2: Given initial value (move)
+    Node(Data&&); 
 
     // Copy constructor
     Node(const Node&);
@@ -76,10 +79,10 @@ public:
   /* ************************************************************************ */
 
   // Specific constructor #1: List obtained from a MappableContainer
-  List(const MappableContainer&) noexcept;
+  List(const MappableContainer<Data>&) noexcept;
 
   // Specific constructor #2: List obtained from a MutableMappableContainer
-  List(MutableMappableContainer&&) noexcept;
+  List(MutableMappableContainer<Data>&&) noexcept;
 
 
   // Copy constructor
@@ -95,34 +98,35 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  List& operator = (const List&) noexcept;
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  List& operator = (List&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator == (const List&) const noexcept;
+  bool operator != (const List&) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  // type InsertAtFront(argument) specifier; // Copy of the value
-  // type InsertAtFront(argument) specifier; // Move of the value
-  // type RemoveFromFront() specifier; // (must throw std::length_error when empty)
-  // type FrontNRemove() specifier; // (must throw std::length_error when empty)
+  void InsertAtFront(const Data&); // Copy of the value
+  void InsertAtFront(Data&&); // Move of the value
+  void RemoveFromFront();
+  
+  Data& FrontNRemove(); // (must throw std::length_error when empty)
 
-  // type InsertAtBack(argument) specifier; // Copy of the value
-  // type InsertAtBack(argument) specifier; // Move of the value
+  void InsertAtBack(const Data&); // Copy of the value
+  void InsertAtBack(Data&&); // Move of the value
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
+  // Override function from ClearableContainer
 
-  // type Clear() specifiers; // Override ClearableContainer member
+  void Clear() noexcept override;
 
   /* ************************************************************************ */
 
