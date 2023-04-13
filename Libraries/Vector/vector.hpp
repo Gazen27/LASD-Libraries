@@ -2,6 +2,9 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+typedef unsigned long ulong;
+typedef unsigned int uint;
+
 /* ************************************************************************** */
 
 #include "../container/container.hpp"
@@ -102,7 +105,6 @@ public:
 
   virtual void Sort() noexcept override;
   
-
 protected:
 
   // Auxiliary functions, if necessary

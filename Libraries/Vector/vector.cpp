@@ -109,6 +109,7 @@ Vector<Data>& Vector<Data>::operator = (Vector<Data>&& otherVector) noexcept{
 
     std::swap(size, otherVector.size);
     std::swap(elements, otherVector.elements);
+    return (*this);
 }
 
 
@@ -134,7 +135,7 @@ bool Vector<Data>::operator == (const Vector<Data>& otherVector) const noexcept{
 template <typename Data>
 bool Vector<Data>::operator != (const Vector<Data>& otherVector) const noexcept{
 
-    return !(*this) == otherVector;
+    return !((*this) == otherVector);
 }
 
 
