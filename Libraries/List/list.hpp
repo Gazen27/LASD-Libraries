@@ -130,6 +130,9 @@ public:
 
   /* ************************************************************************ */
 
+  // Override function Exists
+  bool Exists(const Data& e) const noexcept override;
+
   // Override functions from DictionaryContainer
 
   bool Insert(const Data&) override;   // Copy of the value

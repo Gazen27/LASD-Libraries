@@ -41,10 +41,9 @@ List<Data>::Node::Node(Node&& otherNode){
 
 // Destructor
 template <typename Data>
-List<Data>::Node::~Node(){ /////// ??????????????????????????S
+List<Data>::Node::~Node(){
 
-    next = nullptr;
-    delete (*this);
+    delete next;
 }
 
 
@@ -82,7 +81,13 @@ bool List<Data>::Node::operator != (const Node& otherNode) const noexcept{
 template <typename Data>
 List<Data>::List(const MappableContainer<Data>& container) noexcept{
 
-    ///////// TODO
+    container.Map(
+
+        [this](const Data& element){
+
+            this->InsertAtBack(element);
+        }
+    );
 }
 
 
@@ -122,16 +127,9 @@ List<Data>::List(List<Data>&& otherList) noexcept{
 
 // Destructor
 template <typename Data>
-List<Data>::~List(){ // ??????????????????????????????
+List<Data>::~List(){
 
-    size = 0;
-
-    tail = nullptr;
-    delete tail;
-
-    head = nullptr;
-    delete head;
-    
+    Clear();
 }
 
 
@@ -323,7 +321,23 @@ void List<Data>::InsertAtBack(Data&& newData){
 template <typename Data>
 void List<Data>::Clear() noexcept{
 
-    ////////// TODO // Come per il distruttore + altro
+    while(head != nullptr){ RemoveFromFront(); }
+}
+
+
+// Override function Exists
+template <typename Data>
+bool List<Data>::Exists(const Data& element) const noexcept{
+
+    Node* temp = head;
+
+    while(temp != nullptr){
+
+        if(temp->key == element){ return true; }
+        temp = temp->next;
+    }
+
+    return false;
 }
 
 
