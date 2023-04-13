@@ -401,5 +401,76 @@ Data& List<Data>::Back(){
 }
 
 
+// Override function Fold
+template <typename Data>
+void List<Data>::Fold(FoldFunctor f, void* accumulator) const{
+
+    ///////// TODO
+}
+
+
+// Override function PreOrderFold
+template <typename Data>
+void List<Data>::PreOrderFold(FoldFunctor f, void* accumulator) const{
+
+    ///////// TODO
+}
+
+
+// Override function PostOrderFold
+template <typename Data>
+void List<Data>::PostOrderFold(FoldFunctor f, void* accumulator) const{
+
+    ///////// TODO
+}
+
+
+// Override function Map (Non-Mutable)
+template <typename Data>
+void List<Data>::Map(MapFunctor f) const{
+
+    ///////// TODO
+}
+
+
+// Override function PreOrderMap (Non-Mutable)
+template <typename Data>
+void List<Data>::PreOrderMap(MapFunctor f) const{
+
+    ///////// TODO
+}
+
+
+// Override function PostOrderMap (Non-Mutable)
+template <typename Data>
+void List<Data>::PostOrderMap(MapFunctor f) const{
+
+    ///////// TODO
+}
+
+
+// Override function Map (Mutable)
+template <typename Data>
+void List<Data>::Map(MutableMapFunctor f) const{
+
+    ///////// TODO
+}
+
+
+// Override function PreOrderMap (Mutable)
+template <typename Data>
+void List<Data>::PreOrderMap(MutableMapFunctor f) const{
+
+    ////////// TODO
+}
+
+
+// Override function PostOrderMap (Mutable)
+template <typename Data>
+void List<Data>::PostOrderMap(MutableMapFunctor f) const{
+
+    ////////// TODO
+}
+
 
 }

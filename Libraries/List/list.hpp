@@ -147,56 +147,55 @@ public:
   Data& operator [] (const ulong) override; // must throw std::out_of_range when out of range
 
   // Non-Mutable version
-  const Data& Front() const override; // must throw std::length_error when empty
+  const Data& Front() const override;
   
   // Mutable version
-  Data& Front() override; // must throw std::length_error when empty
+  Data& Front() override;
 
   // Mutable version
-  const Data& Back() const override; // must throw std::length_error when empty
+  const Data& Back() const override;
 
   // Non-Mutable version
-  Data& Back() override; // must throw std::length_error when empty
+  Data& Back() override;
 
   /* ************************************************************************ */
 
-  // Override function from FoldableContainer
-  // using typename FoldableContainer<Data>::FoldFunctor;
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  using typename FoldableContainer<Data>::FoldFunctor;
 
+  // Override function from FoldableContainer
+  void Fold(FoldFunctor, void*) const override;
 
   // Override function from PreOrderFoldableContainer
-  // type PreOrderFold(arguments) specifiers;
-
+  void PreOrderFold(FoldFunctor, void*) const override;
 
   // Override function from PostOrderFoldableContainer
-  // type PostOrderFold(arguments) specifiers;
+  void PostOrderFold(FoldFunctor, void*) const override;
 
+  /* ************************************************************************ */
+
+  using typename MappableContainer<Data>::MapFunctor;
 
   // Override function from MappableContainer
-  // using typename MappableContainer<Data>::MapFunctor;
-  // type Map(argument) specifiers;
-
+  void Map(MapFunctor) const override;
 
   // Override function from PreOrderMappableContainer
-  // type PreOrderMap(argument) specifiers;
-
+  void PreOrderMap(MapFunctor) const override;
 
   // Override function from PostOrderMappableContainer
-  // type PostOrderMap(argument) specifiers;
+  void PostOrderMap(MapFunctor) const override;
 
+  /* ************************************************************************ */
 
+  using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  
   // Override function from MutableMappableContainer
-  // using typename MutableMappableContainer<Data>::MutableMapFunctor;
-  // type Map(argument) specifiers;
-
+  void Map(MutableMapFunctor) const override;
 
   // Override function from MutablePreOrderMappableContainer
-  // type PreOrderMap(argument) specifiers;
-
+  void PreOrderMap(MutableMapfunctor) const override;
 
   // Override function from MutablePostOrderMappableContainer
-  // type PostOrderMap(argument) specifiers;
+  void PostOrderMap(MutableMapFunctor) const override;
 
 protected:
 
