@@ -130,84 +130,73 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from DictionaryContainer)
+  // Override functions from DictionaryContainer
 
-  // type Insert(argument) specifier; // Copy of the value
-  // type Insert(argument) specifier; // Move of the value
-  // type Remove(argument) specifier;
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from LinearContainer)
-
-  // type operator[](argument) specifiers; // Override (NonMutable) LinearContainer member (must throw std::out_of_range when out of range)
-  // type operator[](argument) specifiers; // Override (Mutable) LinearContainer member (must throw std::out_of_range when out of range)
-
-  // type Front() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Front() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
-
-  // type Back() specifiers; // Override (NonMutable) LinearContainer member (must throw std::length_error when empty)
-  // type Back() specifiers; // Override (Mutable) LinearContainer member (must throw std::length_error when empty)
+  bool Insert(const Data&) override;   // Copy of the value
+  bool Insert(Data&&) override;  // Move of the value
+  bool Remove(const Data&) override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from FoldableContainer)
+  // Override functions from LinearContainer
 
+  // Non-Mutable version
+  const Data& operator [] (const ulong) const override; // must throw std::out_of_range when out of range
+  
+  // Mutable version
+  Data& operator [] (const ulong) override; // must throw std::out_of_range when out of range
+
+  // Non-Mutable version
+  const Data& Front() const override; // must throw std::length_error when empty
+  
+  // Mutable version
+  Data& Front() override; // must throw std::length_error when empty
+
+  // Mutable version
+  const Data& Back() const override; // must throw std::length_error when empty
+
+  // Non-Mutable version
+  Data& Back() override; // must throw std::length_error when empty
+
+  /* ************************************************************************ */
+
+  // Override function from FoldableContainer
   // using typename FoldableContainer<Data>::FoldFunctor;
-
   // type Fold(arguments) specifiers; // Override FoldableContainer member
 
-  /* ************************************************************************ */
 
-  // Specific member function (inherited from PreOrderFoldableContainer)
+  // Override function from PreOrderFoldableContainer
+  // type PreOrderFold(arguments) specifiers;
 
-  // type PreOrderFold(arguments) specifiers; // Override PreOrderFoldableContainer member
 
-  /* ************************************************************************ */
+  // Override function from PostOrderFoldableContainer
+  // type PostOrderFold(arguments) specifiers;
 
-  // Specific member function (inherited from PostOrderFoldableContainer)
 
-  // type PostOrderFold(arguments) specifiers; // Override PostOrderFoldableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MappableContainer)
-
+  // Override function from MappableContainer
   // using typename MappableContainer<Data>::MapFunctor;
+  // type Map(argument) specifiers;
 
-  // type Map(argument) specifiers; // Override MappableContainer member
 
-  /* ************************************************************************ */
+  // Override function from PreOrderMappableContainer
+  // type PreOrderMap(argument) specifiers;
 
-  // Specific member function (inherited from PreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override PreOrderMappableContainer member
+  // Override function from PostOrderMappableContainer
+  // type PostOrderMap(argument) specifiers;
 
-  /* ************************************************************************ */
 
-  // Specific member function (inherited from PostOrderMappableContainer)
-
-  // type PostOrderMap(argument) specifiers; // Override PostOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutableMappableContainer)
-
+  // Override function from MutableMappableContainer
   // using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  // type Map(argument) specifiers;
 
-  // type Map(argument) specifiers; // Override MutableMappableContainer member
 
-  /* ************************************************************************ */
+  // Override function from MutablePreOrderMappableContainer
+  // type PreOrderMap(argument) specifiers;
 
-  // Specific member function (inherited from MutablePreOrderMappableContainer)
 
-  // type PreOrderMap(argument) specifiers; // Override MutablePreOrderMappableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutablePostOrderMappableContainer)
-
-  // type PostOrderMap(argument) specifiers; // Override MutablePostOrderMappableContainer member
+  // Override function from MutablePostOrderMappableContainer
+  // type PostOrderMap(argument) specifiers;
 
 protected:
 
@@ -234,7 +223,6 @@ protected:
 
 };
 
-/* ************************************************************************** */
 
 }
 

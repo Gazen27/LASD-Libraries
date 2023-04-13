@@ -321,7 +321,83 @@ void List<Data>::InsertAtBack(Data&& newData){
 template <typename Data>
 void List<Data>::Clear() noexcept{
 
-    // TODO // Come per il distruttore + altro
+    ////////// TODO // Come per il distruttore + altro
+}
+
+
+// Override function Insert (copy)
+template <typename Data>
+bool List<Data>::Insert(const Data&){
+
+    ////////// TODO
+}
+
+
+// Override function Insert (move)
+template <typename Data>
+bool List<Data>::Insert(Data&&){
+
+    ////////// TODO
+}
+
+
+// Override function Remove
+template <typename Data>
+bool List<Data>::Remove(const Data&){
+
+    ////////// TODO
+}
+
+
+// Override operator [] (Non-Mutable version)
+template <typename Data>
+const Data& List<Data>::operator [] (const ulong index) const{
+
+    ////////// TODO
+}
+
+
+// Override operator [] (Mutable version)
+template <typename Data>
+Data& List<Data>::operator [] (const ulong index){
+
+    ////////// TODO
+}
+
+
+// Override function Front (Non-Mutable version)
+template <typename Data>
+const Data& List<Data>::Front() const{
+
+    if(size == 0){ throw std::length_error("Error: the structure is empty!");}
+    else{ return head->key; }
+}
+
+
+// Override function Front (Mutable version)
+template <typename Data>
+Data& List<Data>::Front(){
+
+    if(size == 0){ throw std::length_error("Error: the structure is empty!");}
+    else{ return head->key; } 
+}
+
+
+// Override function Back (Non-Mutable version)
+template <typename Data>
+const Data& List<Data>::Back() const{
+
+    if(size == 0){ throw std::length_error("Error: the structure is empty!");}
+    else{ return tail->key; }   
+}
+
+
+// Override function Back (Mutable version)
+template <typename Data>
+Data& List<Data>::Back(){
+
+    if(size == 0){ throw std::length_error("Error: the structure is empty!");}
+    else{ return tail->key; }   
 }
 
 
