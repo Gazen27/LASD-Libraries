@@ -134,7 +134,7 @@ bool Vector<Data>::operator == (const Vector<Data>& otherVector) const noexcept{
 template <typename Data>
 bool Vector<Data>::operator != (const Vector<Data>& otherVector) const noexcept{
 
-    return !(*this) == (otherVector);
+    return !(*this) == otherVector;
 }
 
 
