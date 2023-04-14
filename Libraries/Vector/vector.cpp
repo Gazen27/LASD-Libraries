@@ -46,7 +46,7 @@ Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
     ulong index = 0;
 
     otherContainer.Map(
-        [this, &index](const Data& e){
+        [this, &index](Data& e){
 
             elements[index++] = std::move(e);
         }
@@ -73,9 +73,7 @@ Vector<Data>::Vector(const Vector<Data>& oldVector){
 template <typename Data>
 Vector<Data>::Vector(Vector<Data>&& otherVector) noexcept{
 
-    size = otherVector.Size();
-    elements = new Data[size];
-
+    std::swap(size, otherVector.size);
     std::swap(elements, otherVector.elements);
 }
 
@@ -155,8 +153,6 @@ void Vector<Data>::Resize(const ulong newSize) noexcept{
 
     if(newSize == 0) { Clear(); }
 
-    else if(newSize == size) { return; }
-
     else{
 
         Data* temp = new Data[newSize];
@@ -179,7 +175,6 @@ void Vector<Data>::Resize(const ulong newSize) noexcept{
         std::swap(elements, temp);
 
         delete[] temp;
-        temp = nullptr;
     }
 }
 
