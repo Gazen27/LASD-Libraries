@@ -134,7 +134,6 @@ public:
   bool Exists(const Data& e) const noexcept override;
 
   // Override functions from DictionaryContainer
-
   bool Insert(const Data&) override;   // Copy of the value
   bool Insert(Data&&) override;  // Move of the value
   bool Remove(const Data&) override;

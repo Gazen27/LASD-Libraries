@@ -95,7 +95,13 @@ List<Data>::List(const MappableContainer<Data>& container) noexcept{
 template <typename Data>
 List<Data>::List(MutableMappableContainer<Data>&& container) noexcept{
 
-    ///////// TODO
+    container.Map(
+
+        [this](Data& element){
+
+            this->InsertAtBack(std::move(element));
+        }
+    );
 }
 
 
@@ -343,25 +349,60 @@ bool List<Data>::Exists(const Data& element) const noexcept{
 
 // Override function Insert (copy)
 template <typename Data>
-bool List<Data>::Insert(const Data&){
+bool List<Data>::Insert(const Data& element){
 
-    ////////// TODO
+    if(this->Exists(element)){ return false; }
+
+    else{
+        
+        this->InsertAtBack(element);
+        return true;    
+    }
 }
 
 
 // Override function Insert (move)
 template <typename Data>
-bool List<Data>::Insert(Data&&){
+bool List<Data>::Insert(Data&& element){
 
-    ////////// TODO
+    if(this->Exists(element)){ return false; }
+
+    else{
+        
+        this->InsertAtBack(std::move(element));
+        return true;    
+    }
 }
 
 
 // Override function Remove
 template <typename Data>
-bool List<Data>::Remove(const Data&){
+bool List<Data>::Remove(const Data& element){
 
-    ////////// TODO
+    if(head->key == element){
+
+        this->RemoveFromFront();
+        return true;
+    }
+
+    Node* temp = head;
+
+    while(temp != nullptr){
+
+        if(temp != this->tail && (temp->next)->key == element){
+
+            Node* toRemove = temp->next;
+            temp->next = (temp->next)->next;
+            delete toRemove;
+            size = size - 1;
+
+            return true;
+        }
+
+        temp = temp->next;
+    }
+
+    return false;
 }
 
 
@@ -369,7 +410,22 @@ bool List<Data>::Remove(const Data&){
 template <typename Data>
 const Data& List<Data>::operator [] (const ulong index) const{
 
-    ////////// TODO
+    if(index >= size || index < size - 1){ throw std::out_of_range("Error: index out of range!");}
+    else{
+
+        Node* temp = head;
+        ulong tempIndex = 0;
+
+        while(temp != nullptr){
+
+            if(tempIndex == index){ return temp->key; }
+            else{
+
+                tempIndex = tempIndex + 1;
+                temp = temp->next;
+            }
+        }        
+    }
 }
 
 
@@ -377,7 +433,22 @@ const Data& List<Data>::operator [] (const ulong index) const{
 template <typename Data>
 Data& List<Data>::operator [] (const ulong index){
 
-    ////////// TODO
+    if(index >= size || index < size - 1){ throw std::out_of_range("Error: index out of range!");}
+    else{
+
+        Node* temp = head;
+        ulong tempIndex = 0;
+
+        while(temp != nullptr){
+
+            if(tempIndex == index){ return temp->key; }
+            else{
+
+                tempIndex = tempIndex + 1;
+                temp = temp->next;
+            }
+        }        
+    }
 }
 
 
