@@ -115,7 +115,7 @@ Vector<Data>& Vector<Data>::operator = (Vector<Data>&& otherVector) noexcept{
 template <typename Data>
 bool Vector<Data>::operator == (const Vector<Data>& otherVector) const noexcept{
 
-    if(size==otherVector.size){
+    if(size == otherVector.size){
 
         for(ulong i = 0; i < size; i++){
 
@@ -198,12 +198,12 @@ Data& Vector<Data>::operator [] (const ulong index){
 
 // Override function Sort
 template <typename Data>
-void Vector<Data>::Sort() noexcept{
+void Vector<Data>::Sort() noexcept{ // PROBABILE ERRORE: J >=0 A CAUSA DI ULONG
 
     ulong j;
     Data temp;
 
-    for(ulong i = 1; i< size; i++) {
+    for(ulong i = 1; i < size; i++) {
         
 		temp = elements[i];
         j = i - 1;
