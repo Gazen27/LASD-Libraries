@@ -26,7 +26,7 @@ template <typename Data>
 List<Data>::Node::Node(const Node& otherNode){
 
     key = otherNode.key;
-    next = otherNode.next;
+    next = otherNode.next; //////// ???????????????????????
 }
 
 
@@ -158,9 +158,9 @@ List<Data>& List<Data>::operator = (const List<Data>& otherList) noexcept{
 template <typename Data>
 List<Data>& List<Data>::operator = (List<Data>&& otherList) noexcept{
 
-    std::swap(size, otherList->size);
-    std::swap(head, otherList->head);
-    std::swap(tail, otherList->tail);
+    std::swap(size, otherList.size);
+    std::swap(head, otherList.head);
+    std::swap(tail, otherList.tail);
 
     return (*this);
 }
@@ -170,7 +170,7 @@ List<Data>& List<Data>::operator = (List<Data>&& otherList) noexcept{
 template <typename Data>
 bool List<Data>::operator == (const List<Data>& otherList) const noexcept{
 
-    if((size == 0) && (otherList == 0)) { return true; }
+    if((size == 0) && (otherList.size == 0)) { return true; }
 
     if(size == otherList.size){
 
@@ -243,7 +243,7 @@ void List<Data>::InsertAtFront(Data&& newData){
 template <typename Data>
 void List<Data>::RemoveFromFront(){
 
-    if(size == 0 || head = nullptr){
+    if(size == 0 || head == nullptr){
 
         throw std::length_error("Error: the structure is empty!");
     }
@@ -257,7 +257,7 @@ void List<Data>::RemoveFromFront(){
         }
 
         head = head->next;
-        temp = nullptr;
+        temp->next = nullptr;
         delete temp;
         size = size - 1;
     }
@@ -275,7 +275,7 @@ Data& List<Data>::FrontNRemove(){
 
     else{
 
-        Data value = head->key;
+        Data& value = head->key;
         Node* temp = head;
 
         if(size == 1){
@@ -284,7 +284,7 @@ Data& List<Data>::FrontNRemove(){
         }
 
         head = head->next;
-        temp = nullptr;
+        temp->next = nullptr;
         delete temp;
         size = size - 1;
 
@@ -393,7 +393,9 @@ bool List<Data>::Remove(const Data& element){
 
             Node* toRemove = temp->next;
             temp->next = (temp->next)->next;
+            toRemove->next = nullptr;
             delete toRemove;
+            
             size = size - 1;
 
             return true;
@@ -418,14 +420,17 @@ const Data& List<Data>::operator [] (const ulong index) const{
 
         while(temp != nullptr){
 
-            if(tempIndex == index){ return temp->key; }
-            else{
+            if(tempIndex != index){
 
                 tempIndex = tempIndex + 1;
                 temp = temp->next;
             }
+
+            else{ return temp->key; }
         }        
     }
+
+    throw std::out_of_range("Error: unexpected error");
 }
 
 
@@ -441,14 +446,17 @@ Data& List<Data>::operator [] (const ulong index){
 
         while(temp != nullptr){
 
-            if(tempIndex == index){ return temp->key; }
-            else{
+            if(tempIndex != index){
 
                 tempIndex = tempIndex + 1;
                 temp = temp->next;
             }
+
+            else{ return temp->key; }
         }        
     }
+
+    throw std::out_of_range("Error: unexpected error");
 }
 
 
@@ -488,35 +496,15 @@ Data& List<Data>::Back(){
 }
 
 
-// Override function Fold
+// PreOrderMap (Non-Mutable, Auxilary)
 template <typename Data>
-void List<Data>::Fold(FoldFunctor f, void* accumulator) const{
+void List<Data>::PreOrderMap(const MapFunctor f, Node* start) const{
 
-    ///////// TODO
-}
+    if(start != nullptr){
 
-
-// Override function PreOrderFold
-template <typename Data>
-void List<Data>::PreOrderFold(FoldFunctor f, void* accumulator) const{
-
-    ///////// TODO
-}
-
-
-// Override function PostOrderFold
-template <typename Data>
-void List<Data>::PostOrderFold(FoldFunctor f, void* accumulator) const{
-
-    ///////// TODO
-}
-
-
-// Override function Map (Non-Mutable)
-template <typename Data>
-void List<Data>::Map(MapFunctor f) const{
-
-    ///////// TODO
+        f(start->key);
+        this->PreOrderMap(f, start->next);
+    }
 }
 
 
@@ -524,40 +512,65 @@ void List<Data>::Map(MapFunctor f) const{
 template <typename Data>
 void List<Data>::PreOrderMap(MapFunctor f) const{
 
-    ///////// TODO
+    PreOrderMap(f, head);
 }
 
+
+// PostOrderMap (Non-Mutable, Auxilary)
+template <typename Data>
+void List<Data>::PostOrderMap(const MapFunctor f, Node* start) const{
+
+    if(start != nullptr){
+
+        this->PostOrderMap(f, start->next);
+        f(start->key);
+    }
+}
 
 // Override function PostOrderMap (Non-Mutable)
 template <typename Data>
 void List<Data>::PostOrderMap(MapFunctor f) const{
 
-    ///////// TODO
+    this->PostOrderMap(f, head);
 }
 
 
-// Override function Map (Mutable)
+// PreOrderMap (Mutable, Auxilary)
 template <typename Data>
-void List<Data>::Map(MutableMapFunctor f) {
+void List<Data>::PreOrderMap(const MutableMapFunctor f, Node* start){
 
-    ///////// TODO
+    if(start != nullptr){
+
+        f(start->key);
+        this->PreOrderMap(f, start->next);
+    }
 }
 
 
 // Override function PreOrderMap (Mutable)
 template <typename Data>
-void List<Data>::PreOrderMap(MutableMapFunctor f) {
+void List<Data>::PreOrderMap(MutableMapFunctor f){
 
-    ////////// TODO
+    PreOrderMap(f, head);
 }
 
+
+// PostOrderMap (Mutable, Auxilary)
+template <typename Data>
+void List<Data>::PostOrderMap(const MutableMapFunctor f, Node* start){
+
+    if(start != nullptr){
+
+        this->PostOrderMap(f, start->next);
+        f(start->key);
+    }
+}
 
 // Override function PostOrderMap (Mutable)
 template <typename Data>
-void List<Data>::PostOrderMap(MutableMapFunctor f) {
+void List<Data>::PostOrderMap(MutableMapFunctor f){
 
-    ////////// TODO
+    this->PostOrderMap(f, head);
 }
-
 
 }

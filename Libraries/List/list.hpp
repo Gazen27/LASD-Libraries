@@ -165,20 +165,20 @@ public:
   using typename FoldableContainer<Data>::FoldFunctor;
 
   // Override function from FoldableContainer
-  void Fold(FoldFunctor, void*) const override;
+  //PreOrderFold not overrided
 
   // Override function from PreOrderFoldableContainer
-  void PreOrderFold(FoldFunctor, void*) const override;
+  //PreOrderFold not overrided
 
   // Override function from PostOrderFoldableContainer
-  void PostOrderFold(FoldFunctor, void*) const override;
+  //PostOrderFold not overrided
 
   /* ************************************************************************ */
 
   using typename MappableContainer<Data>::MapFunctor;
 
   // Override function from MappableContainer
-  void Map(MapFunctor) const override;
+  //Map not overrided
 
   // Override function from PreOrderMappableContainer
   void PreOrderMap(MapFunctor) const override;
@@ -191,7 +191,7 @@ public:
   using typename MutableMappableContainer<Data>::MutableMapFunctor;
   
   // Override function from MutableMappableContainer
-  void Map(MutableMapFunctor) override;
+  //Map not overrided
 
   // Override function from MutablePreOrderMappableContainer
   void PreOrderMap(MutableMapFunctor) override;
@@ -210,16 +210,16 @@ protected:
 
   // Auxiliary member functions (for PreOrderMappableContainer & PostOrderMappableContainer)
 
-  // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type PostOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onward
+  void PreOrderMap(const MapFunctor, Node*) const; 
+  void PostOrderMap(const MapFunctor, Node*) const; 
 
   /* ************************************************************************ */
 
   // Auxiliary member functions (for MutablePreOrderMappableContainer & MutablePostOrderMappableContainer)
 
-  // type PreOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onwards
-  // type PostOrderMap(arguments) specifiers; // Accessory function executing from one point of the list onward
-
+  void PreOrderMap(const MutableMapFunctor, Node*);
+  void PostOrderMap(const MutableMapFunctor, Node*);
+  
   /* ************************************************************************ */
 
 };
