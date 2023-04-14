@@ -117,7 +117,7 @@ public:
   void InsertAtFront(Data&&); // Move of the value
   void RemoveFromFront();
   
-  Data& FrontNRemove(); // (must throw std::length_error when empty)
+  Data FrontNRemove(); // (must throw std::length_error when empty)
 
   void InsertAtBack(const Data&); // Copy of the value
   void InsertAtBack(Data&&); // Move of the value

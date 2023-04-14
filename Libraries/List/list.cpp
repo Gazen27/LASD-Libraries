@@ -1,4 +1,4 @@
-
+#include <iostream>
 typedef unsigned long ulong;
 
 namespace lasd {
@@ -255,7 +255,7 @@ void List<Data>::RemoveFromFront(){
 
             tail = nullptr;
         }
-
+        
         head = head->next;
         temp->next = nullptr;
         delete temp;
@@ -266,7 +266,7 @@ void List<Data>::RemoveFromFront(){
 
 // Defining function FrontNRemove
 template <typename Data>
-Data& List<Data>::FrontNRemove(){
+Data List<Data>::FrontNRemove(){
 
     if(size == 0 || head == nullptr){
 
@@ -275,7 +275,7 @@ Data& List<Data>::FrontNRemove(){
 
     else{
 
-        Data& value = head->key;
+        Data value = head->key;
         Node* temp = head;
 
         if(size == 1){
@@ -326,8 +326,11 @@ void List<Data>::InsertAtBack(Data&& newData){
 // Override function Clear
 template <typename Data>
 void List<Data>::Clear() noexcept{
+    
+    size = 0;
+    head = nullptr;
 
-    while(head != nullptr){ RemoveFromFront(); }
+    //while(head != nullptr){ this->RemoveFromFront(); } // <<<< ALTERNATIVE
 }
 
 
@@ -412,7 +415,7 @@ bool List<Data>::Remove(const Data& element){
 template <typename Data>
 const Data& List<Data>::operator [] (const ulong index) const{
 
-    if(index >= size || index < size - 1){ throw std::out_of_range("Error: index out of range!");}
+    if(index >= size){ throw std::out_of_range("Error: index out of range!");}
     else{
 
         Node* temp = head;
@@ -438,7 +441,7 @@ const Data& List<Data>::operator [] (const ulong index) const{
 template <typename Data>
 Data& List<Data>::operator [] (const ulong index){
 
-    if(index >= size || index < size - 1){ throw std::out_of_range("Error: index out of range!");}
+    if(index >= size){ throw std::out_of_range("Error: index out of range!");}
     else{
 
         Node* temp = head;
