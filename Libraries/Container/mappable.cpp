@@ -25,7 +25,7 @@ void PreOrderMappableContainer<Data>::Fold(FoldFunctor f, void* accumulator) con
 template <typename Data>
 void PreOrderMappableContainer<Data>::PreOrderFold(FoldFunctor f, void* accumulator) const{
 
-    Map(
+    PreOrderMap(
         [f, &accumulator](const Data& element){
 
             f(element, &accumulator);
@@ -54,7 +54,7 @@ void PostOrderMappableContainer<Data>::Fold(FoldFunctor f, void* accumulator) co
 template <typename Data>
 void PostOrderMappableContainer<Data>::PostOrderFold(FoldFunctor f, void* accumulator) const{
 
-    Map(
+    PostOrderMap(
         [f, &accumulator](const Data& element){
 
             f(element, &accumulator);

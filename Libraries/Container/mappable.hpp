@@ -410,8 +410,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator == (const MutablePreOrderMappableContainer) const noexcept = delete;
-  bool operator != (const MutablePreOrderMappableContainer) const noexcept = delete;
+  bool operator == (const MutablePreOrderMappableContainer&) const noexcept = delete;
+  bool operator != (const MutablePreOrderMappableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
 

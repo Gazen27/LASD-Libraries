@@ -13,9 +13,9 @@ namespace lasd {
 template <typename Data>
 bool LinearContainer<Data>::operator == (const LinearContainer<Data>& otherContainer) const noexcept{
 
-    if((*this).Size() != otherContainer.Size()){
+    if(size != otherContainer.size){
 
-        for(ulong i=0; i<(*this).Size(); i++){
+        for(ulong i=0; i < size; i++){
 
             if((*this)[i] != otherContainer[i]) {return false; }
         }
@@ -30,9 +30,9 @@ bool LinearContainer<Data>::operator == (const LinearContainer<Data>& otherConta
 template <typename Data>
 bool LinearContainer<Data>::operator != (const LinearContainer<Data>& otherContainer) const noexcept{
 
-    if((*this).Size() != otherContainer.Size()){
+    if(size != otherContainer.size){
 
-        for(ulong i=0; i<(*this).Size(); i++){
+        for(ulong i=0; i < size; i++){
 
             if((*this)[i] != otherContainer[i]) { return true; }
         }
@@ -47,7 +47,7 @@ bool LinearContainer<Data>::operator != (const LinearContainer<Data>& otherConta
 template <typename Data>
 const Data& LinearContainer<Data>::Front() const {
 
-    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
+    if(size == 0) { throw std::length_error("Error: empty structure!"); }
         
     else { return (*this)[0]; }
 
@@ -57,7 +57,7 @@ const Data& LinearContainer<Data>::Front() const {
 template <typename Data>
 Data& LinearContainer<Data>::Front() {
 
-    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
+    if(size == 0) { throw std::length_error("Error: empty structure!"); }
 
     else { return (*this)[0]; }
 }
@@ -66,27 +66,27 @@ Data& LinearContainer<Data>::Front() {
 template <typename Data>
 const Data& LinearContainer<Data>::Back() const {
 
-    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
+    if(size == 0) { throw std::length_error("Error: empty structure!"); }
 
-    else { return (*this)[(*this).Size() - 1]; }
+    else { return (*this)[size - 1]; }
 }
 
 // Override function Back (Mutable version)
 template <typename Data>
 Data& LinearContainer<Data>::Back() {
 
-    if((*this).Empty()) { throw std::length_error("Error: empty structure!"); }
+    if(size == 0) { throw std::length_error("Error: empty structure!"); }
 
-    else { return (*this)[(*this).Size() - 1]; }
+    else { return (*this)[size - 1]; }
 }
 
 // Override function PreOrderMap (Non-Mutable version)
 template <typename Data>
 void LinearContainer<Data>::PreOrderMap(MapFunctor functor) const{
 
-    if(!(*this).Empty()){
+    if(!this->Empty()){
 
-        for(ulong i=0; i<(*this).Size(); i++){
+        for(ulong i=0; i < size; i++){
 
             functor((*this)[i]);
         }
@@ -97,9 +97,9 @@ void LinearContainer<Data>::PreOrderMap(MapFunctor functor) const{
 template <typename Data>
 void LinearContainer<Data>::PostOrderMap(MapFunctor functor) const{
 
-    if(!(*this).Empty()){
+    if(!this->Empty()){
 
-        for(ulong i=(*this).Size()-1; i>0; i--){
+        for(ulong i=size-1; i>=0; i--){
 
             functor((*this)[i]);
         }
@@ -110,9 +110,9 @@ void LinearContainer<Data>::PostOrderMap(MapFunctor functor) const{
 template <typename Data>
 void LinearContainer<Data>::PreOrderMap(MutableMapFunctor functor) {
 
-    if(!(*this).Empty()){
+    if(!this->Empty()){
 
-        for(ulong i=0; i<(*this).Size(); i++){
+        for(ulong i=0; i<size; i++){
 
             functor((*this)[i]);
         }
@@ -123,9 +123,9 @@ void LinearContainer<Data>::PreOrderMap(MutableMapFunctor functor) {
 template <typename Data>
 void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) {
 
-    if(!(*this).Empty()){
+    if(!this->Empty()){
 
-        for(ulong i=(*this).Size()-1; i>0; i--){
+        for(ulong i = size - 1; i >= 0; i--){
 
             functor((*this)[i]);
         }
@@ -136,7 +136,7 @@ void LinearContainer<Data>::PostOrderMap(MutableMapFunctor functor) {
 template <typename Data>
 bool LinearContainer<Data>::Exists(const Data& element) const noexcept{
 
-    for(ulong i=0; i<(*this).Size(); i++){
+    for(ulong i=0; i < size; i++){
 
         if((*this)[i] == element) { return true; }
     }
