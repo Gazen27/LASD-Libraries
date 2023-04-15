@@ -17,7 +17,7 @@ List<Data>::Node::Node(const Data& value){
 template <typename Data>
 List<Data>::Node::Node(Data&& value){
 
-    std::swap(key, value);
+    key = std::move(value);
 }
 
 
@@ -26,7 +26,7 @@ template <typename Data>
 List<Data>::Node::Node(const Node& otherNode){
 
     key = otherNode.key;
-    next = otherNode.next; //////// ???????????????????????
+    next = otherNode.next;
 }
 
 
@@ -218,7 +218,6 @@ void List<Data>::InsertAtFront(const Data& newData){
     if(size == 0){ tail = newNode; }
 
     head = newNode;
-
     size = size + 1;
 }
 
@@ -227,14 +226,13 @@ void List<Data>::InsertAtFront(const Data& newData){
 template <typename Data>
 void List<Data>::InsertAtFront(Data&& newData){
 
-    Node* newNode = new Node(newData);
+    Node* newNode = new Node(std::move(newData));
 
     newNode->next = head;
 
     if(size == 0){ tail = newNode; }
 
     head = newNode;
-
     size = size + 1;
 }
 
@@ -312,10 +310,10 @@ void List<Data>::InsertAtBack(const Data& newData){
 template <typename Data>
 void List<Data>::InsertAtBack(Data&& newData){
 
-    if(size == 0){ InsertAtFront(newData); }
+    if(size == 0){ InsertAtFront(std::move(newData)); }
     else{
 
-        Node* newNode = new Node(newData);
+        Node* newNode = new Node(std::move(newData));
         tail->next = newNode;
         tail = newNode;
         size = size + 1;
@@ -328,6 +326,7 @@ template <typename Data>
 void List<Data>::Clear() noexcept{
     
     size = 0;
+    delete head;
     head = nullptr;
 
     //while(head != nullptr){ this->RemoveFromFront(); } // <<<< ALTERNATIVE
