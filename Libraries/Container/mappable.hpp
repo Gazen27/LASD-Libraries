@@ -125,7 +125,7 @@ public:
   using typename FoldableContainer<Data>::FoldFunctor;
 
   // Override function from FoldableContainer
-  virtual void Fold(FoldFunctor, void *) const override;
+  // Function Fold already defined in FoldableContainer
 
   // Override function from PreOrderFoldableContainer
   virtual void PreOrderFold(FoldFunctor, void *) const override;
@@ -189,7 +189,7 @@ public:
   using typename FoldableContainer<Data>::FoldFunctor;
 
   // Override function FoldableContainer
-  virtual void Fold(FoldFunctor, void *) const override;
+  // Function Fold already defined in FoldableContainer
 
   /* ************************************************************************ */
 
