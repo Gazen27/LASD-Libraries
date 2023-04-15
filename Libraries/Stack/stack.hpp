@@ -53,16 +53,16 @@ public:
   // Specific member functions
 
   // Non-Mutable version
-  virtual const Data& Top(); // concrete function must throw std::length_error when empty
+  virtual const Data& Top() = 0;
   
   // Mutable version
-  virtual Data& Top(); // concrete function must throw std::length_error when empty
+  virtual Data& Top() = 0; 
   
-  virtual void Pop(); // concrete function must throw std::length_error when empty
-  virtual Data& TopNPop(); // concrete function must throw std::length_error when empty
+  virtual void Pop() = 0;
+  virtual Data& TopNPop() = 0;
   
-  virtual void Push(const Data&) noexcept; // Copy of the value
-  virtual void Push(Data&&) noexcept; // Move of the value
+  virtual void Push(const Data&) noexcept = 0; // Copy of the value
+  virtual void Push(Data&&) noexcept = 0; // Move of the value
 
 };
 
