@@ -83,7 +83,7 @@ const Data& StackLst<Data>::Top(){
 
     else{
 
-        /////////// TODO
+        Data& element = List<Data>::Front();
     }
 } 
 
@@ -96,7 +96,7 @@ Data& StackLst<Data>::Top(){
 
     else{
 
-        /////////// TODO
+        Data& element = std::move(List<Data>::Front());
     }
 }
 
@@ -108,21 +108,20 @@ void StackLst<Data>::Pop(){
 
     else{
 
-        /////////// TODO
+        List<Data>::RemoveFromFront();
     }
 }
 
 
 // Override function TopNPop
 template <typename Data>
-Data StackLst<Data>::TopNPop(){
+Data& StackLst<Data>::TopNPop(){
 
     if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
 
     else{
 
-        Data element = this->Top();
-        this->Pop();
+        Data& element = List<Data>::FrontNRemove();
     }
 
     return element;
@@ -133,7 +132,7 @@ Data StackLst<Data>::TopNPop(){
 template <typename Data>
 void StackLst<Data>::Push(const Data& element) noexcept{
 
-    ///////////// TODO
+    List<Data>::InsertAtFront(element);
 }
 
 
@@ -141,7 +140,7 @@ void StackLst<Data>::Push(const Data& element) noexcept{
 template <typename Data>
 void StackLst<Data>::Push(Data&& element) noexcept{
 
-    ///////////// TODO
+    List<Data>::InsertAtFront(element);
 }
 
 
