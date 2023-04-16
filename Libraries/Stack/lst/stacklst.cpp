@@ -29,11 +29,14 @@ StackLst<Data>::StackLst(MutableMappableContainer<Data>&& container) noexcept{
 template <typename Data>
 StackLst<Data>::StackLst(const StackLst& otherStack){
 
-    StackLst temp = otherStack;
+    if(otherStack.size != 0){
+        
+        StackLst temp = otherStack;
 
-    while(this->size != otherStack.size){
+        while(this->size != otherStack.size){
 
-        this->Push(temp.TopNPop());
+            this->Push(temp.TopNPop());
+        }
     }
 }
 
@@ -42,17 +45,24 @@ StackLst<Data>::StackLst(const StackLst& otherStack){
 template <typename Data>
 StackLst<Data>::StackLst(StackLst&& otherStack) noexcept{
 
-    while(this->size != otherStack.size){
+    if(otherStack.size != 0){
 
-        this->Push(otherStack.TopNPop);
+        while(this->size != otherStack.size){
 
-        // this->Push(std::move(otherStack.TopNPop)); // <<<< probably the correct way
+            this->Push(otherStack.TopNPop);
+
+            // this->Push(std::move(otherStack.TopNPop)); // <<<< probably the correct way
+        }
     }
 }
 
 
-// Operator ==
+// Copy assignment
+template <typename Data>
+StackLst<Data>& StackLst<Data>::operator = (const StackLst<Data>& otherStack) noexcept{
 
+    ////////// TODO
+}
 
 /* ************************************************************************** */
 
