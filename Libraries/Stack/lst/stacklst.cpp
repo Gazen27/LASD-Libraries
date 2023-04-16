@@ -27,42 +27,123 @@ StackLst<Data>::StackLst(MutableMappableContainer<Data>&& container) noexcept{
 
 // Copy constructor
 template <typename Data>
-StackLst<Data>::StackLst(const StackLst& otherStack){
-
-    if(otherStack.size != 0){
-        
-        StackLst temp = otherStack;
-
-        while(this->size != otherStack.size){
-
-            this->Push(temp.TopNPop());
-        }
-    }
-}
+StackLst<Data>::StackLst(const StackLst& otherStack) : List<Data>(otherStack){}
 
 
 // Move constructor
 template <typename Data>
-StackLst<Data>::StackLst(StackLst&& otherStack) noexcept{
+StackLst<Data>::StackLst(StackLst&& otherStack) noexcept : List<Data>(std::move(otherStack)){}
 
-    if(otherStack.size != 0){
 
-        while(this->size != otherStack.size){
+// Destructor
+template <typename Data>
+StackLst<Data>::~StackLst(){
 
-            this->Push(otherStack.TopNPop);
-
-            // this->Push(std::move(otherStack.TopNPop)); // <<<< probably the correct way
-        }
-    }
+    while(this->size != 0){ this->Pop(); }
 }
 
 
 // Copy assignment
 template <typename Data>
 StackLst<Data>& StackLst<Data>::operator = (const StackLst<Data>& otherStack) noexcept{
-
-    ////////// TODO
+    
+    List<Data>::operator = (otherStack);
 }
+
+
+// Move assignment
+template <typename Data>
+StackLst<Data>& StackLst<Data>::operator = (StackLst<Data>&& otherStack) noexcept{
+
+    List<Data>::operator = (std::move(otherStack));
+}
+
+
+// Operator ==
+template <typename Data>
+bool StackLst<Data>::operator == (const StackLst<Data>& otherStack) const noexcept{
+
+    List<Data>::operator == (otherStack);
+}
+
+
+// Operator !=
+template <typename Data>
+bool StackLst<Data>::operator != (const StackLst<Data>& otherStack) const noexcept{
+
+    List<Data>::operator != (otherStack);
+}
+
+
+// Override function Top (Non-Mutable)
+template <typename Data>
+const Data& StackLst<Data>::Top(){
+
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
+
+    else{
+
+        /////////// TODO
+    }
+} 
+
+
+// Override function Top (Mutable)
+template <typename Data>
+Data& StackLst<Data>::Top(){
+
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
+
+    else{
+
+        /////////// TODO
+    }
+}
+
+// Override function Pop
+template <typename Data>
+void StackLst<Data>::Pop(){
+
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
+
+    else{
+
+        /////////// TODO
+    }
+}
+
+
+// Override function TopNPop
+template <typename Data>
+Data StackLst<Data>::TopNPop(){
+
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
+
+    else{
+
+        Data element = this->Top();
+        this->Pop();
+    }
+
+    return element;
+}
+
+
+// Override function Push (Copy)
+template <typename Data>
+void StackLst<Data>::Push(const Data& element) noexcept{
+
+    ///////////// TODO
+}
+
+
+// Override function Push (Move)
+template <typename Data>
+void StackLst<Data>::Push(Data&& element) noexcept{
+
+    ///////////// TODO
+}
+
 
 /* ************************************************************************** */
 

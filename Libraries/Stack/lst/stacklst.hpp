@@ -70,13 +70,13 @@ public:
   // Override functions from Stack
 
   //Non-Mutable version
-   virtual const Data& Top(); // must throw std::length_error when empty
+  virtual const Data& Top();
  
   // Mutable version
-  virtual Data& Top(); // must throw std::length_error when empty
+  virtual Data& Top();
   
-  virtual void Pop(); // must throw std::length_error when empty
-  virtual Data& TopNPop(); // must throw std::length_error when empty
+  virtual void Pop();
+  virtual Data TopNPop();
   
   virtual void Push(const Data&) noexcept; // Copy of the value
   virtual void Push(Data&&) noexcept; // Move of the value
