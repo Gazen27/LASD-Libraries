@@ -50,7 +50,6 @@ public:
   // Move constructor
   QueueLst(QueueLst&&) noexcept;
 
-  /* ************************************************************************ */
 
   // Destructor
   virtual ~QueueLst();
@@ -58,33 +57,38 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument);
+  QueueLst& operator = (const QueueLst&) noexcept;
 
   // Move assignment
-  // type operator=(argument);
+  QueueLst& operator = (QueueLst&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator == (const QueueLst&) const noexcept;
+  bool operator != (const QueueLst&) const noexcept;
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from Queue)
+  // Override functions from Queue
 
-  // type Head() specifiers; // Override Queue member (non-mutable version; must throw std::length_error when empty)
-  // type Head() specifiers; // Override Queue member (mutable version; must throw std::length_error when empty)
-  // type Dequeue() specifiers; // Override Queue member (must throw std::length_error when empty)
-  // type HeadNDequeue() specifiers; // Override Queue member (must throw std::length_error when empty)
-  // type Enqueue(argument) specifiers; // Override Queue member (copy of the value)
-  // type Enqueue(argument) specifiers; // Override Queue member (move of the value)
+  // Non-Mutable version
+  const Data& Head() const; // must throw std::length_error when empty
 
+  // Mutable version
+  Data& Head(); // must throw std::length_error when empty
+
+  void Dequeue(); // must throw std::length_error when empty
+  Data& HeadNDequeue(); // must throw std::length_error when empty
+
+  void Enqueue(const Data&) noexcept; // Copy of the value
+  void Enqueue(Data&&) noexcept; // Move of the value
+  
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
+  // Override function from ClearableContainer
 
-  // using List<Data>::Clear;
+  using List<Data>::Clear;
 
 };
 
