@@ -76,7 +76,7 @@ public:
   virtual Data& Top();
   
   virtual void Pop();
-  virtual Data& TopNPop();
+  virtual Data TopNPop();
   
   virtual void Push(const Data&) noexcept; // Copy of the value
   virtual void Push(Data&&) noexcept; // Move of the value

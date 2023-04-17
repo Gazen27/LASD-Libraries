@@ -8,33 +8,61 @@ namespace lasd {
 
 // Specific constructor #1: StackVec obtained from a MappableContainer
 template <typename Data>
-StackVec<Data>::StackVec(const MappableContainer<Data>&) noexcept{
+StackVec<Data>::StackVec(const MappableContainer<Data>& container) noexcept{
 
-    ///////// TODO
+    size = container.size;
+    elements = new Data[size];
+    level = 0;
+
+    container.Map(
+
+        [this](const Data& e){ this->Push(e); }
+    );
 }
 
 
 // Specific constructor #2: StackVec obtained from a MutableMappableContainer
 template <typename Data>
-StackVec<Data>::StackVec(MutableMappableContainer<Data>&&) noexcept{
+StackVec<Data>::StackVec(MutableMappableContainer<Data>&& container) noexcept{
 
-    ///////// TODO
+    size = container.size;
+    elements = new Data[size];
+    level = 0;
+
+    container.Map(
+
+        [this](const Data& e){ this->Push(std::move(e)); }
+    );
 }
 
 
 // Copy constructor
 template <typename Data>
-StackVec<Data>::StackVec(const StackVec<Data>&){
+StackVec<Data>::StackVec(const StackVec<Data>& otherStack){
 
-    //////// TODO
+    size = otherStack.size;
+    elements = new Data[size];
+    level = 0;
+
+    for(ulong i = 0; i < otherStack.level; i++){
+
+        this->Push(otherStack.elements[i]);
+    }
 }
 
 
 // Move constructor
 template <typename Data>
-StackVec<Data>::StackVec(StackVec<Data>&&) noexcept{
+StackVec<Data>::StackVec(StackVec<Data>&& otherStack) noexcept{
 
-    //////// TODO
+    size = otherStack.size;
+    elements = new Data[size];
+    level = 0;
+
+    for(ulong i = 0; i < otherStack.level; i++){
+
+        this->Push(std::move(otherStack.TopNPop()));
+    }
 }
 
 
@@ -42,39 +70,64 @@ StackVec<Data>::StackVec(StackVec<Data>&&) noexcept{
 template <typename Data>
 StackVec<Data>::~StackVec(){
 
-    //////// TODO
+    Clear();
+    delete[] elements;
 }
 
 
 // Copy assignment
 template <typename Data>
-StackVec<Data>& StackVec<Data>::operator = (const StackVec<Data>&) noexcept{
+StackVec<Data>& StackVec<Data>::operator = (const StackVec<Data>& otherStack) noexcept{
 
-    ///////// TODO
+    Clear();
+    size = otherStack.size;
+    level = 0;
+
+    for(ulong i = 0; i < otherStack.level; i++){
+
+        this->Push(otherStack.elements[i]);
+    }
 }
 
 
 // Move assignment
 template <typename Data>
-StackVec<Data>& StackVec<Data>::operator = (StackVec<Data>&&) noexcept{
+StackVec<Data>& StackVec<Data>::operator = (StackVec<Data>&& otherStack) noexcept{
 
-    ///////// TODO
+    Clear();
+    size = otherStack.size;
+    level = 0;
+
+    for(ulong i = 0; i < otherStack.level; i++){
+
+        this->Push(std::move(otherStack.TopNPop()));
+    }
 }
 
 
 // Operator ==
 template <typename Data>
-bool StackVec<Data>::operator == (const StackVec<Data>&) const noexcept{
+bool StackVec<Data>::operator == (const StackVec<Data>& otherStack) const noexcept{
 
-    ///////// TODO
+    if(this->size == otherStack.size && this->level == otherStack.level){
+
+        for(ulong i = 0; i < level; i++){
+
+            if(this->elements[i] != otherStack.elements[i]){ return false; }
+        }
+
+        return true;
+    }
+
+    else{ return false; }
 }
 
 
 // Operator !=
 template <typename Data>
-bool StackVec<Data>::operator != (const StackVec<Data>&) const noexcept{
+bool StackVec<Data>::operator != (const StackVec<Data>& otherStack) const noexcept{
 
-    ///////// TODO
+    return !((*this) == otherStack);
 }
 
 
@@ -82,7 +135,10 @@ bool StackVec<Data>::operator != (const StackVec<Data>&) const noexcept{
 template <typename Data>
 const Data& StackLst<Data>::Top(){
 
-    ///////// TODO
+    if(this.level == 0 || this->size == 0){ throw std::length_error("Error: the structure is empty!"); }
+
+    Data& e = elements[level - 1];
+    return e;
 } 
 
 
@@ -90,38 +146,58 @@ const Data& StackLst<Data>::Top(){
 template <typename Data>
 Data& StackVec<Data>::Top(){
 
-    ///////// TODO
+    if(this.level == 0 || this->size == 0){ throw std::length_error("Error: the structure is empty!"); }
+
+    Data& e = std::move(elements[level - 1]);
+    return e;
 }
 
 // Override function Pop
 template <typename Data>
 void StackVec<Data>::Pop(){
 
-    ///////// TODO
+    if(this.level == 0 || this->size == 0){ throw std::length_error("Error: the structure is empty!"); }
+
+    level = level - 1;
 }
 
 
 // Override function TopNPop
 template <typename Data>
-Data& StackVec<Data>::TopNPop(){
+Data StackVec<Data>::TopNPop(){
 
-    ///////// TODO
+    if(this.level == 0 || this->size == 0){ throw std::length_error("Error: the structure is empty!"); }
+
+    Data e = this->Top();
+    this->Pop();
+
+    return e;
 }
 
 
 // Override function Push (Copy)
 template <typename Data>
-void StackVec<Data>::Push(const Data& element) noexcept{
+void StackVec<Data>::Push(const Data& e) noexcept{
 
-    ///////// TODO
+    if(size == 0){ size = 1; }
+
+    if(level == size){ this->Expand(); }
+
+    level = level + 1;
+    elements[level] = e;
 }
 
 
 // Override function Push (Move)
 template <typename Data>
-void StackVec<Data>::Push(Data&& element) noexcept{
+void StackVec<Data>::Push(Data&& e) noexcept{
 
-    ///////// TODO
+    if(size == 0){ size = 1; }
+
+    if(level == size){ this->Expand(); }
+
+    level = level + 1;
+    elements[level] = std::move(e);
 }
 
 
@@ -129,7 +205,8 @@ void StackVec<Data>::Push(Data&& element) noexcept{
 template <typename Data>
 bool StackVec<Data>::Empty() const noexcept{
 
-    ///////// TODO
+    if(this->level == 0 || this->size == 0){ return true; }
+    else{ return false; }
 }
 
 
@@ -137,7 +214,7 @@ bool StackVec<Data>::Empty() const noexcept{
 template <typename Data>
 ulong StackVec<Data>::Size() const noexcept{
 
-    ///////// TODO
+    return this->level;
 }
 
 
@@ -145,7 +222,8 @@ ulong StackVec<Data>::Size() const noexcept{
 template <typename Data>
 void StackVec<Data>::Clear() noexcept{
 
-    ///////// TODO
+    size = 0; 
+    level = 0;
 }
 
 
@@ -153,7 +231,7 @@ void StackVec<Data>::Clear() noexcept{
 template <typename Data>
 void StackVec<Data>::Expand(){
 
-    ///////// TODO
+    this->size = size*2;
 }
 
 
@@ -161,7 +239,12 @@ void StackVec<Data>::Expand(){
 template <typename Data>
 void StackVec<Data>::Reduce(){
 
-    ///////// TODO
+    if(this->level <= size/2){ size = size/2; }
+    else{
+
+        size = size/2;
+        level = size;
+    }
 }
 
 /* ************************************************************************** */

@@ -115,13 +115,13 @@ void StackLst<Data>::Pop(){
 
 // Override function TopNPop
 template <typename Data>
-Data& StackLst<Data>::TopNPop(){
+Data StackLst<Data>::TopNPop(){
 
     if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
 
     else{
 
-        Data& element = List<Data>::FrontNRemove();
+        Data element = List<Data>::FrontNRemove();
     }
 
     return element;
