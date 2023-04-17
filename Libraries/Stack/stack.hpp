@@ -53,7 +53,7 @@ public:
   // Specific member functions
 
   // Non-Mutable version
-  virtual const Data& Top() = 0;
+  virtual const Data& Top() const = 0;
   
   // Mutable version
   virtual Data& Top() = 0; 

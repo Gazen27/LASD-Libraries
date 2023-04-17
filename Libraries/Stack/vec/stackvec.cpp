@@ -133,7 +133,7 @@ bool StackVec<Data>::operator != (const StackVec<Data>& otherStack) const noexce
 
 // Override function Top (Non-Mutable)
 template <typename Data>
-const Data& StackLst<Data>::Top(){
+const Data& StackVec<Data>::Top() const{
 
     if(this.level == 0 || this->size == 0){ throw std::length_error("Error: the structure is empty!"); }
 

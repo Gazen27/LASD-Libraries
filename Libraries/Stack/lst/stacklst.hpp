@@ -70,7 +70,7 @@ public:
   // Override functions from Stack
 
   //Non-Mutable version
-  virtual const Data& Top();
+  virtual const Data& Top() const;
  
   // Mutable version
   virtual Data& Top();
@@ -84,7 +84,7 @@ public:
   /* ************************************************************************ */
 
   // Override function from ClearableContainer
-  using List<Data>::Clear();
+  using List<Data>::Clear;
 
 };
 

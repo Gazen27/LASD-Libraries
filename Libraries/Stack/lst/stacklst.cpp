@@ -21,7 +21,7 @@ StackLst<Data>::StackLst(MutableMappableContainer<Data>&& container) noexcept{
     container.Map(
 
         [this](const Data& element){ this->Push(std::move(element));}
-    )
+    );
 }
 
 
@@ -63,7 +63,7 @@ StackLst<Data>& StackLst<Data>::operator = (StackLst<Data>&& otherStack) noexcep
 template <typename Data>
 bool StackLst<Data>::operator == (const StackLst<Data>& otherStack) const noexcept{
 
-    List<Data>::operator == (otherStack);
+    return List<Data>::operator == (otherStack);
 }
 
 
@@ -71,13 +71,13 @@ bool StackLst<Data>::operator == (const StackLst<Data>& otherStack) const noexce
 template <typename Data>
 bool StackLst<Data>::operator != (const StackLst<Data>& otherStack) const noexcept{
 
-    List<Data>::operator != (otherStack);
+    return List<Data>::operator != (otherStack);
 }
 
 
 // Override function Top (Non-Mutable)
 template <typename Data>
-const Data& StackLst<Data>::Top(){
+const Data& StackLst<Data>::Top() const{
 
     if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
 
@@ -117,11 +117,13 @@ void StackLst<Data>::Pop(){
 template <typename Data>
 Data StackLst<Data>::TopNPop(){
 
+    Data element;
+
     if(this->size == 0){ throw std::length_error("Error: the structure is empty!");}
 
     else{
 
-        Data element = List<Data>::FrontNRemove();
+        element = List<Data>::FrontNRemove();
     }
 
     return element;
