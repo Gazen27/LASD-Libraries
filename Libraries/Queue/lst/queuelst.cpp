@@ -112,7 +112,7 @@ void QueueLst<Data>::Dequeue(){
 
     else{
 
-        List<Data>::Remove(List<Data>::Back());
+        List<Data>::RemoveFromFront();
     }
 }
 
@@ -127,8 +127,8 @@ Data QueueLst<Data>::HeadNDequeue(){
 
     else{
 
-        element = this->Head();
-        this->Dequeue();
+        element = List<Data>::FrontNRemove();
+        return element;
     }
 }
 
