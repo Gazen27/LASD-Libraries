@@ -14,7 +14,8 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class QueueVec {
+class QueueVec : public virtual Queue<Data>,
+                  Vector<Data>{
                   // Must extend Queue<Data>,
                   //             Vector<Data>
 
@@ -24,80 +25,88 @@ private:
 
 protected:
 
-  // using Vector<Data>::???;
-
-  // ...
+  using Vector<Data>::size;
+  using Vector<Data>::elements;
+  ulong last = 0;
 
 public:
 
   // Default constructor
-  // QueueVec() specifier;
+  QueueVec() = default;
 
   /* ************************************************************************ */
 
-  // Specific constructor
-  // QueueVec(argument) specifiers; // A queue obtained from a MappableContainer
-  // QueueVec(argument) specifiers; // A queue obtained from a MutableMappableContainer
+  // Specific constructor #1: QueueVec obtained from a MappableContainer
+  QueueVec(const MappableContainer<Data>&) noexcept;
+
+  // Specific constructor #: QueueVec obtained from a MutableMappableContainer
+  QueueVec(MutableMappableContainer<Data>&&) noexcept;
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // QueueVec(argument);
+  QueueVec(const QueueVec&);
 
   // Move constructor
-  // QueueVec(argument);
+  QueueVec(QueueVec&&) noexcept;
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~QueueVec() specifier;
+  virtual ~QueueVec();
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument);
+  QueueVec& operator = (const QueueVec&) noexcept;
 
   // Move assignment
-  // type operator=(argument);
+  QueueVec& operator = (QueueVec&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator == (const QueueVec&) const noexcept;
+  bool operator != (const QueueVec&) const noexcept;
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from Queue)
+  // Override functions from Queue
+  
+  // Non-Mutable version
+  const Data& Head() const; // must throw std::length_error when empty
 
-  // type Head() specifiers; // Override Queue member (non-mutable version; must throw std::length_error when empty)
-  // type Head() specifiers; // Override Queue member (mutable version; must throw std::length_error when empty)
-  // type Dequeue() specifiers; // Override Queue member (must throw std::length_error when empty)
-  // type HeadNDequeue() specifiers; // Override Queue member (must throw std::length_error when empty)
-  // type Enqueue(argument) specifiers; // Override Queue member (copy of the value)
-  // type Enqueue(argument) specifiers; // Override Queue member (move of the value)
+  // Mutable version
+  Data& Head(); // must throw std::length_error when empty
 
-  /* ************************************************************************ */
+  void Dequeue(); // must throw std::length_error when empty
+  Data HeadNDequeue(); // must throw std::length_error when empty
 
-  // Specific member functions (inherited from Container)
-
-  // type Empty() specifiers; // Override Container member
-
-  // type Size() specifiers; // Override Container member
+  void Enqueue(const Data&) noexcept; // Copy of the value
+  void Enqueue(Data&&) noexcept; // Move of the value
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
+  // Override functions from Container
 
-  // type Clear() specifiers; // Override ClearableContainer member
+  virtual bool Empty() const noexcept override;
+
+  virtual ulong Size() const noexcept override;
+
+  /* ************************************************************************ */
+
+  // Override function from ClearableContainer
+
+  virtual void Clear() noexcept override;
 
 protected:
 
   // Auxiliary member functions
 
-  // type Expand() specifiers;
-  // type Reduce() specifiers;
-  // type SwapVectors(arguments) specifiers;
+  virtual void Expand();
+  virtual void Reduce();
+  
+  virtual void SwapVectors(QueueVec&&) noexcept;
 
 };
 
