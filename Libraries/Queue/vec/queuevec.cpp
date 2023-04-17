@@ -11,7 +11,14 @@ namespace lasd {
 template <typename Data>
 QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept{
 
-    ////////// TODO
+    size = container.size;
+    elements = new Data[size];
+    last = 0;
+
+    container.Map(
+
+        [this](const Data& e){ this->Enqueue(e); }
+    );
 }
 
 
@@ -19,7 +26,14 @@ QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept{
 template <typename Data>
 QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& container) noexcept{
 
-    ///////// TODO
+    size = container.size;
+    elements = new Data[size];
+    last = 0;
+
+    container.Map(
+
+        [this](const Data& e){ this->Enqueue(std::move(e)); }
+    );
 }
 
 
@@ -27,7 +41,14 @@ QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& container) noexcept{
 template <typename Data>
 QueueVec<Data>::QueueVec(const QueueVec<Data>& otherQueue){
 
-    ///////// TODO
+    size = otherQueue.size;
+    elements = new Data[size];
+    last = 0;
+
+    for(ulong i = 0; i < otherQueue.last; i++){
+        
+        this->Enqueue(otherQueue.elements[i]);
+    }
 }
 
 
@@ -35,7 +56,14 @@ QueueVec<Data>::QueueVec(const QueueVec<Data>& otherQueue){
 template <typename Data>
 QueueVec<Data>::QueueVec(QueueVec<Data>&& otherQueue) noexcept{
 
-    ///////// TODO
+    size = otherQueue.size;
+    elements = new Data[size];
+    last = 0;
+
+    for(ulong i = 0; i < otherQueue.last; i++){
+        
+        this->Enqueue(std::move(otherQueue.HeadNDequeue()));
+    }
 }
 
 
@@ -51,7 +79,14 @@ QueueVec<Data>::~QueueVec(){
 template <typename Data>
 QueueVec<Data>& QueueVec<Data>::operator = (const QueueVec<Data>& otherQueue) noexcept{
 
-    ///////// TODO
+    Clear();
+    size = otherQueue.size;
+    last = 0;
+
+    for(ulong i = 0; i < otherQueue.last; i++){
+
+        this->Enqueue(otherQueue.elements[i]);
+    }
 }
 
 
@@ -59,7 +94,14 @@ QueueVec<Data>& QueueVec<Data>::operator = (const QueueVec<Data>& otherQueue) no
 template <typename Data>
 QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcept{
 
-    ///////// TODO
+    Clear();
+    size = otherQueue.size;
+    last = 0;
+
+    for(ulong i = 0; i < otherQueue.level; i++){
+
+        this->Push(std::move(otherQueue.HeadNDequeue()));
+    }
 } 
 
 
@@ -67,7 +109,17 @@ QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcep
 template <typename Data>
 bool QueueVec<Data>::operator == (const QueueVec<Data>& otherQueue) const noexcept{
 
-    ///////// TODO
+    if(size == otherQueue.size && last = otherQueue.last){
+
+        for(ulong i = 0; i < last; i++){
+
+            if(this->elements[i] != otherQueue.elements[i]){ return false; }
+        }
+
+        return true;
+    }
+
+    else{ return false; }
 }
 
 
@@ -75,13 +127,13 @@ bool QueueVec<Data>::operator == (const QueueVec<Data>& otherQueue) const noexce
 template <typename Data>
 bool QueueVec<Data>::operator != (const QueueVec<Data>& otherQueue) const noexcept{
 
-    ///////// TODO
+    return !((*this) == otherQueue);
 }
 
 
 // Override function Head (Non-Mutable)
 template <typename Data>
-const Data& QueueVec<Dat>::Head() const{
+const Data& QueueVec<Data>::Head() const{
 
     ///////// TODO
 }
