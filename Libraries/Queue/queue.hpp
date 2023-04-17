@@ -59,7 +59,7 @@ public:
   virtual Data& Head() = 0;
 
   virtual void Dequeue() = 0;
-  virtual Data& HeadNDequeue() = 0;
+  virtual Data HeadNDequeue() = 0;
 
   virtual void Enqueue(const Data&) noexcept = 0; // Copy of the value
   virtual void Enqueue(Data&&) noexcept = 0; // Move of the value

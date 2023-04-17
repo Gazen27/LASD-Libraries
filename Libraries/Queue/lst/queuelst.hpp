@@ -73,13 +73,13 @@ public:
   // Override functions from Queue
 
   // Non-Mutable version
-  const Data& Head() const; // must throw std::length_error when empty
+  const Data& Head() const;
 
   // Mutable version
-  Data& Head(); // must throw std::length_error when empty
+  Data& Head();
 
-  void Dequeue(); // must throw std::length_error when empty
-  Data& HeadNDequeue(); // must throw std::length_error when empty
+  void Dequeue();
+  Data HeadNDequeue();
 
   void Enqueue(const Data&) noexcept; // Copy of the value
   void Enqueue(Data&&) noexcept; // Move of the value

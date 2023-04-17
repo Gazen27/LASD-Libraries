@@ -10,38 +10,38 @@ namespace lasd {
 template <typename Data>
 QueueLst<Data>::QueueLst(const MappableContainer<Data>& container) noexcept{
 
-    ////////// TODO
+    container.Map(
+
+        [this](const Data& element){ this->Enqueue(element); }
+    );
 }
 
 // Specific constructor #2: QueueLst obtained from a MutableMappableContainer
 template <typename Data>
 QueueLst<Data>::QueueLst(MutableMappableContainer<Data>&& container) noexcept{
 
-    ////////// TODO
+    container.Map(
+
+        [this](const Data& element){ this->Enqueue(std::move(element)); }
+    );
 }
 
 
 // Copy constructor
 template <typename Data>
-QueueLst<Data>::QueueLst(const QueueLst<Data>& otherQueue){
-
-    ///////// TODO
-}
+QueueLst<Data>::QueueLst(const QueueLst<Data>& otherQueue) : List<Data>(otherQueue){}
 
 
 // Move constructor
 template <typename Data>
-QueueLst<Data>::QueueLst(QueueLst<Data>&& otherQueue) noexcept{
-
-    ///////// TODO
-}
+QueueLst<Data>::QueueLst(QueueLst<Data>&& otherQueue) noexcept : List<Data>(std::move(otherQueue)){}
 
 
 // Destructor
 template <typename Data>
 QueueLst<Data>::~QueueLst(){
 
-    ///////// TODO
+    while(this->size != 0){ this->Dequeue(); }
 }
 
 
@@ -49,7 +49,7 @@ QueueLst<Data>::~QueueLst(){
 template <typename Data>
 QueueLst<Data>& QueueLst<Data>::operator = (const QueueLst<Data>& otherQueue) noexcept{
 
-    ///////// TODO
+    return List<Data>::operator = (otherQueue);
 }
 
 
@@ -57,7 +57,7 @@ QueueLst<Data>& QueueLst<Data>::operator = (const QueueLst<Data>& otherQueue) no
 template <typename Data>
 QueueLst<Data>& QueueLst<Data>::operator = (QueueLst<Data>&& otherQueue) noexcept{
 
-    //////// TODO
+    return List<Data>::operator = (std::move(otherQueue));
 }
 
 
@@ -65,7 +65,7 @@ QueueLst<Data>& QueueLst<Data>::operator = (QueueLst<Data>&& otherQueue) noexcep
 template <typename Data>
 bool QueueLst<Data>::operator == (const QueueLst<Data>& otherQueue) const noexcept{
 
-    //////// TODO
+    return List<Data>::operator == (otherQueue);
 }
 
 
@@ -73,7 +73,7 @@ bool QueueLst<Data>::operator == (const QueueLst<Data>& otherQueue) const noexce
 template <typename Data>
 bool QueueLst<Data>::operator != (const QueueLst<Data>& otherQueue) const noexcept{
 
-    //////// TODO
+    return List<Data>::operator != (otherQueue);
 }
 
 
@@ -81,7 +81,12 @@ bool QueueLst<Data>::operator != (const QueueLst<Data>& otherQueue) const noexce
 template <typename Data>
 const Data& QueueLst<Data>::Head() const{
 
-    //////// TODO
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty"); }
+
+    else{
+
+        return List<Data>::Front();
+    }
 }
 
 
@@ -89,7 +94,13 @@ const Data& QueueLst<Data>::Head() const{
 template <typename Data>
 Data& QueueLst<Data>::Head(){
 
-    ///////// TODO
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty"); }
+
+    else{
+
+        Data& element = std::move(List<Data>::Front());
+        return element;
+    }
 }
 
 
@@ -97,15 +108,28 @@ Data& QueueLst<Data>::Head(){
 template <typename Data>
 void QueueLst<Data>::Dequeue(){
 
-    ///////// TODO
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty"); }
+
+    else{
+
+        List<Data>::Remove(List<Data>::Back());
+    }
 }
 
 
 // Override function HeadNDequeue
 template <typename Data>
-Data& QueueLst<Data>::HeadNDequeue(){
+Data QueueLst<Data>::HeadNDequeue(){
 
-    ////////// TODO
+    Data element;
+
+    if(this->size == 0){ throw std::length_error("Error: the structure is empty"); }
+
+    else{
+
+        element = this->Head();
+        this->Dequeue();
+    }
 }
 
 
@@ -113,7 +137,7 @@ Data& QueueLst<Data>::HeadNDequeue(){
 template <typename Data>
 void QueueLst<Data>::Enqueue(const Data& element) noexcept{
 
-    ////////// TODO
+    List<Data>::InsertAtBack(element);
 }
 
 
@@ -121,7 +145,7 @@ void QueueLst<Data>::Enqueue(const Data& element) noexcept{
 template <typename Data>
 void QueueLst<Data>::Enqueue(Data&& element) noexcept{
 
-    ////////// TODO
+    List<Data>::InsertAtBack(std::move(element));
 }
 
 
