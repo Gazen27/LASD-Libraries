@@ -23,30 +23,27 @@ List<Data>::Node::Node(Data&& value){
 
 // Copy constructor
 template <typename Data>
-List<Data>::Node::Node(const Node& otherNode){
+List<Data>::Node::Node(const Node& otherNode) = delete;
 
+/*{
     key = otherNode.key;
     next = otherNode.next;
-}
+}*/
 
 
 // Move constructor
 template <typename Data>
-List<Data>::Node::Node(Node&& otherNode){
-
+List<Data>::Node::Node(Node&& otherNode) = delete;
+/*{
     std::swap(key, otherNode.key);
     std::swap(next, otherNode.next);
-}
+}*/
 
 
 // Destructor
-// XXXXXXXXX
-
-/*vvvvvvvv  alternative destructor  vvvvvvvvv
-
 template <typename Data>
 List<Data>::Node::~Node(){ delete next; }
-*/
+
 
 // Operator ==
 template <typename Data>

@@ -135,7 +135,4 @@ void StackLst<Data>::Push(Data&& element) noexcept{
     List<Data>::InsertAtFront(std::move(element));
 }
 
-
-/* ************************************************************************** */
-
 }

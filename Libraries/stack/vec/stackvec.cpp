@@ -58,6 +58,11 @@ StackVec<Data>::StackVec(const StackVec<Data>& otherStack){
 template <typename Data>
 StackVec<Data>::StackVec(StackVec<Data>&& otherStack) noexcept{
 
+    std::swap(size, otherStack.size);
+    std::swap(level, otherStack.level);
+    std::swap(elements, otherStack.elements);
+
+/*
     size = otherStack.size;
     elements = new Data[size];
     level = 0;
@@ -65,16 +70,13 @@ StackVec<Data>::StackVec(StackVec<Data>&& otherStack) noexcept{
     for(ulong i = 0; i < otherStack.level; i++){
 
         this->Push(std::move(otherStack.elements[i]));
-    }
+    }*/
 }
 
 
 // Destructor
 template <typename Data>
-StackVec<Data>::~StackVec(){
-
-    Clear();
-}
+StackVec<Data>::~StackVec(){}   // ~StackVec() = default;
 
 
 // Copy assignment
@@ -99,7 +101,7 @@ template <typename Data>
 StackVec<Data>& StackVec<Data>::operator = (StackVec<Data>&& otherStack) noexcept {
 
     Vector<Data>::operator=(std::move(otherStack));
-    level=otherStack.level;
+    std::swap(level, otherStack.level);
     return *this;
 }
 

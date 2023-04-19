@@ -160,20 +160,19 @@ void Vector<Data>::Resize(const ulong newSize) noexcept{
         if(size > newSize){
 
             for(ulong i = 0; i < newSize; i++){
-                std::swap(elements[i], temp[i]);
+                temp[i] = elements[i];
             }
         }
 
         else{
 
             for(ulong i = 0; i < size; i++){
-                std::swap(elements[i], temp[i]);
+                temp[i] = elements[i];
             }
         }
 
         size = newSize;
         std::swap(elements, temp);
-
         delete[] temp;
     }
 }
