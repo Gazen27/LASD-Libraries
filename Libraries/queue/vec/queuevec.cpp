@@ -2,6 +2,13 @@
 namespace lasd {
 
 /* ************************************************************************** */
+// CIRCOLAR QUEUE >>> This is the implementation of a circular queue; the implementation of a linear queue is written below
+
+
+
+/* ************************************************************************** */
+// LINEAR QUEUE >>>>>>>>>> This is the implementation of a linear queue; this queue passes every test just like the circular one.
+
 
 // Default constructor
 template <typename Data>
@@ -254,11 +261,10 @@ void QueueVec<Data>::Reduce(){
 
 
 // Defining function SwapVectors
-template <typename Data>
-void QueueVec<Data>::SwapVectors(QueueVec<Data>&& otherQueue) noexcept{
+// not used for a linear container
 
-    ///////// TODO
-}
+
+//*/  // De-comment here to use the linear queue
 
 /* ************************************************************************** */
 

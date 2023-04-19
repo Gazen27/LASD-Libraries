@@ -27,6 +27,7 @@ protected:
 
   using Vector<Data>::size;
   using Vector<Data>::elements;
+  ulong head = 0;
   ulong last = 0;
 
 public:
@@ -106,7 +107,9 @@ protected:
   virtual void Expand();
   virtual void Reduce();
   
-  virtual void SwapVectors(QueueVec&&) noexcept;
+  // virtual void SwapVectors(const ulong);
+
+  // virtual ulong WhereTail() const;
 
 };
 

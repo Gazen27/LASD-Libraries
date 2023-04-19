@@ -61,16 +61,6 @@ StackVec<Data>::StackVec(StackVec<Data>&& otherStack) noexcept{
     std::swap(size, otherStack.size);
     std::swap(level, otherStack.level);
     std::swap(elements, otherStack.elements);
-
-/*
-    size = otherStack.size;
-    elements = new Data[size];
-    level = 0;
-
-    for(ulong i = 0; i < otherStack.level; i++){
-
-        this->Push(std::move(otherStack.elements[i]));
-    }*/
 }
 
 
@@ -88,18 +78,6 @@ StackVec<Data>& StackVec<Data>::operator = (const StackVec<Data>& otherStack) no
     size = otherStack.size;
     level = otherStack.level;
     return *this;
-
-    /*
-    Clear();
-    size = otherStack.size;
-    level = 0;
-
-    for(ulong i = 0; i < otherStack.level; i++){
-
-        this->Push(otherStack.elements[i]);
-    }
-
-    return *this;*/
 }
 
 
@@ -249,7 +227,5 @@ void StackVec<Data>::Reduce(){
 
     Vector<Data>::Resize(size/2);
 }
-
-/* ************************************************************************** */
 
 }

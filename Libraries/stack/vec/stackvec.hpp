@@ -25,7 +25,7 @@ private:
 
 protected:
 
-  using Vector<Data>::size;
+  using Container::size;
   using Vector<Data>::elements;
 
   ulong level = 0;
