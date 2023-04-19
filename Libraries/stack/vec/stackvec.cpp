@@ -84,6 +84,13 @@ template <typename Data>
 StackVec<Data>& StackVec<Data>::operator = (const StackVec<Data>& otherStack) noexcept{
 
     Clear();
+    Vector<Data>::operator=(otherStack);
+    size = otherStack.size;
+    level = otherStack.level;
+    return *this;
+
+    /*
+    Clear();
     size = otherStack.size;
     level = 0;
 
@@ -92,7 +99,7 @@ StackVec<Data>& StackVec<Data>::operator = (const StackVec<Data>& otherStack) no
         this->Push(otherStack.elements[i]);
     }
 
-    return *this;
+    return *this;*/
 }
 
 
@@ -181,7 +188,7 @@ Data StackVec<Data>::TopNPop(){
 template <typename Data>
 void StackVec<Data>::Push(const Data& e) noexcept{
 
-    if(level == size){ this->Expand(); }
+    if(level == size - 1){ this->Expand(); }
 
     elements[level] = e;
     level = level + 1;
@@ -192,7 +199,7 @@ void StackVec<Data>::Push(const Data& e) noexcept{
 template <typename Data>
 void StackVec<Data>::Push(Data&& e) noexcept{
 
-    if(level == size){ this->Expand(); }
+    if(level == size - 1){ this->Expand(); }
 
     elements[level] = std::move(e);
     level = level + 1;
