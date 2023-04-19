@@ -5,24 +5,12 @@ namespace lasd {
 
 // Specific constructor #1: StackLst obtained from a MappableContainer
 template <typename Data>
-StackLst<Data>::StackLst(const MappableContainer<Data>& container) noexcept{
-
-    container.Map(
-
-        [this](const Data& element){ this->Push(element); }
-    );
-}
+StackLst<Data>::StackLst(const MappableContainer<Data>& container) noexcept : List<Data>(container){}
 
 
 // Specific constructor #2: StackLst obtained from a MutableMappableContainer
 template <typename Data>
-StackLst<Data>::StackLst(MutableMappableContainer<Data>&& container) noexcept{
-
-    container.Map(
-
-        [this](const Data& element){ this->Push(std::move(element));}
-    );
-}
+StackLst<Data>::StackLst(MutableMappableContainer<Data>&& container) noexcept : List<Data>(container){}
 
 
 // Copy constructor
@@ -144,7 +132,7 @@ void StackLst<Data>::Push(const Data& element) noexcept{
 template <typename Data>
 void StackLst<Data>::Push(Data&& element) noexcept{
 
-    List<Data>::InsertAtFront(element);
+    List<Data>::InsertAtFront(std::move(element));
 }
 
 

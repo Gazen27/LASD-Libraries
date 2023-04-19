@@ -231,6 +231,7 @@ void stestListInt(uint& testnum, uint& testerr) {
     FoldPreOrder(loctestnum, loctesterr, coplst, true, &FoldAdd<int>, 0, 17);
 
     lasd::List<int> movlst(move(lst));
+
     MapPreOrder(loctestnum, loctesterr, movlst, true, &MapIncrement<int>);
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 0, 14);
 
@@ -238,6 +239,7 @@ void stestListInt(uint& testnum, uint& testerr) {
     InsertC(loctestnum, loctesterr, movlst, false, 8);
     Remove(loctestnum, loctesterr, movlst, true, 6);
     InsertC(loctestnum, loctesterr, movlst, true, 7);
+
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 1, 22);
 
     movlst.Clear();

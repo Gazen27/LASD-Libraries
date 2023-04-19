@@ -51,7 +51,7 @@ protected:
     Node(Node&&);
 
     // Destructor
-    ~Node();
+    ~Node() = default;
 
     /* ********************************************************************** */
 
@@ -134,19 +134,19 @@ public:
   bool Exists(const Data& e) const noexcept override;
 
   // Override functions from DictionaryContainer
-  bool Insert(const Data&) override;   // Copy of the value
-  bool Insert(Data&&) override;  // Move of the value
-  bool Remove(const Data&) override;
+  bool Insert(const Data&) noexcept override;   // Copy of the value
+  bool Insert(Data&&) noexcept override;  // Move of the value
+  bool Remove(const Data&) noexcept override;
 
   /* ************************************************************************ */
 
   // Override functions from LinearContainer
 
   // Non-Mutable version
-  const Data& operator [] (const ulong) const override; // must throw std::out_of_range when out of range
+  const Data& operator [] (const ulong) const override;
   
   // Mutable version
-  Data& operator [] (const ulong) override; // must throw std::out_of_range when out of range
+  Data& operator [] (const ulong) override;
 
   // Non-Mutable version
   const Data& Front() const override;

@@ -40,12 +40,13 @@ List<Data>::Node::Node(Node&& otherNode){
 
 
 // Destructor
+// XXXXXXXXX
+
+/*vvvvvvvv  alternative destructor  vvvvvvvvv
+
 template <typename Data>
-List<Data>::Node::~Node(){
-
-    delete next;
-}
-
+List<Data>::Node::~Node(){ delete next; }
+*/
 
 // Operator ==
 template <typename Data>
@@ -116,8 +117,6 @@ List<Data>::List(const List<Data>& otherList){
         this->InsertAtBack(tempList->key);
         tempList = tempList->next;
     }
-
-    tempList = nullptr;
 }
 
 
@@ -298,10 +297,11 @@ void List<Data>::InsertAtBack(const Data& newData){
     if(size == 0){ InsertAtFront(newData); }
     else{
 
+        size = size + 1;
         Node* newNode = new Node(newData);
+
         tail->next = newNode;
         tail = newNode;
-        size = size + 1;
     }
 }
 
@@ -312,24 +312,25 @@ void List<Data>::InsertAtBack(Data&& newData){
 
     if(size == 0){ InsertAtFront(std::move(newData)); }
     else{
-
+        
+        size = size + 1;
         Node* newNode = new Node(std::move(newData));
         tail->next = newNode;
         tail = newNode;
-        size = size + 1;
-    } 
+    }
 }
 
 
 // Override function Clear
 template <typename Data>
 void List<Data>::Clear() noexcept{
-    
+ 
     size = 0;
     delete head;
     head = nullptr;
 
-    //while(head != nullptr){ this->RemoveFromFront(); } // <<<< ALTERNATIVE
+    //while(head != nullptr){ this->RemoveFromFront(); }
+    //tail = head;
 }
 
 
@@ -351,7 +352,7 @@ bool List<Data>::Exists(const Data& element) const noexcept{
 
 // Override function Insert (copy)
 template <typename Data>
-bool List<Data>::Insert(const Data& element){
+bool List<Data>::Insert(const Data& element) noexcept{
 
     if(this->Exists(element)){ return false; }
 
@@ -365,7 +366,7 @@ bool List<Data>::Insert(const Data& element){
 
 // Override function Insert (move)
 template <typename Data>
-bool List<Data>::Insert(Data&& element){
+bool List<Data>::Insert(Data&& element) noexcept{
 
     if(this->Exists(element)){ return false; }
 
@@ -379,7 +380,9 @@ bool List<Data>::Insert(Data&& element){
 
 // Override function Remove
 template <typename Data>
-bool List<Data>::Remove(const Data& element){
+bool List<Data>::Remove(const Data& element) noexcept{
+
+    if(!Exists(element)){ return false; }
 
     if(head->key == element){
 
@@ -388,22 +391,29 @@ bool List<Data>::Remove(const Data& element){
     }
 
     Node* temp = head;
+    Node* prev = nullptr;
 
     while(temp != nullptr){
 
-        if(temp != this->tail && (temp->next)->key == element){
+        prev = temp;
+        temp = temp->next;
 
-            Node* toRemove = temp->next;
-            temp->next = (temp->next)->next;
-            toRemove->next = nullptr;
-            delete toRemove;
-            
-            size = size - 1;
+        if(temp->key == element){
+
+            if(temp == tail){
+
+                tail = prev;
+                tail->next = nullptr;
+                delete temp;
+
+                return true;   
+            }
+
+            prev->next = temp->next;
+            delete temp;
 
             return true;
         }
-
-        temp = temp->next;
     }
 
     return false;
