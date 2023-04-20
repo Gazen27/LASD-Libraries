@@ -28,7 +28,7 @@ protected:
   using Vector<Data>::size;
   using Vector<Data>::elements;
   ulong head = 0;
-  ulong last = 1;
+  ulong last = 2;
 
 public:
 
@@ -93,6 +93,8 @@ public:
   virtual bool Empty() const noexcept override;
 
   virtual ulong Size() const noexcept override;
+
+  virtual ulong AllocatedSize() const noexcept;
 
   /* ************************************************************************ */
 
