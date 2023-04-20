@@ -90,10 +90,10 @@ public:
 
   // Override functions from LinearContainer
 
-  // Non-Mutable version // throws std::out_of_range when out of range
+  // Non-Mutable version
   virtual const Data& operator [] (const ulong) const override;
 
-  // Mutable version // throws std::out_of_range when out of range
+  // Mutable version
   virtual Data& operator [] (const ulong) override;
 
   // Override Front (Mutable and Non-Mutable version) // Already defined in linearContainer

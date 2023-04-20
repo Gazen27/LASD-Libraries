@@ -28,7 +28,7 @@ protected:
   using Vector<Data>::size;
   using Vector<Data>::elements;
   ulong head = 0;
-  ulong last = 0;
+  ulong last = 1;
 
 public:
 

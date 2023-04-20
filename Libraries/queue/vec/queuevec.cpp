@@ -4,12 +4,29 @@ namespace lasd {
 /* ************************************************************************** */
 // CIRCOLAR QUEUE >>> This is the implementation of a circular queue; the implementation of a linear queue is written below
 
+// Default constructor
+template <typename Data>
+QueueVec<Data>::QueueVec() : Vector<Data>::Vector(2){}
 
+
+// Specific constructor #1: Queuevec obtained from a MappableContainer
+template <typename Data>
+QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept{
+
+    size = container.Size();
+    elements = new Data[size];
+    last = 0;
+
+    container.Map(
+
+        [this](const Data& e){ this->Enqueue(e); }
+    );
+}
 
 /* ************************************************************************** */
 // LINEAR QUEUE >>>>>>>>>> This is the implementation of a linear queue; this queue passes every test just like the circular one.
 
-
+/*
 // Default constructor
 template <typename Data>
 QueueVec<Data>::QueueVec() : Vector<Data>::Vector(8){}
@@ -264,7 +281,7 @@ void QueueVec<Data>::Reduce(){
 // not used for a linear container
 
 
-//*/  // De-comment here to use the linear queue
+*/  // < De-comment here to use the linear queue
 
 /* ************************************************************************** */
 

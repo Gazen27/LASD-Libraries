@@ -38,10 +38,10 @@ public:
   /* ************************************************************************ */
 
   // Specific constructor #1: StackVec obtained from a MappableContainer
-  StackVec(const MappableContainer<Data>&) noexcept;
+  StackVec(const MappableContainer<Data>&);
 
   // Specific constructor #2: StackVec obtained from a MutableMappableContainer
-  StackVec(MutableMappableContainer<Data>&&) noexcept;
+  StackVec(MutableMappableContainer<Data>&&);
 
   /* ************************************************************************ */
 
@@ -49,7 +49,7 @@ public:
   StackVec(const StackVec&);
 
   // Move constructor
-  StackVec(StackVec&&) noexcept;
+  StackVec(StackVec&&);
 
 
   // Destructor
@@ -92,6 +92,8 @@ public:
   virtual bool Empty() const noexcept override;
 
   virtual ulong Size() const noexcept override;
+
+  virtual ulong AllocatedSize() const noexcept;
 
   /* ************************************************************************ */
 

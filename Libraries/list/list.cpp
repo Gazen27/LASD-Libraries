@@ -25,19 +25,10 @@ List<Data>::Node::Node(Data&& value){
 template <typename Data>
 List<Data>::Node::Node(const Node& otherNode) = delete;
 
-/*{
-    key = otherNode.key;
-    next = otherNode.next;
-}*/
-
 
 // Move constructor
 template <typename Data>
 List<Data>::Node::Node(Node&& otherNode) = delete;
-/*{
-    std::swap(key, otherNode.key);
-    std::swap(next, otherNode.next);
-}*/
 
 
 // Destructor
@@ -325,9 +316,6 @@ void List<Data>::Clear() noexcept{
     size = 0;
     delete head;
     head = nullptr;
-
-    //while(head != nullptr){ this->RemoveFromFront(); }
-    //tail = head;
 }
 
 

@@ -9,7 +9,7 @@ namespace lasd {
 // XXXXXXXXXXXXXXXXXX
 
 
-// Specific constructor #1
+// Specific constructor #1: Given initial dimention
 template<typename Data>
 Vector<Data>::Vector(const ulong mySize){
 
@@ -18,7 +18,7 @@ Vector<Data>::Vector(const ulong mySize){
 }
 
 
-// Specific constructor #2
+// Specific constructor #2: Vector obtained from a MappableContainer
 template <typename Data>
 Vector<Data>::Vector(const MappableContainer<Data>& otherContainer) noexcept{
 
@@ -36,7 +36,7 @@ Vector<Data>::Vector(const MappableContainer<Data>& otherContainer) noexcept{
 }
 
 
-// Specific constructor #3
+// Specific constructor #3: Vector obtained from a MutableMappableContainer
 template <typename Data>
 Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
 
@@ -151,7 +151,14 @@ void Vector<Data>::Clear() noexcept{
 template <typename Data>
 void Vector<Data>::Resize(const ulong newSize) noexcept{
 
-    if(newSize == 0) { Clear(); }
+    if(newSize == 0){
+        
+        delete[] elements;
+        elements = nullptr;
+        size = 0;     
+    }
+
+    else if(size == newSize){ return; }
 
     else{
 
@@ -159,20 +166,17 @@ void Vector<Data>::Resize(const ulong newSize) noexcept{
 
         if(size > newSize){
 
-            for(ulong i = 0; i < newSize; i++){
-                temp[i] = elements[i];
-            }
+            for(ulong i = 0; i < newSize; i++){ temp[i] = elements[i]; }
         }
 
-        else{
+        else if(newSize > size){
 
-            for(ulong i = 0; i < size; i++){
-                temp[i] = elements[i];
-            }
+            for(ulong i = 0; i < size; i++){ temp[i] = elements[i]; }
         }
 
-        size = newSize;
+        
         std::swap(elements, temp);
+        size = newSize;
         delete[] temp;
     }
 }

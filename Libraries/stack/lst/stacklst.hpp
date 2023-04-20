@@ -86,24 +86,6 @@ public:
   // Override function from ClearableContainer
   using List<Data>::Clear;
 
-
-
-    //////////////////
-  void printStack(){
-      
-      std::cout << std::endl << std::endl <<  " ciao " << std::endl << std::endl;
-  }
-
-    /////////////////
-  void printPosition(ulong index){
-
-    std::cout << std::endl << std::endl; 
-
-    std::cout << "ciao" << std::endl;
-
-    std::cout << std::endl << std::endl; 
-  }
-
 };
 
 /* ************************************************************************** */
