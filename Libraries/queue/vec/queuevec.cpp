@@ -6,7 +6,7 @@ namespace lasd {
 
 // Default constructor
 template <typename Data>
-QueueVec<Data>::QueueVec() : Vector<Data>::Vector(2){}
+QueueVec<Data>::QueueVec() : Vector<Data>::Vector(4){}
 
 
 // Specific constructor #1: Queuevec obtained from a MappableContainer
@@ -14,7 +14,7 @@ template <typename Data>
 QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept : Vector<Data>::Vector(container){
 
     head = 0;
-    last = size;
+    rear = 0;
 }
 
 
@@ -23,7 +23,7 @@ template <typename Data>
 QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& container) noexcept : Vector<Data>(std::move(container)){
 
     head = 0;
-    last = size;
+    rear = 0;
 }
 
 
@@ -32,18 +32,16 @@ template <typename Data>
 QueueVec<Data>::QueueVec(const QueueVec<Data>& otherQueue) : Vector<Data>((Vector<Data>&)otherQueue){
 
     head = otherQueue.head;
-    last = otherQueue.last;
+    rear = otherQueue.rear;
 }
 
 
 // Move constructor
 template <typename Data>
-QueueVec<Data>::QueueVec(QueueVec<Data>&& otherQueue) noexcept{
+QueueVec<Data>::QueueVec(QueueVec<Data>&& otherQueue) noexcept : Vector<Data>(std::move(otherQueue)){
 
-    std::swap(size, otherQueue.size);
     std::swap(head, otherQueue.head);
-    std::swap(last, otherQueue.last);
-    std::swap(elements, otherQueue.elements);
+    std::swap(rear, otherQueue.rear);
 }
 
 
@@ -58,7 +56,7 @@ QueueVec<Data>& QueueVec<Data>::operator = (const QueueVec<Data>& otherQueue) no
 
     Vector<Data>::operator = (otherQueue);
     head = otherQueue.head;
-    last = otherQueue.last;
+    rear = otherQueue.rear;
 
     return *this;
 }
@@ -68,7 +66,9 @@ QueueVec<Data>& QueueVec<Data>::operator = (const QueueVec<Data>& otherQueue) no
 template <typename Data>
 QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcept{
 
-
+    Vector<Data>::operator = (std::move(otherQueue));
+    std::swap(head, otherQueue.head);
+    std::swap(rear, otherQueue.rear);
 } 
 
 
@@ -76,7 +76,7 @@ QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcep
 template <typename Data>
 bool QueueVec<Data>::operator == (const QueueVec<Data>& otherQueue) const noexcept{
 
-
+    ////////////// TODO
 }
 
 
@@ -92,7 +92,9 @@ bool QueueVec<Data>::operator != (const QueueVec<Data>& otherQueue) const noexce
 template <typename Data>
 const Data& QueueVec<Data>::Head() const{
 
+    if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
 
+    else{ return this->head; }
 }
 
 
@@ -100,7 +102,9 @@ const Data& QueueVec<Data>::Head() const{
 template <typename Data>
 Data& QueueVec<Data>::Head(){
 
-
+    if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
+    
+    else{ return this->head; }
 }
 
 
@@ -116,7 +120,10 @@ void QueueVec<Data>::Dequeue(){
 template <typename Data>
 Data QueueVec<Data>::HeadNDequeue(){
 
+    Data value = Head();
+    Dequeue();
 
+    return value;
 }
 
 
@@ -124,7 +131,13 @@ Data QueueVec<Data>::HeadNDequeue(){
 template <typename Data>
 void QueueVec<Data>::Enqueue(const Data& e) noexcept{
 
+    if(this->Full()){ Expand(); }
 
+    else{
+
+        rear = NextRear();
+        elements[rear] = e;
+    }
 }
 
 
@@ -132,7 +145,13 @@ void QueueVec<Data>::Enqueue(const Data& e) noexcept{
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& e) noexcept{
 
+    if(this->Full()){ Expand(); }
 
+    else{
+
+        rear = NextRear();
+        elements[rear] = std::move(e);
+    }
 }
 
 
@@ -140,7 +159,25 @@ void QueueVec<Data>::Enqueue(Data&& e) noexcept{
 template <typename Data>
 bool QueueVec<Data>::Empty() const noexcept{
 
+    return(rear == 0);
+}
 
+
+// Defining function Full
+template <typename Data>
+bool QueueVec<Data>::Full() const noexcept{
+
+    if(this->NextRear() != head){ return true; }
+
+    return false;
+}
+
+
+// Defining function NextRear
+template <typename Data>
+ulong QueueVec<Data>::NextRear(){
+
+    return (rear + 1) % size;
 }
 
 
@@ -156,7 +193,7 @@ ulong QueueVec<Data>::AllocatedSize() const noexcept{
 template <typename Data>
 ulong QueueVec<Data>::Size() const noexcept{
 
-    return this->last;
+    return this->rear;
 }
 
 

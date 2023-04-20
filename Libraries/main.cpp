@@ -10,8 +10,15 @@
 /* ************************************************************************** */
 
 int main() {
-  std::cout << "Lasd Libraries 2023" << std::endl;
-  lasdtest(); // Call in the menu of your library test!
+
+  // Menu from where is possible to choose the test
+  callMenu();
+
+  // Teacher test
+  // lasdtest();
+
+  // Student test
+  // ????????????
 
   return 0;
 }

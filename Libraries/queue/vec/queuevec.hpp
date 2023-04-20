@@ -28,7 +28,7 @@ protected:
   using Vector<Data>::size;
   using Vector<Data>::elements;
   ulong head = 0;
-  ulong last = 2;
+  ulong rear = 0;
 
 public:
 
@@ -75,10 +75,10 @@ public:
   // Override functions from Queue
   
   // Non-Mutable version
-  const Data& Head() const; // must throw std::length_error when empty
+  const Data& Head() const;
 
   // Mutable version
-  Data& Head(); // must throw std::length_error when empty
+  Data& Head();
 
   void Dequeue(); // must throw std::length_error when empty
   Data HeadNDequeue(); // must throw std::length_error when empty
@@ -94,6 +94,10 @@ public:
 
   virtual ulong Size() const noexcept override;
 
+  /* ************************************************************************ */
+
+  virtual bool Full() const noexcept;
+
   virtual ulong AllocatedSize() const noexcept;
 
   /* ************************************************************************ */
@@ -108,10 +112,10 @@ protected:
 
   virtual void Expand();
   virtual void Reduce();
+
+  virtual ulong NextRear();
   
   // virtual void SwapVectors(const ulong);
-
-  // virtual ulong WhereTail() const;
 
 };
 

@@ -1,8 +1,6 @@
 
 #include <iostream>
 
-#include "../test.hpp" //<<<<<<<<<<< REMEMBER TO REMOVE THIS WHEN COMPILING
-
 using namespace std;
 
 void VectorInt(){

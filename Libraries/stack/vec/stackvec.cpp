@@ -18,7 +18,7 @@ StackVec<Data>::StackVec(const MappableContainer<Data>& container) : Vector<Data
 
 // Specific constructor #2: StackVec obtained from a MutableMappableContainer
 template <typename Data>
-StackVec<Data>::StackVec(MutableMappableContainer<Data>&& container) : Vector<Data>::Vector(std::move(container)) {
+StackVec<Data>::StackVec(MutableMappableContainer<Data>&& container) : Vector<Data>(std::move(container)) {
    
     level = size;
 }
