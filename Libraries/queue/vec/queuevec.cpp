@@ -11,19 +11,31 @@ QueueVec<Data>::QueueVec() : Vector<Data>::Vector(4){}
 
 // Specific constructor #1: Queuevec obtained from a MappableContainer
 template <typename Data>
-QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept : Vector<Data>::Vector(container){
+QueueVec<Data>::QueueVec(const MappableContainer<Data>& container) noexcept /*: Vector<Data>(container)*/{
 
+    size = 4;
     head = 0;
-    rear = 0;
+    elements = new Data[size];
+
+    container.Map(
+
+        [this](const Data& e){ Enqueue(e); }
+    );
 }
 
 
 // Specific constructor #2: QueueVec obtained from a MutableMappableContainer
 template <typename Data>
-QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& container) noexcept : Vector<Data>(std::move(container)){
+QueueVec<Data>::QueueVec(MutableMappableContainer<Data>&& container) noexcept /*: Vector<Data>(std::move(container))*/{
 
+    size = 4;
     head = 0;
-    rear = 0;
+    elements = new Data[size];
+
+    container.Map(
+
+        [this](Data& e){ Enqueue(std::move(e)); }
+    );
 }
 
 
@@ -32,7 +44,7 @@ template <typename Data>
 QueueVec<Data>::QueueVec(const QueueVec<Data>& otherQueue) : Vector<Data>((Vector<Data>&)otherQueue){
 
     head = otherQueue.head;
-    rear = otherQueue.rear;
+    length = otherQueue.length;
 }
 
 
@@ -41,7 +53,7 @@ template <typename Data>
 QueueVec<Data>::QueueVec(QueueVec<Data>&& otherQueue) noexcept : Vector<Data>(std::move(otherQueue)){
 
     std::swap(head, otherQueue.head);
-    std::swap(rear, otherQueue.rear);
+    std::swap(length, otherQueue.length);
 }
 
 
@@ -56,7 +68,7 @@ QueueVec<Data>& QueueVec<Data>::operator = (const QueueVec<Data>& otherQueue) no
 
     Vector<Data>::operator = (otherQueue);
     head = otherQueue.head;
-    rear = otherQueue.rear;
+    length = otherQueue.length;
 
     return *this;
 }
@@ -68,7 +80,9 @@ QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcep
 
     Vector<Data>::operator = (std::move(otherQueue));
     std::swap(head, otherQueue.head);
-    std::swap(rear, otherQueue.rear);
+    std::swap(length, otherQueue.length);
+
+    return *this;
 } 
 
 
@@ -76,7 +90,23 @@ QueueVec<Data>& QueueVec<Data>::operator = (QueueVec<Data>&& otherQueue) noexcep
 template <typename Data>
 bool QueueVec<Data>::operator == (const QueueVec<Data>& otherQueue) const noexcept{
 
-    ////////////// TODO
+    if(this->length == otherQueue.length){
+
+        ulong tempHead = head;
+        ulong otherHead = otherQueue.head;
+
+        for(ulong i = 0; i < length; i++){
+
+            if(elements[tempHead] != otherQueue.elements[otherHead]){ return false; }
+
+            tempHead = (tempHead + 1) % size;
+            otherHead = (otherHead + 2) % otherQueue.size;
+        }
+
+        return true;
+    }
+
+    else{ return false; }
 }
 
 
@@ -94,7 +124,7 @@ const Data& QueueVec<Data>::Head() const{
 
     if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
 
-    else{ return this->head; }
+    else{ return elements[head]; }
 }
 
 
@@ -104,7 +134,7 @@ Data& QueueVec<Data>::Head(){
 
     if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
     
-    else{ return this->head; }
+    else{ return elements[head]; }
 }
 
 
@@ -112,13 +142,23 @@ Data& QueueVec<Data>::Head(){
 template <typename Data>
 void QueueVec<Data>::Dequeue(){
 
+    if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
 
+    else{
+        
+        head = (head + 1) % size;
+        length = length - 1;
+
+        if(length <= (size / 4)){ Reduce(); }
+    }
 }
 
 
 // Override function HeadNDequeue
 template <typename Data>
 Data QueueVec<Data>::HeadNDequeue(){
+
+    if(this->Empty()){ throw std::length_error("Error: the structure is empty"); }
 
     Data value = Head();
     Dequeue();
@@ -131,12 +171,20 @@ Data QueueVec<Data>::HeadNDequeue(){
 template <typename Data>
 void QueueVec<Data>::Enqueue(const Data& e) noexcept{
 
-    if(this->Full()){ Expand(); }
+    if(length == size - 1){ Expand(); }
+
+    ulong rear = NextRear();
+
+    if(Empty()){
+
+        elements[0] = e;
+        length = length + 1;
+    }
 
     else{
 
-        rear = NextRear();
         elements[rear] = e;
+        length = length + 1;
     }
 }
 
@@ -145,12 +193,20 @@ void QueueVec<Data>::Enqueue(const Data& e) noexcept{
 template <typename Data>
 void QueueVec<Data>::Enqueue(Data&& e) noexcept{
 
-    if(this->Full()){ Expand(); }
+    if(length == size - 1){ Expand(); }
+
+    ulong rear = NextRear();
+
+    if(Empty()){
+
+        elements[0] = std::move(e);
+        length = length + 1;
+    }
 
     else{
 
-        rear = NextRear();
         elements[rear] = std::move(e);
+        length = length + 1;
     }
 }
 
@@ -159,7 +215,7 @@ void QueueVec<Data>::Enqueue(Data&& e) noexcept{
 template <typename Data>
 bool QueueVec<Data>::Empty() const noexcept{
 
-    return(rear == 0);
+    return(length == 0);
 }
 
 
@@ -167,7 +223,7 @@ bool QueueVec<Data>::Empty() const noexcept{
 template <typename Data>
 bool QueueVec<Data>::Full() const noexcept{
 
-    if(this->NextRear() != head){ return true; }
+    if(this->NextRear() == head){ return true; }
 
     return false;
 }
@@ -175,9 +231,9 @@ bool QueueVec<Data>::Full() const noexcept{
 
 // Defining function NextRear
 template <typename Data>
-ulong QueueVec<Data>::NextRear(){
+ulong QueueVec<Data>::NextRear() const{
 
-    return (rear + 1) % size;
+    return (head + length) % size;
 }
 
 
@@ -193,7 +249,7 @@ ulong QueueVec<Data>::AllocatedSize() const noexcept{
 template <typename Data>
 ulong QueueVec<Data>::Size() const noexcept{
 
-    return this->rear;
+    return this->length;
 }
 
 
@@ -201,7 +257,37 @@ ulong QueueVec<Data>::Size() const noexcept{
 template <typename Data>
 void QueueVec<Data>::Clear() noexcept{
 
+    delete[] elements;
+    elements = nullptr;
 
+    size = 2;
+    length = 0;
+    head = 0;
+}
+
+
+// Defining function SwapVectors
+template <typename Data>
+void QueueVec<Data>::SwapVectors(const ulong newSize){
+
+    size = newSize;
+
+    Data* temp = new Data[newSize];
+
+    ulong tempIndex = head;
+
+    for(ulong i = 0; i < length; i++){
+
+        temp[i] = elements[tempIndex];
+
+        tempIndex = (tempIndex + 1) % size;
+    }
+
+    //size = newSize;
+    head = 0;
+
+    std::swap(elements, temp);
+    delete[] temp;
 }
 
 
@@ -209,7 +295,7 @@ void QueueVec<Data>::Clear() noexcept{
 template <typename Data>
 void QueueVec<Data>::Expand(){
 
-    
+    SwapVectors(size*2);
 }
 
 
@@ -217,12 +303,9 @@ void QueueVec<Data>::Expand(){
 template <typename Data>
 void QueueVec<Data>::Reduce(){
 
-    
+    SwapVectors(size/2);
 }
 
-
-// Defining function SwapVectors
-// not used for a linear container
 
 /* ************************************************************************** */
 // LINEAR QUEUE >>>>>>>>>> This is the implementation of a linear queue; this queue passes every test just like the circular one.

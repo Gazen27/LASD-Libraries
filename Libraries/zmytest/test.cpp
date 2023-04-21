@@ -12,10 +12,13 @@ void callMenu(){
 
     cout << "Choose a test to start:" << endl;
     cout << "[1] Teacher Test" << endl;
-    cout << "[2] Student Test" << endl;
+    cout << "[2] Student Test" << endl << endl;
+    cout << "[0] Exit" << endl;
 
     int option;
     cout << endl << "Test selected: ";
+    cin >> option;
+
     switch(option){
 
         case 1:
@@ -24,6 +27,9 @@ void callMenu(){
 
         case 2:
         //mytest();
+        break;
+
+        case 0:
         break;
     }
 }

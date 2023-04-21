@@ -28,7 +28,7 @@ protected:
   using Vector<Data>::size;
   using Vector<Data>::elements;
   ulong head = 0;
-  ulong rear = 0;
+  ulong length = 0;
 
 public:
 
@@ -113,9 +113,9 @@ protected:
   virtual void Expand();
   virtual void Reduce();
 
-  virtual ulong NextRear();
+  virtual ulong NextRear() const;
   
-  // virtual void SwapVectors(const ulong);
+  virtual void SwapVectors(const ulong);
 
 };
 
