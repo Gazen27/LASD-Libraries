@@ -89,7 +89,7 @@ public:
   // Override function from ClearableContainer
 
   using List<Data>::Clear;
-
+  
 };
 
 /* ************************************************************************** */

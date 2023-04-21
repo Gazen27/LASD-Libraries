@@ -13,8 +13,13 @@ namespace lasd {
 template<typename Data>
 Vector<Data>::Vector(const ulong mySize){
 
-    size = mySize;
-    elements = new Data[size];
+    try{
+
+        size = mySize;
+        elements = new Data[size];
+    }
+    
+    catch(std::bad_alloc){}
 }
 
 
@@ -22,8 +27,7 @@ Vector<Data>::Vector(const ulong mySize){
 template <typename Data>
 Vector<Data>::Vector(const MappableContainer<Data>& otherContainer) noexcept{
 
-    size = otherContainer.Size();
-    elements = new Data[size];
+    Resize(otherContainer.Size());
 
     ulong index = 0;
 
@@ -40,8 +44,7 @@ Vector<Data>::Vector(const MappableContainer<Data>& otherContainer) noexcept{
 template <typename Data>
 Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
 
-    size = otherContainer.Size();
-    elements = new Data[size];
+    Resize(otherContainer.Size());
 
     ulong index = 0;
 
@@ -51,7 +54,6 @@ Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
             elements[index++] = std::move(e);
         }
     );
-
 }
 
 
@@ -59,7 +61,7 @@ Vector<Data>::Vector(MutableMappableContainer<Data>&& otherContainer) noexcept{
 template <typename Data>
 Vector<Data>::Vector(const Vector<Data>& oldVector){
     
-    size = oldVector.Size();
+    size = oldVector.size;
     elements = new Data[size];
 
     for(ulong i = 0; i < size; i++){
@@ -90,7 +92,7 @@ Vector<Data>::~Vector(){
 template <typename Data>
 Vector<Data>& Vector<Data>::operator = (const Vector<Data>& otherVector) noexcept{
 
-    Resize(otherVector.Size());
+    Resize(otherVector.size);
 
     for(ulong i = 0; i < size; i++){
 
@@ -107,6 +109,7 @@ Vector<Data>& Vector<Data>::operator = (Vector<Data>&& otherVector) noexcept{
 
     std::swap(size, otherVector.size);
     std::swap(elements, otherVector.elements);
+
     return (*this);
 }
 
@@ -141,9 +144,7 @@ bool Vector<Data>::operator != (const Vector<Data>& otherVector) const noexcept{
 template <typename Data>
 void Vector<Data>::Clear() noexcept{
 
-    size = 0;
-    delete[] elements;
-    elements = nullptr;
+    Resize(0);
 }
 
 
@@ -174,7 +175,6 @@ void Vector<Data>::Resize(const ulong newSize) noexcept{
             for(ulong i = 0; i < size; i++){ temp[i] = elements[i]; }
         }
 
-        
         std::swap(elements, temp);
         size = newSize;
         delete[] temp;

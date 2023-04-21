@@ -1,8 +1,14 @@
 #include <iostream>
 
 #include "../zlasdtest/test.hpp"
+#include "test.hpp"
 
 using namespace std;
+
+void mytest(){
+
+    cout << "WORK IN PROGRESS" << endl;
+}
 
 void callMenu(){
 
@@ -26,15 +32,10 @@ void callMenu(){
         break;
 
         case 2:
-        //mytest();
+        mytest();
         break;
 
         case 0:
         break;
     }
-}
-
-void mytest(){
-
-    cout << "WORK IN PROGRESS" << endl;
 }
