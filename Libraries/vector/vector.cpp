@@ -201,24 +201,19 @@ Data& Vector<Data>::operator [] (const ulong index){
 
 // Override function Sort
 template <typename Data>
-void Vector<Data>::Sort() noexcept{ // PROBABILE ERRORE: J >=0 A CAUSA DI ULONG
+void Vector<Data>::Sort() noexcept{
 
-    ulong j;
-    Data temp;
+    for (ulong i = 0; i < size - 1; i++){
 
-    for(ulong i = 1; i < size; i++) {
-        
-		temp = elements[i];
-        j = i - 1;
-        
-		while((elements[j] > temp) && (j >= 0)) { 
-		    
-			elements[j+1] = elements[j]; 
-            j--;
+        ulong index = i;
+
+        for (ulong j = i + 1; j < size; j++){
+
+            if(elements[j] < elements[index]){ index = j; }
         }
 
-		elements[j + 1] = temp;
-	}
+        if (index != i){std::swap(elements[index], elements[i]);}
+    }
 }
 
 }

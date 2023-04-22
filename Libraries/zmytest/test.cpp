@@ -1,14 +1,16 @@
 #include <iostream>
+#include <stdlib.h>
+#include <random>
 
-#include "../zlasdtest/test.hpp"
 #include "test.hpp"
+#include "../zlasdtest/test.hpp"
+
+#define RESET   "\033[0m"
+#define BOLDGREEN   "\033[1m\033[32m"
+#define BOLDRED     "\033[1m\033[31m"
+#define BOLDCYAN    "\033[1m\033[36m"
 
 using namespace std;
-
-void mytest(){
-
-    cout << "WORK IN PROGRESS" << endl;
-}
 
 void callMenu(){
 
@@ -38,4 +40,28 @@ void callMenu(){
         case 0:
         break;
     }
+}
+
+////////////////////////////////////////////////////////////////////
+
+void mytest(){
+
+    cout << endl;
+    cout << "<><><><><><><> Student Libraries Test <><><><><><><>" << endl;
+
+    // STARTING VECTOR TEST
+    cout << endl;
+    cout << BOLDCYAN << "+++ Vector test +++" << RESET << endl;
+    VectorTest1();
+    VectorTest2();
+    VectorTest3();
+    VectorTest4();
+
+    // STARTING LIST TEST
+    cout << endl;
+    cout << BOLDCYAN << "+++ List test +++" << RESET << endl;
+    ListTest1();
+    //ListTest2();
+    //ListTest3();
+    //ListTest4();
 }

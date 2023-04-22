@@ -15,7 +15,7 @@ namespace lasd {
 
 template <typename Data>
 class QueueLst : public virtual Queue<Data>,
-                  public virtual List<Data>{
+                  private virtual List<Data>{
                   // Must extend Queue<Data>,
                   //             List<Data>
 
