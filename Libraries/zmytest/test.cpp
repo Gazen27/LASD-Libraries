@@ -42,7 +42,7 @@ void callMenu(){
     }
 }
 
-////////////////////////////////////////////////////////////////////
+  /* ************************************************************************ */
 
 void mytest(){
 
@@ -61,7 +61,37 @@ void mytest(){
     cout << endl;
     cout << BOLDCYAN << "+++ List test +++" << RESET << endl;
     ListTest1();
-    //ListTest2();
-    //ListTest3();
-    //ListTest4();
+    ListTest2();
+    ListTest3();
+    ListTest4();
+
+    // STARTING STACK TEST
+    cout << endl;
+    cout << BOLDCYAN << "+++ Stack test +++" << RESET << endl;
+    //StackTest1();
+    //StackTest2();
+    //StackTest3();
+    //StackTest4();
+
+    // STARTING QUEUE TEST
+    cout << endl;
+    cout << BOLDCYAN << "+++ Queue test +++" << RESET << endl;
+    //QueueTest1();
+    //QueueTest2();
+    //QueueTest3();
+    //QueueTest4();
+
+  /* ************************************************************************ */
+
+    // INFO
+    cout << endl << endl << BOLDCYAN << "+++ INFO +++" << RESET << endl;
+    cout << endl;
+    cout << "In every single test, more than one function is tested" << endl;
+    cout << "to combine each other and try to stress the structures." << endl;
+    cout << endl;
+    cout << "Every test and the library itself, are provided by Giovanni Adamo." << endl;
+    cout << endl << "Goodbye!" << endl;
+
+  /* ************************************************************************ */
+
 }

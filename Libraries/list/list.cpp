@@ -130,14 +130,20 @@ List<Data>::~List(){
 template <typename Data>
 List<Data>& List<Data>::operator = (const List<Data>& otherList) noexcept{
 
-    List<Data>* tempList = new List<Data>(otherList);
+    if(this != &otherList){    
+        this->Clear();
 
-    std::swap(size, tempList->size);
-    std::swap(head, tempList->head);
-    std::swap(tail, tempList->tail);
+        if(otherList.head != nullptr){
+            Node* temp = otherList.head;
 
-    delete tempList;
-    return (*this);
+            while(temp != nullptr){
+
+                this->InsertAtBack(temp->key);
+                temp = temp->next;
+            }
+        }
+    }
+    return *this;
 }
 
 
@@ -290,6 +296,7 @@ void List<Data>::InsertAtBack(const Data& newData){
 
         tail->next = newNode;
         tail = newNode;
+        tail->next = nullptr;
     }
 }
 
@@ -303,8 +310,10 @@ void List<Data>::InsertAtBack(Data&& newData){
         
         size = size + 1;
         Node* newNode = new Node(std::move(newData));
+
         tail->next = newNode;
         tail = newNode;
+        tail->next = nullptr;
     }
 }
 
@@ -391,10 +400,13 @@ bool List<Data>::Remove(const Data& element) noexcept{
                 tail->next = nullptr;
                 delete temp;
 
+                size = size - 1;
                 return true;   
             }
 
+            size = size - 1;
             prev->next = temp->next;
+            temp->next = nullptr;
             delete temp;
 
             return true;
