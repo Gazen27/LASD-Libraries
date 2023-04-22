@@ -133,29 +133,24 @@ void ListTest4(){
         lst.PreOrderMap(DoubleOnList<int>);
         lst.PreOrderMap(DoubleOnList<int>);
         lst.PreOrderMap(IncrementOnList<int>);
-        lst.PreOrderMap(IncrementOnList<int>);
+        lst.PreOrderMap(IncrementOnList<int>);  
 
         lst.Remove(402); //should be at index 99
 
         lasd::List<int> otherlst;
         otherlst = std::move(lst);
 
-        if(lst.Size() != 0 && otherlst.Size() != 199){ Lresult = Lerror; }
-        if(otherlst[0] != 6 && otherlst[198] != 806){ Lresult = Lerror; }
+        lasd::List<int> finalList;
+        finalList.Insert(100);
+
+        if(lst.Size() != 0 || otherlst.Size() != 199){ Lresult = Lerror; }
+        if(otherlst[0] != 6 || otherlst[198] != 802){ Lresult = Lerror; }
         if(otherlst.Exists(402)){ Lresult = Lerror; }
+        if(finalList.Remove(5555)){ Lresult = Lerror; }
     }
     catch(...){ Lresult = Lerror; }
 
     cout << endl << "• Test 4: " << Lresult << RESET << endl; 
-}
-
-
-//////// TO DELETE
-void printlist(lasd::List<int> lista){
-
-    cout << endl;
-    for(uint i = 0; i < lista.Size(); i++){ cout << lista[i] << " - ";}
-    cout << endl;
 }
 
 
@@ -167,16 +162,8 @@ void IncrementOnList(Data& e) {
 }
 
 
-
 // Auxiliary
 template <typename Data>
 void DoubleOnList(Data& e) {
   e *= 2;
-}
-
-
-// Auxiliary
-template <typename Data>
-void FoldSum(const Data& e, void* accumulator){
-  *((Data*) accumulator) += e;
 }

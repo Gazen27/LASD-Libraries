@@ -140,7 +140,7 @@ Data StackVec<Data>::TopNPop(){
 template <typename Data>
 void StackVec<Data>::Push(const Data& e) noexcept{
    
-    if(level > size - 1){ Expand(); }
+    if(level >= size - 1){ Expand(); }
 
     elements[level] = e;
     level = level + 1;
@@ -151,7 +151,7 @@ void StackVec<Data>::Push(const Data& e) noexcept{
 template <typename Data>
 void StackVec<Data>::Push(Data&& e) noexcept{
 
-    if(level < size){ Expand(); }
+    if(level >= size){ Expand(); }
 
     elements[level] = std::move(e);
     level = level + 1;

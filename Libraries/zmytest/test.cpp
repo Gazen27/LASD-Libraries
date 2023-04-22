@@ -68,10 +68,10 @@ void mytest(){
     // STARTING STACK TEST
     cout << endl;
     cout << BOLDCYAN << "+++ Stack test +++" << RESET << endl;
-    //StackTest1();
-    //StackTest2();
-    //StackTest3();
-    //StackTest4();
+    StackTest1();
+    StackTest2();
+    StackTest3();
+    StackTest4();
 
     // STARTING QUEUE TEST
     cout << endl;

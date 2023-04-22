@@ -29,20 +29,104 @@ uniform_int_distribution<uint> Sdist(1, 999);
 // (vec) testing all the main function on a stack full of many elements
 void StackTest1(){
 
-    uint find = 0;
-    uint maxSize = Sdist(Sgenerator);
-
     try{
 
         lasd::StackVec<int> stk;
-        for(uint i = 0; i < maxSize; i++){
-
-            find = Sdist(Sgenerator);
-            stk.Push(find);
-        }
+        for(uint i = 0; i < 100; i++){ stk.Push(Sdist(Sgenerator)); }
+        stk.Push(1000);
 
         lasd::StackVec<int> stk2(std::move(stk));
 
+        for(uint i = 0; i < 100; i++){ stk2.Push(Sdist(Sgenerator)); }
+        for(uint i = 0; i < 100; i ++){ stk2.Pop(); }
+
+        if(stk.Size() == 0 && stk.Empty()){
+
+            if(stk2.Size() == 101 && stk2.Top() == 1000){ Sresult = Scorrect; }
+            else{ Sresult = Serror; }
+        }
+        else{ Sresult = Serror; }
     }
     catch(...){ Sresult = Serror; }
+
+    cout << endl << "• Test 1: " << Sresult << RESET << endl;     
+}
+
+
+// Stack test 2:
+// (vec) testing Clear function and some operators
+void StackTest2(){
+
+    Sresult = Scorrect;
+
+    try{
+
+        lasd::StackVec<int> stk1;
+        for(uint i = 0; i < 100; i++){ stk1.Push(Sdist(Sgenerator)); }
+        for(uint i = 0; i < 100; i++){
+
+            stk1.Push(Sdist(Sgenerator));
+            stk1.Pop();
+            stk1.Push(Sdist(Sgenerator));
+        }
+
+        // expected size 200
+        lasd::StackVec<int> stk2(stk1);
+        
+        lasd::StackVec<int> stk3;
+        stk3 = stk1;
+
+        stk1.Clear();
+
+        if(stk1.Size() != 0 || !(stk1.Empty())){ Sresult = Serror; }
+        if(stk3.Size() != 200){ Sresult = Serror; }
+        if(stk2 != stk3){ Sresult = Serror; }
+    }
+    catch(...){ Sresult = Serror; }
+
+    cout << endl << "• Test 2: " << Sresult << RESET << endl; 
+}
+
+
+// Stack test 3:
+// (lst) testing main functionalities on a stack full of many elements
+void StackTest3(){
+
+    Sresult = Scorrect;
+
+    try{
+
+        lasd::StackLst<int> stk;
+        for(uint i = 0; i < 500; i++){ stk.Push(Sdist(Sgenerator)); }
+        for(uint i = 0; i < 100; i++){ stk.Pop(); }
+        
+        lasd::StackLst<int> otherstack(std::move(stk));
+        for(uint i = 0; i < 100; i++){ otherstack.Pop(); }
+        
+        for(uint i = 0; i < 100; i++){ stk.Push(Sdist(Sgenerator)); }
+
+        lasd::StackLst<int> finalstack(stk);
+
+        if(stk.Size() != 100 || stk.Empty()){ Sresult = Serror; }
+        if(otherstack.Size() != 300 || finalstack.Size() != 100){ Sresult = Serror; }
+        if(finalstack != stk){ Sresult = Serror; }
+    }
+    catch(...){ Sresult = Serror; }
+
+    cout << endl << "• Test 3: " << Sresult << RESET << endl;
+}
+
+
+// Stack test 4:
+// ...
+void StackTest4(){
+
+    try{
+
+
+
+    }
+    catch(...){ Sresult = Serror; }
+
+    cout << endl << "• Test 4: " << Sresult << RESET << endl;
 }

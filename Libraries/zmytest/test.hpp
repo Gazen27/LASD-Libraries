@@ -50,9 +50,4 @@ void DoubleOnList(Data&);
 template <typename Data>
 void IncrementOnList(Data&);
 
-void printlist(lasd::List<int>);
-
-template <typename Data>
-void FoldSum(Data&, void*);
-
 #endif
