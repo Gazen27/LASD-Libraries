@@ -23,7 +23,7 @@ string Sresult;
 default_random_engine Sgenerator(random_device{}());
 uniform_int_distribution<uint> Sdist(1, 999);
 
-// STARTING TO DEFINE LIST TEST FUNCTIONS
+// STARTING TO DEFINE STACK TEST FUNCTIONS
 
 // Stack test 1:
 // (vec) testing all the main function on a stack full of many elements
@@ -118,13 +118,29 @@ void StackTest3(){
 
 
 // Stack test 4:
-// ...
+// (lst) testing Clear function, operators and other main functionalities
 void StackTest4(){
+
+    Sresult = Scorrect;
 
     try{
 
+        lasd::StackLst<int> simple;
+        simple.Push(Sdist(Sgenerator));
+        simple.Pop();
 
+        lasd::StackLst<int> stk;
+        for(uint i = 0; i < 500; i++){ stk.Push(Sdist(Sgenerator)); }
+        stk.Push(1000);
 
+        lasd::StackLst<int> otherstk;
+        otherstk = stk;
+
+        stk.Clear();
+
+        if(!(simple.Empty()) || simple.Size() != 0){ Sresult = Serror; }
+        if(!(stk.Empty()) || stk.Size() != 0){ Sresult = Serror; }
+        if(otherstk.Top() != 1000 || otherstk.Size() != 501){ Sresult = Serror; }
     }
     catch(...){ Sresult = Serror; }
 
