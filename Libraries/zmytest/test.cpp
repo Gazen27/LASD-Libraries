@@ -76,18 +76,18 @@ void mytest(){
     // STARTING QUEUE TEST
     cout << endl;
     cout << BOLDCYAN << "+++ Queue test +++" << RESET << endl;
-    //QueueTest1();
-    //QueueTest2();
-    //QueueTest3();
-    //QueueTest4();
+    QueueTest1();
+    QueueTest2();
+    QueueTest3();
+    QueueTest4();
 
   /* ************************************************************************ */
 
     // INFO
     cout << endl << endl << BOLDCYAN << "+++ INFO +++" << RESET << endl;
     cout << endl;
-    cout << "In every single test, more than one function is tested" << endl;
-    cout << "to combine each other and try to stress the structures." << endl;
+    cout << "In every single test, a lot of different functions are tested," << endl;
+    cout << "in order to combine each other and try to stress the structures." << endl;
     cout << endl;
     cout << "Every test and the library itself, are provided by Giovanni Adamo." << endl;
     cout << endl << "Goodbye!" << endl;
