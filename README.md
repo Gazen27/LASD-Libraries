@@ -1,5 +1,6 @@
 ![license: MIT](https://badgen.net/badge/license/MIT/blue)
 ![status: ongoing](https://badgen.net/badge/status/ongoing/orange)
+![release: none](https://badgen.net/badge/release/none/purple)
 # Assignment: C++ Libraries
 ![banner](https://user-images.githubusercontent.com/43990877/229632544-9a562782-f293-43f4-83f6-a8a8da1bc80d.png)
 
