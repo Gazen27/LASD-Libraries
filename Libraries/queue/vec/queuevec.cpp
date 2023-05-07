@@ -2,7 +2,6 @@
 namespace lasd {
 
 /* ************************************************************************** */
-// CIRCOLAR QUEUE >>> This is the implementation of a circular queue; the implementation of a linear queue is written below
 
 // Default constructor
 template <typename Data>
