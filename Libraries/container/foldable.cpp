@@ -38,6 +38,22 @@ void PostOrderFoldableContainer<Data>::Fold(FoldFunctor f, void* accumulator) co
     PostOrderFold(f, accumulator);
 }
 
+
+// Override function Fold from InOrderFoldableContainer
+template <typename Data>
+void InOrderFoldableContainer<Data>::Fold(FoldFunctor f, void* accumulator) const{
+
+    InOrderFold(f, accumulator);
+}
+
+
+// Override function Fold from BreadthFoldableContainer
+template <typename Data>
+void BreadthFoldableContainer<Data>::Fold(FoldFunctor f, void* accumulator) const{
+
+    BreadthFold(f, accumulator);
+}
+
 /* ************************************************************************** */
 
 }

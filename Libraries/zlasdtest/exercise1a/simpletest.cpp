@@ -1,7 +1,4 @@
 
-typedef unsigned long ulong;
-typedef unsigned int uint;
-
 #include <iostream>
 
 /* ************************************************************************** */
@@ -185,6 +182,7 @@ void stestListInt(uint& testnum, uint& testerr) {
     MapPostOrder(loctestnum, loctesterr, lst, true, &MapPrint<int>);
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldAdd<int>, 0, 0);
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldAdd<int>, 0, 0);
+
     RemoveFromFront(loctestnum, loctesterr, lst, false);
     FrontNRemove(loctestnum, loctesterr, lst, false, 0);
 
@@ -231,7 +229,6 @@ void stestListInt(uint& testnum, uint& testerr) {
     FoldPreOrder(loctestnum, loctesterr, coplst, true, &FoldAdd<int>, 0, 17);
 
     lasd::List<int> movlst(move(lst));
-
     MapPreOrder(loctestnum, loctesterr, movlst, true, &MapIncrement<int>);
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 0, 14);
 
@@ -239,7 +236,6 @@ void stestListInt(uint& testnum, uint& testerr) {
     InsertC(loctestnum, loctesterr, movlst, false, 8);
     Remove(loctestnum, loctesterr, movlst, true, 6);
     InsertC(loctestnum, loctesterr, movlst, true, 7);
-
     FoldPreOrder(loctestnum, loctesterr, movlst, true, &FoldAdd<int>, 1, 22);
 
     movlst.Clear();

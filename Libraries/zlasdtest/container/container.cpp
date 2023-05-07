@@ -1,9 +1,6 @@
 
 #include <iostream>
 
-typedef unsigned long ulong;
-typedef unsigned int uint;
-
 /* ************************************************************************** */
 
 #include "../../container/container.hpp"

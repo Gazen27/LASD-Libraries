@@ -4,9 +4,6 @@
 
 #include "../../container/container.hpp"
 
-typedef unsigned long ulong;
-typedef unsigned int uint;
-
 /* ************************************************************************** */
 
 // Container member functions!

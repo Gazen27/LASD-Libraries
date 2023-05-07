@@ -54,9 +54,7 @@ void stestStackInt(Stk& stk, uint& testnum, uint& testerr) {
     NonEqualStack(loctestnum, loctesterr, stk, copstk, true);
 
     Top(loctestnum, loctesterr, copstk, true, 6);
-
     copstk = move(stk);
-
     TopNPop(loctestnum, loctesterr, copstk, true, 5);
     Pop(loctestnum, loctesterr, copstk, true);
     Top(loctestnum, loctesterr, copstk, true, 3);

@@ -174,7 +174,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class InOrderFoldableContainer {
+class InOrderFoldableContainer : public virtual FoldableContainer<Data>{
                                   // Must extend FoldableContainer<Data>
 
 private:
@@ -188,42 +188,40 @@ protected:
 public:
 
   // Destructor
-  // ~InOrderFoldableContainer() specifiers
+  virtual ~InOrderFoldableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  InOrderFoldableContainer& operator = (const InOrderFoldableContainer&) = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  InOrderFoldableContainer& operator = (InOrderFoldableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const InOrderFoldableContainer&) const noexcept = delete;
+  bool operator != (const InOrderFoldableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
+
+  using typename FoldableContainer<Data>::FoldFunctor;
 
   // Specific member function
-
-  // using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type InOrderFold(arguments) specifiers;
+  virtual void InOrderFold(FoldFunctor, void*) const = 0;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from FoldableContainer)
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  // Override function from FoldableContainer
+  virtual void Fold(FoldFunctor, void *) const override;
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class BreadthFoldableContainer {
+class BreadthFoldableContainer : public virtual FoldableContainer<Data>{
                                   // Must extend FoldableContainer<Data>
 
 private:
@@ -237,35 +235,33 @@ protected:
 public:
 
   // Destructor
-  // ~BreadthFoldableContainer() specifiers
+  virtual ~BreadthFoldableContainer() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types should not be possible.
+  BreadthFoldableContainer& operator = (const BreadthFoldableContainer&) = delete;
 
   // Move assignment
-  // type operator=(argument); // Move assignment of abstract types should not be possible.
+  BreadthFoldableContainer& operator = (BreadthFoldableContainer&&) noexcept = delete;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types might not be possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types might not be possible.
+  bool operator == (const BreadthFoldableContainer&) const noexcept = delete;
+  bool operator != (const BreadthFoldableContainer&) const noexcept = delete;
 
   /* ************************************************************************ */
+
+  using typename FoldableContainer<Data>::FoldFunctor;
 
   // Specific member function
-
-  // using typename FoldableContainer<Data>::FoldFunctor;
-
-  // type BreadthFold(arguments) specifiers;
+  virtual void BreadthFold(FoldFunctor, void*) const = 0;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from FoldableContainer)
-
-  // type Fold(arguments) specifiers; // Override FoldableContainer member
+  // Override function from FoldableContainer
+  virtual void Fold(FoldFunctor, void*) const override;
 
 };
 
