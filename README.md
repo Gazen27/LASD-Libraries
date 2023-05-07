@@ -9,8 +9,11 @@ Academic assignment made for the "Laboratory of Algorithm and Data Structures" (
 
 # Teacher's grades
 > Assignment 1: 26 | Containers, Vector, List, Stack, Queue
+
 > Assignment 2:
+
 > Assignment 3:
+
 > Assignment 4:
 
 # Languages and Tools
