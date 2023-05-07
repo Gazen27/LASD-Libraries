@@ -8,7 +8,8 @@
 Academic assignment made for the "Laboratory of Algorithm and Data Structures" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
 
 # Teacher's grades
-> Assignment 1: Containers, Vector, List, Stack, Queue > Grade: 26
+> Assignment 1: Containers, Vector, List, Stack, Queue
+> Grade: 26
 
 > Assignment 2:
 
