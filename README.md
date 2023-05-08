@@ -7,14 +7,13 @@
 # About
 Academic assignment made for the "Laboratory of Algorithm and Data Structures" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
 
-# Teacher's grades
-> Assignment 1: Containers, Vector, List, Stack, Queue || Grade: 26
+> Assignment 1: Containers, Vector, List, Stack, Queue
 
-> Assignment 2: Iterators, BinaryTree, BinarySearchTree || Grade: ???
+> Assignment 2: Iterators, BinaryTree, BinarySearchTree
 
-> Assignment 3:
+> Assignment 3: ???
 
-> Assignment 4:
+> Assignment 4: ???
 
 # Languages and Tools
 ![cpp](https://user-images.githubusercontent.com/43990877/221264171-0ed9c86f-7cb2-405a-b44e-508965305c0c.png)
