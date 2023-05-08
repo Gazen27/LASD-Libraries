@@ -236,6 +236,7 @@ void QueueVec<Data>::Clear() noexcept{
     size = 4;
     length = 0;
     head = 0;
+    elements = new Data[size];
 }
 
 

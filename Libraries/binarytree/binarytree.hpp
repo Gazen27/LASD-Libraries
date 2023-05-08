@@ -135,13 +135,13 @@ protected:
 
   // Auxiliary member functions
 
-  virtual void PreOrderMap(MapFunctor, void*, Node&);
+  virtual void PreOrderMap(MapFunctor, Node&);
 
-  virtual void PostOrderMap(MapFunctor, void*, Node&);
+  virtual void PostOrderMap(MapFunctor, Node&);
   
-  virtual void InOrderMap(MapFunctor, void*, Node&);
+  virtual void InOrderMap(MapFunctor, Node&);
   
-  virtual void BreadthMap(MapFunctor, void*, Node&);
+  virtual void BreadthMap(MapFunctor, Node&);
 
 };
 
@@ -241,13 +241,13 @@ protected:
 
   // Auxiliary member functions
 
-  virtual void PreOrderMap(MutableMapFunctor, void*, Node&);
+  virtual void PreOrderMap(MutableMapFunctor, Node&);
 
-  virtual void PostOrderMap(MutableMapFunctor, void*, Node&);
+  virtual void PostOrderMap(MutableMapFunctor, Node&);
   
-  virtual void InOrderMap(MutableMapFunctor, void*, Node&);
+  virtual void InOrderMap(MutableMapFunctor, Node&);
   
-  virtual void BreadthMap(MutableMapFunctor, void*, Node&);
+  virtual void BreadthMap(MutableMapFunctor, Node&);
 
 };
 
