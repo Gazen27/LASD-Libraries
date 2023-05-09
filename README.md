@@ -5,7 +5,7 @@
 ![banner](https://user-images.githubusercontent.com/43990877/229632544-9a562782-f293-43f4-83f6-a8a8da1bc80d.png)
 
 # About
-Academic assignment made for the "Laboratory of Algorithm and Data Structures" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
+Academic assignments made for the "Laboratory of Algorithm and Data Structures" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
 
 > Assignment 1: Containers, Vector, List, Stack, Queue
 
