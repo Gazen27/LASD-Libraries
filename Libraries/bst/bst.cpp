@@ -340,49 +340,45 @@ Data BST<Data>::DataNDelete(struct BST<Data>::NodeLnk* nodeLnk){
 template <typename Data>
 struct BST<Data>::NodeLnk* BST<Data>::Detach(struct BST<Data>::NodeLnk*& nodeLnk) noexcept{
 
-    if(nodeLnk == nullptr)
-        return nullptr;
+    if(nodeLnk == nullptr){ return nullptr; }
     
+    // Has both left and right child
     if(nodeLnk->left != nullptr && nodeLnk->right != nullptr){
-        //entrambi i figli
+        
         struct BST<Data>::NodeLnk* temp = DetachMin(nodeLnk->right);
         std::swap(nodeLnk->key, temp->key);
         return temp;
     }
-    else
-        if(nodeLnk->left != nullptr)
-            //solo figlio sx
-            return Skip2Left(nodeLnk);
-        else if(nodeLnk->right != nullptr)
-        //solo figlio dx
-            return Skip2Right(nodeLnk);
-        else
-            return DetachMin(nodeLnk);
 
-    
+    // Has left child only
+    else if(nodeLnk->left != nullptr){ return Skip2Left(nodeLnk); }
+
+    // Has right child only
+    else if(nodeLnk->right != nullptr){ return Skip2Right(nodeLnk); }
+
+    else{ return DetachMin(nodeLnk); }
 }
 
+
+// AUXILIARY - Defining function DetachMin
 template <typename Data>
 struct BST<Data>::NodeLnk* BST<Data>::DetachMin(struct BST<Data>::NodeLnk*& nodeLnk) noexcept{
 
-    if(size != 0){
-        return Skip2Right(FindPointerToMin(nodeLnk));
-    }
+    if(size != 0){ return Skip2Right(FindPointerToMin(nodeLnk)); }
     return nullptr;
-
 }
 
+
+// AUXILIARY - Defining function DetachMax
 template <typename Data>
 struct BST<Data>::NodeLnk* BST<Data>::DetachMax(struct BST<Data>::NodeLnk*& nodeLnk) noexcept{
     
-    if(size != 0){
-        return Skip2Left(FindPointerToMax(nodeLnk));
-    }
+    if(size != 0){ return Skip2Left(FindPointerToMax(nodeLnk)); }
     return nullptr;
-
 }
 
 /* ************************************************************************** */
+
 
 template <typename Data>
 struct BST<Data>::NodeLnk* BST<Data>::Skip2Left(struct BST<Data>::NodeLnk*& nodeLnk) noexcept{

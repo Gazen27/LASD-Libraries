@@ -81,10 +81,10 @@ public:
   Data PredecessorNRemove(const Data&);
   void RemovePredecessor(const Data&);
 
-  Data& Successor(const Data&) const; // (concrete function must throw std::length_error when not found)
-  const Data& Successor(const Data&) const; // (concrete function must throw std::length_error when not found)
-  Data SuccessorNRemove(const Data&); // (concrete function must throw std::length_error when not found) 
-  void RemoveSuccessor(const Data&); // (concrete function must throw std::length_error when not found)
+  Data& Successor(const Data&);
+  const Data& Successor(const Data&) const;
+  Data SuccessorNRemove(const Data&);
+  void RemoveSuccessor(const Data&);
 
   /* ************************************************************************ */
 
