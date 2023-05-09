@@ -13,7 +13,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class BinaryTreeLnk {
+class BinaryTreeLnk : public virtual MutableBinaryTree<Data> {
                       // Must extend MutableBinaryTree<Data>
 
 private:
@@ -22,81 +22,113 @@ private:
 
 protected:
 
-  // using BinaryTree<Data>::???;
+  using BinaryTree<Data>::size;
 
   // ...
 
-  struct NodeLnk { // Must extend MutableNode
+  struct NodeLnk : public virtual MutableBinaryTree<Data>::MutableNode{ // Must extend MutableNode
 
   private:
 
     // ...
 
-  protected:
+  public:
 
-    // ...
+    friend class BinaryTreeLnk<Data>;
+	
+    NodeLnk* left = nullptr;
+    NodeLnk* right = nullptr;
+    using MutableBinaryTree<Data>::MutableNode::key;
 
   public:
 
-    // ...
+    // NodeLnk Destructor
+    virtual ~NodeLnk();
+
+    // NodeLnk Specific constructor #1
+    NodeLnk(const Data&, NodeLnk*, NodeLnk*);
+    
+    // NodeLnk Specific constructor #2
+    NodeLnk(const Data&);
+
+    // NodeLnk Specific constructor #3
+    NodeLnk(Data&&) noexcept;
+
+    // NodeLnk Copy and Move constructor
+    NodeLnk(const NodeLnk&);
+    NodeLnk(NodeLnk&&) noexcept;
+
+    // NodeLnk Copy and Move Assignment
+    NodeLnk& operator = (const NodeLnk&) = delete;
+    NodeLnk& operator = (NodeLnk&&) noexcept = delete;
+
+    // NodeLnk Specific functions
+    virtual bool IsLeaf() const noexcept;
+    virtual bool HasLeftChild() const noexcept;
+    virtual bool HasRightChild() const noexcept;
+
+    // NodeLnk Override functions from MutableNode (and Node)
+    NodeLnk& LeftChild() override;
+    NodeLnk& RightChild() override;
+
+    NodeLnk& LeftChild() const override;
+    NodeLnk& RightChild() const override;
 
   };
+
+protected:
+
+  NodeLnk* root = nullptr;
+
 
 public:
 
   // Default constructor
-  // BinaryTreeLnk() specifiers;
+  BinaryTreeLnk() = default;
 
-  /* ************************************************************************ */
-
-  // Specific constructors
-  // BinaryTreeLnk(argument) specifiers; // A binary tree obtained from a MappableContainer
-  // BinaryTreeLnk(argument) specifiers; // A binary tree obtained from a MutableMappableContainer
+  // Specific constructor #1: BinaryTreeLnk obtained from a MappableContainer
+  BinaryTreeLnk(const MappableContainer<Data>&) noexcept;
+  
+  // Specific constructor #2: BinaryTreeLnk obtained from a MutableMappableContainer
+  BinaryTreeLnk(MutableMappableContainer<Data>&&) noexcept;
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // BinaryTreeLnk(argument) specifiers;
+  BinaryTreeLnk(const BinaryTreeLnk<Data>&);
 
   // Move constructor
-  // BinaryTreeLnk(argument) specifiers;
-
-  /* ************************************************************************ */
+  BinaryTreeLnk(BinaryTreeLnk<Data>&&) noexcept;
 
   // Destructor
-  // ~BinaryTreeLnk() specifiers;
+  virtual ~BinaryTreeLnk();
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  BinaryTreeLnk<Data>& operator = (const BinaryTreeLnk<Data>&);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  BinaryTreeLnk<Data>& operator = (BinaryTreeLnk<Data>&&) noexcept;
 
   /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  // Comparison operators 
+  bool operator == (const BinaryTreeLnk<Data>&) const noexcept;
+  bool operator != (const BinaryTreeLnk<Data>&) const noexcept;
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from BinaryTree)
-
-  // type Root() specifiers; // Override BinaryTree member (throw std::length_error when empty)
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MutableBinaryTree)
-
-  // type Root() specifiers; // Override MutableBinaryTree member (throw std::length_error when empty)
+  // Override function from BinaryTree
+  NodeLnk& Root() const override;
+  
+   // Override function from MutableBinaryTree
+  NodeLnk& Root() override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
-
-  // type Clear() specifiers; // Override ClearableContainer member
+  // Override function from ClearableContainer
+  void Clear() override;
 
 };
 

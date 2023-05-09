@@ -99,26 +99,109 @@ void BinaryTree<Data>::BreadthMap(MapFunctor f) const{ BreadthMap(f, Root()); }
 
 // Auxiliary PreOrderMap
 template <typename Data>
-void BinaryTree<Data>::PreOrderMap(MapFunctor f, Node& start){ /*/////////////////////////////// TODO*/ }
+void BinaryTree<Data>::PreOrderMap(MapFunctor f, Node& start){
+
+    f(start.Element());
+    if(start.HasLeftChild()){ PreOrderMap(f, start.LeftChild()); }
+    if(start.HasRightChild()){ PreOrderMap(f, start.RightChild()); }
+}
 
 // Auxiliary PostOrderMap
 template <typename Data>
-void BinaryTree<Data>::PostOrderMap(MapFunctor f, Node& start){ /*/////////////////////////////// TODO*/ }
+void BinaryTree<Data>::PostOrderMap(MapFunctor f, Node& start){
+
+    if(start.HasLeftChild()){ PostOrderMap(f, start.LeftChild()); }
+    if(start.HasRightChild()){ PostOrderMap(f, start.RightChild()); }
+    f(start.Element());
+}
 
 
 // Auxiliary InOrderMap
 template <typename Data>
-void BinaryTree<Data>::InOrderMap(MapFunctor f, Node& start){ /*/////////////////////////////// TODO*/ }
+void BinaryTree<Data>::InOrderMap(MapFunctor f, Node& start){
+
+    if(start.HasLeftChild()){ InOrderMap(f, start.LeftChild()); }
+    f(start.Element());
+    if(start.HasRightChild()){ InOrderMap(f, start.RightChild()); }
+}
 
 
 // Auxiliary BreadthMap
 template <typename Data>
-void BinaryTree<Data>::BreadthMap(MapFunctor f, Node& start){ /*/////////////////////////////// TODO*/ }
+void BinaryTree<Data>::BreadthMap(MapFunctor f, Node& start){
+
+    lasd::QueueVec<Data> que;
+    
+}
+
+
+////////////////////////////////////////////////////////////////////// MUTABLENODE
+
+// Defining function Element
+template <typename Data>
+Data& MutableBinaryTree<Data>::MutableNode::Element() noexcept{ return this->key; }
 
 
 ////////////////////////////////////////////////////////////////////// MUTABLEBINARYTREE
 
+// Override function Map
+template <typename Data>
+void MutableBinaryTree<Data>::Map(MutableMapFunctor f){ PreOrderMappableContainer<Data>::Map(f); }
 
+
+// Override function PreOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::PreOrderMap(MutableMapFunctor f){ PreOrderMap(f, Root()); }
+
+
+// Override function PostOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::PostOrderMap(MutableMapFunctor f){ PostOrderMap(f, Root()); }
+
+
+// Override function InOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::InOrderMap(MutableMapFunctor f){ InOrderMap(f, Root()); }
+
+
+// Override function BreadthMap
+template <typename Data>
+void MutableBinaryTree<Data>::BreadthMap(MutableMapFunctor f){ BreadthMap(f, Root()); }
+
+
+// Auxiliary PreOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::PreOrderMap(MutableMapFunctor f, MutableNode& start){
+
+    f(start.Element());
+    if(start.HasLeftChild()){ PreOrderMap(f, start.LeftChild()); }
+    if(start.HasRightChild()){ PreOrderMap(f, start.RightChild()); }
+}
+
+
+// Auxiliary PostOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::PostOrderMap(MutableMapFunctor f, MutableNode& start){
+
+    if(start.HasLeftChild()){ PostOrderMap(f, start.LeftChild()); }
+    if(start.HasRightChild()){ PostOrderMap(f, start.RightChild()); }
+    f(start.Element());
+}
+
+
+// Auxiliary InOrderMap
+template <typename Data>
+void MutableBinaryTree<Data>::InOrderMap(MutableMapFunctor f, MutableNode& start){
+
+    if(start.HasLeftChild()){ InOrderMap(f, start.LeftChild()); }
+    f(start.Element());
+    if(start.HasRightChild()){ InOrderMap(f, start.RightChild()); }
+}
+
+
+// Auxiliary BreadthMap
+template <typename Data>
+void MutableBinaryTree<Data>::BreadthMap(MutableMapFunctor f, MutableNode& start){ /*************************** TODO*/ }
 
 /* ************************************************************************** */
 

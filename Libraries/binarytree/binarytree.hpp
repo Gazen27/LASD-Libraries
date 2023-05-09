@@ -114,7 +114,7 @@ public:
 
   /* ************************************************************************ */
 
-  using typename MappableContainer<Data>::MapFunctor;
+  using MapFunctor = typename MappableContainer<Data>::MapFunctor;
 
   // Override function from MappableContainer
   virtual void Map(MapFunctor) const override;
@@ -220,7 +220,7 @@ public:
 
   /* ************************************************************************ */
 
-  using typename MutableMappableContainer<Data>::MutableMapFunctor;
+  using MutableMapFunctor = typename MutableMappableContainer<Data>::MutableMapFunctor;
 
   // Override function from MutableMappableContainer
   virtual void Map(MutableMapFunctor) override;
@@ -241,13 +241,13 @@ protected:
 
   // Auxiliary member functions
 
-  virtual void PreOrderMap(MutableMapFunctor, Node&);
+  virtual void PreOrderMap(MutableMapFunctor, MutableNode&);
 
-  virtual void PostOrderMap(MutableMapFunctor, Node&);
+  virtual void PostOrderMap(MutableMapFunctor, MutableNode&);
   
-  virtual void InOrderMap(MutableMapFunctor, Node&);
+  virtual void InOrderMap(MutableMapFunctor, MutableNode&);
   
-  virtual void BreadthMap(MutableMapFunctor, Node&);
+  virtual void BreadthMap(MutableMapFunctor, MutableNode&);
 
 };
 
