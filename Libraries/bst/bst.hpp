@@ -44,11 +44,9 @@ public:
   BST(MutableMappableContainer<Data>&&) noexcept;
 
   // Copy constructor
-  //BST(const BST<Data>& otherBst) : BinaryTreeLnk<Data>(otherBst){};
   BST(const BST&);
 
   // Move constructor
-  //BST(BST<Data>&& otherBst) noexcept : BinaryTreeLnk<Data>(std::move(otherBst)){};
   BST(BST&&) noexcept;
 
   // Destructor
@@ -68,19 +66,23 @@ public:
 
   // Specific member functions
 
-  Data& Min() const; // (concrete function must throw std::length_error when empty)
-  Data MinNRemove(); // (concrete function must throw std::length_error when empty)
-  void RemoveMin(); // (concrete function must throw std::length_error when empty)
+  Data& Min();
+  const Data& Min() const;
+  Data MinNRemove();
+  void RemoveMin();
 
-  Data& Max() const; // (concrete function must throw std::length_error when empty)
-  Data MaxNRemove(); // (concrete function must throw std::length_error when empty)
-  void RemoveMax(); // (concrete function must throw std::length_error when empty)
+  Data& Max();
+  const Data& Max() const;
+  Data MaxNRemove();
+  void RemoveMax();
 
-  Data& Predecessor(const Data&) const; // (concrete function must throw std::length_error when not found)
-  Data PredecessorNRemove(const Data&); // (concrete function must throw std::length_error when not found)
-  void RemovePredecessor(const Data&); // (concrete function must throw std::length_error when not found)
+  Data& Predecessor(const Data&);
+  const Data& Predecessor(const Data&) const;
+  Data PredecessorNRemove(const Data&);
+  void RemovePredecessor(const Data&);
 
   Data& Successor(const Data&) const; // (concrete function must throw std::length_error when not found)
+  const Data& Successor(const Data&) const; // (concrete function must throw std::length_error when not found)
   Data SuccessorNRemove(const Data&); // (concrete function must throw std::length_error when not found) 
   void RemoveSuccessor(const Data&); // (concrete function must throw std::length_error when not found)
 

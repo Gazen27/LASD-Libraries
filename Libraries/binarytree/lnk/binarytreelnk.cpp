@@ -191,7 +191,7 @@ BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator = (BinaryTreeLnk<Data>&& othe
 }
 
 
-// Operator !=
+// Operator ==
 template <typename Data>
 bool BinaryTreeLnk<Data>::operator == (const BinaryTreeLnk<Data>& otherTree) const noexcept{
 

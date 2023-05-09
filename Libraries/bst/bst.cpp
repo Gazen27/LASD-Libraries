@@ -23,283 +23,320 @@ BST<Data>::BST(MutableMappableContainer<Data>&& container) noexcept{
 }
 
 
+// Copy constructor
 template <typename Data>
-BST<Data>& BST<Data>::operator = (const BST<Data>& otherBst){
-    BinaryTreeLnk<Data>::operator = (otherBst);
+BST<Data>::BST(const BST<Data>& otherBst) : BinaryTreeLnk<Data>(otherBst){};
+
+
+// Move constructor
+template <typename Data>
+BST<Data>::BST(BST<Data>&& otherBst) noexcept : BinaryTreeLnk<Data>(std::move(otherBst)){};
+
+
+// Copy assignment
+template <typename Data>
+BST<Data>& BST<Data>::operator = (const BST<Data>& otherBST){
+    BinaryTreeLnk<Data>::operator = (otherBST);
     return (*this);
 }
 
+
+// Move assignment
 template <typename Data>
-BST<Data>& BST<Data>::operator = (BST<Data>&& otherBst) noexcept {
-    BinaryTreeLnk<Data>::operator = (std::move(otherBst));
+BST<Data>& BST<Data>::operator = (BST<Data>&& otherBST) noexcept {
+    BinaryTreeLnk<Data>::operator = (std::move(otherBST));
     return (*this);
 }
 
+
+// Operator ==
 template <typename Data>
-bool BST<Data>::operator == (const BST<Data>& otherBst) const noexcept{
-    if(size != otherBst.size)
-        return false;
-    else
-        if(size == 0)
-            return true;
+bool BST<Data>::operator == (const BST<Data>& otherBST) const noexcept{
 
-        else{
-            BTInOrderIterator<Data> myIterator(*this); 
-            BTInOrderIterator<Data> otherIterator(otherBst);
+    if(size != otherBST.size){ return false; } 
+    if(size == 0 && otherBST.size == 0){ return true; }
 
-            while(!myIterator.Terminated()){
-                if(*myIterator != *otherIterator)
-                    return false;
-                ++myIterator;
-                ++otherIterator;
-            }
+    BTInOrderIterator<Data> myIterator(*this); 
+    BTInOrderIterator<Data> otherIterator(otherBST);
 
-            return true;
-        }
+    while(!myIterator.Terminated()){
+        
+        if(*myIterator != *otherIterator){ return false; }
+        
+        ++myIterator;
+        ++otherIterator;
+
+    }
+
+    return true;
 }
 
+
+// Operator !=
 template <typename Data>
-bool BST<Data>::operator != (const BST<Data>& otherBst) const noexcept{
-    if(*this == otherBst)
-        return false;
-    else
-        return true;
+bool BST<Data>::operator != (const BST<Data>& otherBST) const noexcept{
+
+    return !((*this) == otherBST);
 }
 
-/* ************************************************************************** */
 
+// Defining function Min (const)
 template <typename Data>
 const Data& BST<Data>::Min() const{
+
     return const_cast<Data&>(static_cast<const Data&>(this)->Min());
 }
 
+
+// Defining fuction Min
 template <typename Data>
 Data& BST<Data>::Min(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else{
-        return (FindPointerToMin(root))->key;
-    }
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else{ return (FindPointerToMin(root))->key; }
 }
 
+
+// Defining function MinNRemove
 template <typename Data>
 Data BST<Data>::MinNRemove(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else{
-        return DataNDelete(DetachMin(root));
-    }
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else{ return DataNDelete(DetachMin(root)); }
 }
 
+
+// Defining function RemoveMin
 template <typename Data>
 void BST<Data>::RemoveMin(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else
-        delete DetachMin(root);
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else{ delete DetachMin(root); }
     
 }
 
-/* ************************************************************************** */
 
+// Defining function Max (const)
 template <typename Data>
 const Data& BST<Data>::Max() const{
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
     return const_cast<Data&>(static_cast<const Data&>(this)->Max());
 }
 
+
+// Defining function Max
 template <typename Data>
 Data& BST<Data>::Max(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else{
-        return (FindPointerToMax(root))->key;
-    }
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else{ return (FindPointerToMax(root))->key; }
 }
 
+
+// Defining function MaxNRemove
 template <typename Data>
 Data BST<Data>::MaxNRemove(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else{
-        return DataNDelete(DetachMax(root));
-    }
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else{ return DataNDelete(DetachMax(root)); }
 }
 
+
+// Defining function RemoveMax
 template <typename Data>
 void BST<Data>::RemoveMax(){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else
-        delete DetachMax(root);
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    else { delete DetachMax(root); }
 }
 
-/* ************************************************************************** */
 
+// Defining function Predecessor (const)
 template <typename Data>
 const Data& BST<Data>::Predecessor(const Data& data) const{
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
     return const_cast<Data&>(static_cast<const Data&>(this)->Predecessor());
 }
 
+
+// Defining function Predecessor
 template <typename Data>
 Data& BST<Data>::Predecessor(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    
     else{
+
         struct BST<Data>::NodeLnk* const* result = FindPointerToPredecessor(root, data);
-        if(result != nullptr)
-            return (*(result))->key;
-        else
-            throw std::length_error("Error : Predecessor not found.");
+
+        if(result != nullptr){ return (*(result))->key; }
+        else{ throw std::length_error("Error : Predecessor not found."); }
     }
 }
 
+
+// Defining function PredecessorNRemove
 template <typename Data>
 Data BST<Data>::PredecessorNRemove(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
-    else{
-        struct BST<Data>::NodeLnk** tempPredecessor = FindPointerToPredecessor(root, data);
-        if(tempPredecessor != nullptr)
-            return DataNDelete(Detach(*tempPredecessor));
-        else
-            throw std::length_error("Error : Predecessor not found.");
 
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    
+    else{
+        
+        struct BST<Data>::NodeLnk** tempPredecessor = FindPointerToPredecessor(root, data);
+        
+        if(tempPredecessor != nullptr){ return DataNDelete(Detach(*tempPredecessor)); }
+        else{ throw std::length_error("Error : Predecessor not found!"); }
     }
 }
 
+
+// Defining function RemovePredecessor
 template <typename Data>
 void BST<Data>::RemovePredecessor(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty."); 
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); } 
+    
     else{
+        
         struct BST<Data>::NodeLnk** tempPredecessor = FindPointerToPredecessor(root, data);
-        if(tempPredecessor != nullptr)
-            delete Detach(*tempPredecessor);
-        else
-            throw std::length_error("Error : Predecessor not found.");
+        
+        if(tempPredecessor != nullptr){ delete Detach(*tempPredecessor); }
+        else{ throw std::length_error("Error : Predecessor not found!"); }
     } 
 }
 
-/* ************************************************************************** */
 
+// Defining function Successor (const)
 template <typename Data>
 const Data& BST<Data>::Successor(const Data& data) const{
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
     return const_cast<Data&>(static_cast<const Data&>(this)->Successor());
 }
 
+
+// Defining function Successor
 template <typename Data>
 Data& BST<Data>::Successor(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    
     else{
-        struct BST<Data>::NodeLnk* const* result = FindPointerToSuccessor(root, data);
-        if(result != nullptr)
-            return (*(result))->key;
-        else
-            throw std::length_error("Error : Successor not found.");
         
+        struct BST<Data>::NodeLnk* const* result = FindPointerToSuccessor(root, data);
+        
+        if(result != nullptr){ return (*(result))->key; }
+        else{ throw std::length_error("Error : Successor not found!"); }
     }
 }
 
+
+// Defining function SuccessorNRemove
 template <typename Data>
 Data BST<Data>::SuccessorNRemove(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+    
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+
     else{
+        
         struct BST<Data>::NodeLnk** tempSuccessor = FindPointerToSuccessor(root, data);
-        if(tempSuccessor != nullptr)
-            return DataNDelete(Detach(*tempSuccessor));
-        else
-            throw std::length_error("Error : Successor not found.");
+        
+        if(tempSuccessor != nullptr){ return DataNDelete(Detach(*tempSuccessor)); }
+        else{ throw std::length_error("Error : Successor not found!"); }
     }
 }
 
+
+// Defining function RemoveSuccessor
 template <typename Data>
 void BST<Data>::RemoveSuccessor(const Data& data){
-    if(size == 0)
-        throw std::length_error("Error : BST is Empty.");
+
+    if(size == 0){ throw std::length_error("Error : BST is Empty!"); }
+    
     else{
+        
         struct BST<Data>::NodeLnk** tempSuccessor = FindPointerToSuccessor(root, data);
-        if(tempSuccessor != nullptr)
-            delete Detach(*tempSuccessor);
-        else
-            throw std::length_error("Error : Successor not found.");
-            
+        
+        if(tempSuccessor != nullptr){ delete Detach(*tempSuccessor); }
+        else{ throw std::length_error("Error : Successor not found!"); }
     }
 }
 
-/* ************************************************************************** */
 
+// Defining function Insert (Copy)
 template <typename Data>
 bool BST<Data>::Insert(const Data& data){
 
     struct BST<Data>::NodeLnk*& tempPointer = FindPointerTo(root, data);
+    
     if(tempPointer == nullptr){
+
         tempPointer = new struct BST<Data>::NodeLnk(data);
         size = size + 1;
         return true;
     }
-    else
-        return false;
 
+    return false;
 }
 
+
+// Defining function Insert (Move)
 template <typename Data>
 bool BST<Data>::Insert(Data&& data){
-    //..
 
     struct BST<Data>::NodeLnk*& tempPointer = FindPointerTo(root, data);
+    
     if(tempPointer == nullptr){
+        
         tempPointer = new struct BST<Data>::NodeLnk(std::move(data));
         size = size + 1;
         return true;
     }
-    else
-        return false;
+    
+    return false;
 }
 
+
+// Defining function Remove
 template <typename Data>
 bool BST<Data>::Remove(const Data& data){
-    //..
 
     int tempSize = size;
     delete Detach(FindPointerTo(root, data));
     return (tempSize != size);
-
 }
 
+
+// Defining function Exists
 template <typename Data>
 bool BST<Data>::Exists(const Data& data) const noexcept{
-    if(size == 0)
-        return false;
+    
+    if(size == 0){ return false; }
+    
     else{
 
         struct BST<Data>::NodeLnk* resultExists = FindPointerTo(root, data);
 
-        if(resultExists != nullptr)
-            return true;
-        else
-            return false;
+        if(resultExists != nullptr){ return true; }
+        else { return false; }
     }
 }
 
+
+// Function Clear Inherited from BinaryTreeLnk
+
+
 /* ************************************************************************** */
 
+// AUXILIARY - Defining function DataNDelete
 template <typename Data>
 Data BST<Data>::DataNDelete(struct BST<Data>::NodeLnk* nodeLnk){
  
     Data tempKey = nodeLnk->key;
     delete nodeLnk;
     return tempKey;
-
 }
 
+
+// AUXILIARY - Defining function Detach
 template <typename Data>
 struct BST<Data>::NodeLnk* BST<Data>::Detach(struct BST<Data>::NodeLnk*& nodeLnk) noexcept{
 
