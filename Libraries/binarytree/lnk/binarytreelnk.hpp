@@ -28,10 +28,6 @@ protected:
 
   struct NodeLnk : public virtual MutableBinaryTree<Data>::MutableNode{ // Must extend MutableNode
 
-  private:
-
-    // ...
-
   public:
 
     friend class BinaryTreeLnk<Data>;
@@ -80,7 +76,6 @@ protected:
 
   NodeLnk* root = nullptr;
 
-
 public:
 
   // Default constructor
@@ -95,10 +90,10 @@ public:
   /* ************************************************************************ */
 
   // Copy constructor
-  BinaryTreeLnk(const BinaryTreeLnk<Data>&);
+  BinaryTreeLnk(const BinaryTreeLnk&);
 
   // Move constructor
-  BinaryTreeLnk(BinaryTreeLnk<Data>&&) noexcept;
+  BinaryTreeLnk(BinaryTreeLnk&&) noexcept;
 
   // Destructor
   virtual ~BinaryTreeLnk();
@@ -106,16 +101,16 @@ public:
   /* ************************************************************************ */
 
   // Copy assignment
-  BinaryTreeLnk<Data>& operator = (const BinaryTreeLnk<Data>&);
+  BinaryTreeLnk<Data>& operator = (const BinaryTreeLnk&);
 
   // Move assignment
-  BinaryTreeLnk<Data>& operator = (BinaryTreeLnk<Data>&&) noexcept;
+  BinaryTreeLnk<Data>& operator = (BinaryTreeLnk&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators 
-  bool operator == (const BinaryTreeLnk<Data>&) const noexcept;
-  bool operator != (const BinaryTreeLnk<Data>&) const noexcept;
+  bool operator == (const BinaryTreeLnk&) const noexcept;
+  bool operator != (const BinaryTreeLnk&) const noexcept;
 
   /* ************************************************************************ */
 
