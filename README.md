@@ -9,7 +9,7 @@ Academic assignments made for the "Laboratory of Algorithm and Data Structures" 
 
 > [Assignment 1](https://github.com/Gazen27/LASD-Libraries/blob/main/Assignments/Exercise1.pdf): Containers, Vector, List, Stack, Queue
 
-> Assignment 2: Iterators, BinaryTree, BinarySearchTree
+> [Assignment 2](https://github.com/Gazen27/LASD-Libraries/blob/main/Assignments/Exercise2.pdf): Iterators, BinaryTree, BinarySearchTree
 
 > Assignment 3: ???
 
