@@ -853,179 +853,203 @@ Data& BTInOrderMutableIterator<Data>::operator*(){
 }
 
 
-/* ************************************************************************** */
+////////////////////////////////////////////////////////////////////// BTBreadthIterator
+
+// Specific constructor: Iterator over a given binary tre
 template<typename Data>
-BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& tree)
-{
-    current=&(tree.Root());
-    root=current;
+BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& tree){
+
+    current = &(tree.Root());
+    root = current;
 }
 
+
+// Copy constructor
 template<typename Data>
-BTBreadthIterator<Data>::BTBreadthIterator(const BTBreadthIterator<Data>& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
+BTBreadthIterator<Data>::BTBreadthIterator(const BTBreadthIterator<Data>& otherIterator){
+
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = otherIterator.elements;
 }
 
+
+// Move constructor
 template<typename Data>
-BTBreadthIterator<Data>::BTBreadthIterator(BTBreadthIterator<Data>&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
+BTBreadthIterator<Data>::BTBreadthIterator(BTBreadthIterator<Data>&& otherIterator){
+    
+    std::swap(root, otherIterator.root);
+    std::swap(current, otherIterator.current);
+    std::swap(elements, otherIterator.elements);
 }
+
+
+// Destructor
 template<typename Data>
-BTBreadthIterator<Data>::~BTBreadthIterator()
-{
+BTBreadthIterator<Data>::~BTBreadthIterator(){
+    
     elements.Clear();
-    current=nullptr;
-    root=nullptr;
+    current = nullptr;
+    root = nullptr;
 }
 
-template<typename Data>
-BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=(const BTBreadthIterator<Data>& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
 
-    return *this;
-}
+// Copy assignment
 template<typename Data>
-BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=( BTBreadthIterator<Data>&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
+BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=(const BTBreadthIterator<Data>& otherIterator){
+    
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = otherIterator.elements;
 
     return *this;
 }
-template<typename Data>
-bool BTBreadthIterator<Data>::operator==(const BTBreadthIterator<Data>& iterator) const noexcept
-{
-    if(root!=iterator.root)
-        if(current==iterator.current)
-            if(elements==iterator.elements)
-                return true;
 
-    return false;
-}
-template<typename Data>
-bool BTBreadthIterator<Data>::operator!=(const BTBreadthIterator<Data>& iterator) const noexcept
-{
-    return !(*this==iterator);
-}
-template<typename Data>
-const Data& BTBreadthIterator<Data>::operator*() const
-{
-    if(Terminated())
-        throw std::out_of_range("Iterator was terminated ! ");
 
+// Move assignment
+template<typename Data>
+BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=( BTBreadthIterator<Data>&& otherIterator)
+{
+    std::swap(root, otherIterator.root);
+    std::swap(current, otherIterator.current);
+    std::swap(elements, otherIterator.elements);
+
+    return *this;
+}
+
+
+// Operator ==
+template<typename Data>
+bool BTBreadthIterator<Data>::operator==(const BTBreadthIterator<Data>& iterator) const noexcept{
+
+    if(root != iterator.root){ return false; }
+    if(current != iterator.current){ return false; }
+    if(elements != iterator.elements){ return false; }
+
+    return true;
+}
+
+
+// Operator !=
+template<typename Data>
+bool BTBreadthIterator<Data>::operator!=(const BTBreadthIterator<Data>& iterator) const noexcept{
+    
+    return !(*this == iterator);
+}
+
+
+// Operator *
+template<typename Data>
+const Data& BTBreadthIterator<Data>::operator*() const{
+
+    if(Terminated()){ throw std::out_of_range("Error: Iterator is terminated!"); }
     return current->Element();
 }
 
-template<typename Data>
-bool BTBreadthIterator<Data>::Terminated() const noexcept
-{
-    return (current==nullptr);
-}
 
+// Function Terminated
 template<typename Data>
-BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator++()
-{
-    if(Terminated())
-        throw std::out_of_range("Iterator was terminated ! ");
+bool BTBreadthIterator<Data>::Terminated() const noexcept{
     
-    if(current->HasLeftChild())
-        elements.Enqueue(&(current->LeftChild()));
+    if(current == nullptr){ return true; }
+    return false;
+}
 
-    if(current->HasRightChild())
-        elements.Enqueue(&(current->RightChild()));
 
-    if(elements.Empty())
-        current=nullptr;
-    else
-    {
-        current=elements.HeadNDequeue();
-    }
+// Operator ++
+template<typename Data>
+BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator++(){
+    
+    if(Terminated()){ throw std::out_of_range("Error: Iterator is terminated!"); }
+    
+    if(current->HasLeftChild()){ elements.Enqueue(&(current->LeftChild())); }
+    if(current->HasRightChild()){ elements.Enqueue(&(current->RightChild())); }
+
+    if(elements.Empty()){ current = nullptr; }
+    else{ current = elements.HeadNDequeue(); }
 
     return *this;
 }
 
+
+// Function Reset
 template<typename Data>
-void BTBreadthIterator<Data>::Reset() noexcept
-{
+void BTBreadthIterator<Data>::Reset() noexcept{
+
     elements.Clear();
-    current=root;
-}
-//BREADTH ITERATOR MUTABLE
-template<typename Data>
-BTBreadthMutableIterator<Data>::BTBreadthMutableIterator( MutableBinaryTree<Data>& tree) :BTBreadthIterator<Data>(tree)
-{
-    //current=tree.Root();
-    //root=current ;
+    current = root;
 }
 
-template<typename Data>
-BTBreadthMutableIterator<Data>::BTBreadthMutableIterator(const BTBreadthMutableIterator<Data>& copyiterator) : BTBreadthIterator<Data>(copyiterator)
-{
-    //root=copyiterator.root;
-    //current=copyiterator.current;
-    //elements=QueueLst<typename MutableBinaryTree<Data>::MutableNode* >(copyiterator.elements);
-}
 
-template<typename Data>
-BTBreadthMutableIterator<Data>::BTBreadthMutableIterator(BTBreadthMutableIterator<Data>&& moveiterator) : BTBreadthIterator<Data>(std::move(moveiterator))
-{
-    //root=std::move(moveiterator.root);
-    //current=std::move(moveiterator.current);
-    //elements=QueueLst<typename MutableBinaryTree<Data>::MutableNode* >(std::move(moveiterator.elements));
-}
+////////////////////////////////////////////////////////////////////// BTBreadthMutableIterator
 
+// Specific constructor: Iterator over a given mutable binary tree
 template<typename Data>
-BTBreadthMutableIterator<Data>::~BTBreadthMutableIterator()
-{
+BTBreadthMutableIterator<Data>::BTBreadthMutableIterator(MutableBinaryTree<Data>& tree) : BTBreadthIterator<Data>(tree){}
+
+// Copy constructor
+template<typename Data>
+BTBreadthMutableIterator<Data>::BTBreadthMutableIterator(const BTBreadthMutableIterator<Data>& otherIterator) : BTBreadthIterator<Data>(otherIterator){}
+
+// Move constructor
+template<typename Data>
+BTBreadthMutableIterator<Data>::BTBreadthMutableIterator(BTBreadthMutableIterator<Data>&& otherIterator) : BTBreadthIterator<Data>(std::move(otherIterator)){}
+
+// Destructor
+template<typename Data>
+BTBreadthMutableIterator<Data>::~BTBreadthMutableIterator(){
+
     elements.Clear();
-    current=nullptr;
-    root=nullptr;
+    current = nullptr;
+    root = nullptr;
 }
 
+
+// Copy assignment
 template<typename Data>
-BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=(const BTBreadthMutableIterator<Data>& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
+BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=(const BTBreadthMutableIterator<Data>& otherIterator){
+
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = otherIterator.elements;
 
     return *this;
 }
+
+
+// Move assignment
 template<typename Data>
-BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=( BTBreadthMutableIterator<Data>&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
+BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=( BTBreadthMutableIterator<Data>&& otherIterator){
+
+    std::swap(root, otherIterator.root);
+    std::swap(current, otherIterator.current);
+    std::swap(elements, otherIterator.elements);
     
     return *this;
 }
 
+
+// Operator ==
 template<typename Data>
-bool BTBreadthMutableIterator<Data>::operator==(const BTBreadthMutableIterator<Data>& iterator ) const noexcept
-{
+bool BTBreadthMutableIterator<Data>::operator==(const BTBreadthMutableIterator<Data>& iterator) const noexcept{
+   
     return (BTBreadthIterator<Data>::operator==(iterator));
 }
 
+
+// Operator !=
 template<typename Data>
-bool BTBreadthMutableIterator<Data>::operator!=(const BTBreadthMutableIterator<Data>& iterator ) const noexcept
-{
+bool BTBreadthMutableIterator<Data>::operator!=(const BTBreadthMutableIterator<Data>& iterator) const noexcept{
+    
     return !(*this==iterator);
 }
 
+
+// Operator *
 template<typename Data>
-Data& BTBreadthMutableIterator<Data>::operator*()
-{
+Data& BTBreadthMutableIterator<Data>::operator*(){
+
     return const_cast<Data&>(BTBreadthIterator<Data>::operator*());
 }
+
 }
