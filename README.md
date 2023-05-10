@@ -7,7 +7,7 @@
 # About
 Academic assignments made for the "Laboratory of Algorithm and Data Structures" (LASD) course at Università degli Studi di Napoli Federico II. Every library is written by me and it's made for academic purposes.
 
-> Assignment 1: Containers, Vector, List, Stack, Queue
+> [Assignment 1](https://github.com/Gazen27/LASD-Libraries/blob/main/Assignments/Exercise1.pdf): Containers, Vector, List, Stack, Queue
 
 > Assignment 2: Iterators, BinaryTree, BinarySearchTree
 
