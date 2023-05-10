@@ -410,10 +410,10 @@ public:
   void Reset() noexcept ;
 
 
-  private:
+private:
 
   // Auxiliary function
-  void LastLeftLeaf(const typename BinaryTree<Data>::Node* );
+  void MostLeftLeaf(const typename BinaryTree<Data>::Node* );
 
 };
 
@@ -438,7 +438,7 @@ protected:
 public:
   
   // Specific constructor: Iterator over a given mutable binary tree
-  BTPostOrderMutableIterator( MutableBinaryTree<Data>&);
+  BTPostOrderMutableIterator(MutableBinaryTree<Data>&);
 
   // Copy constructor
   BTPostOrderMutableIterator(const BTPostOrderMutableIterator<Data>&) ;
@@ -450,10 +450,10 @@ public:
   virtual ~BTPostOrderMutableIterator();
 
   // Copy assignment
-  BTPostOrderMutableIterator<Data>& operator = (const BTPostOrderMutableIterator<Data>& );
+  BTPostOrderMutableIterator<Data>& operator = (const BTPostOrderMutableIterator<Data>&);
 
   // Move assignment
-  BTPostOrderMutableIterator<Data>& operator = (BTPostOrderMutableIterator<Data>&& );
+  BTPostOrderMutableIterator<Data>& operator = (BTPostOrderMutableIterator<Data>&&);
 
   // Comparison operators
   bool operator==(const BTPostOrderMutableIterator<Data>& ) const noexcept ;
@@ -532,7 +532,7 @@ public:
   private:
 
   // Auxiliary function
-  void LastLeftLeaf(const typename BinaryTree<Data>::Node* );
+  void MostLeftLeaf(const typename BinaryTree<Data>::Node* );
 
 };
 

@@ -393,6 +393,15 @@ BTPreOrderMutableIterator<Data>::BTPreOrderMutableIterator(const BTPreOrderMutab
 template<typename Data>
 BTPreOrderMutableIterator<Data>::BTPreOrderMutableIterator(BTPreOrderMutableIterator<Data>&& iterator) : BTPreOrderIterator<Data>(std::move(iterator)){}
 
+// Destructor
+template<typename Data>
+BTPreOrderMutableIterator<Data>::~BTPreOrderMutableIterator(){
+    elements.Clear();
+    current = nullptr ;
+    root = nullptr ;
+}
+
+
 // Copy assignment
 template<typename Data>
 BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=(const BTPreOrderMutableIterator<Data>& iterator){
@@ -404,6 +413,7 @@ BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=(cons
     return *this;
 }
 
+
 // Move assignment
 template<typename Data>
 BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=( BTPreOrderMutableIterator<Data>&& iterator){
@@ -413,14 +423,6 @@ BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=( BTP
     std::swap(elements,iterator.elements);
 
     return *this;
-}
-
-// Destructor
-template<typename Data>
-BTPreOrderMutableIterator<Data>::~BTPreOrderMutableIterator(){
-    elements.Clear();
-    current = nullptr ;
-    root = nullptr ;
 }
 
 
@@ -448,370 +450,409 @@ Data& BTPreOrderMutableIterator<Data>::operator*(){
 }
 
 
-/* ************************************************************************** */
-//BTPOSTORDER ITERATOR NOT MUTABLE
+////////////////////////////////////////////////////////////////////// BTPostOrderIterator
+
+// Specific constructor: Iterator over a given binary tree
 template<typename Data>
-BTPostOrderIterator<Data>::BTPostOrderIterator(const BinaryTree<Data>& tree)
-{
-    LastLeftLeaf(&(tree.Root()));
-    current=elements.TopNPop();
+BTPostOrderIterator<Data>::BTPostOrderIterator(const BinaryTree<Data>& tree){
+    
+    MostLeftLeaf(&(tree.Root()));
+    current = elements.TopNPop();
     root = &(tree.Root()) ;
 }
 
+
+// Copy constructor
 template<typename Data>
-BTPostOrderIterator<Data>::BTPostOrderIterator(const BTPostOrderIterator& iterator)
-{
+BTPostOrderIterator<Data>::BTPostOrderIterator(const BTPostOrderIterator& iterator){
+    
     root = iterator.root;
-    current=iterator.current;
-    elements=iterator.elements;
+    current = iterator.current;
+    elements = iterator.elements;
 }
 
-template<typename Data>
-BTPostOrderIterator<Data>::BTPostOrderIterator( BTPostOrderIterator&& iterator)
-{
-    //root=std::move(iterator.root);
-    //current=std::move(iterator.current);
-    //elements=StackLst<typename BinaryTree<Data>::Node*>(std::move(iterator.elements));
 
-    std::swap(root,iterator.root);
-    std::swap(current,iterator.current);
-    std::swap(elements,iterator.elements);
+// Move constructor
+template<typename Data>
+BTPostOrderIterator<Data>::BTPostOrderIterator(BTPostOrderIterator&& iterator){
+
+    std::swap(root, iterator.root);
+    std::swap(current, iterator.current);
+    std::swap(elements, iterator.elements);
 }
 
+
+// Destructor
 template<typename Data>
-BTPostOrderIterator<Data>::~BTPostOrderIterator()
-{
+BTPostOrderIterator<Data>::~BTPostOrderIterator(){
+
     elements.Clear();
-    current=nullptr;
-    root=nullptr ;
+    current = nullptr;
+    root = nullptr ;
 }
 
+
+// Copy assignment
 template<typename Data>
-BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=(const BTPostOrderIterator& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
+BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=(const BTPostOrderIterator& otherIterator){
+    
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = otherIterator.elements;
 
     return *this;
 }
 
+
+// Move assignment
 template<typename Data>
-BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=( BTPostOrderIterator&& moveiterator)
+BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=( BTPostOrderIterator&& otherIterator)
 {
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
+
+    std::swap(root, otherIterator.root);
+    std::swap(current, otherIterator.current);
+    std::swap(elements, otherIterator.elements);
 
     return *this;
 }
 
-template<typename Data>
-const Data& BTPostOrderIterator<Data>::operator*() const
-{
-    if(Terminated())
-        throw std::out_of_range("Iteratore was terminated ! ");
 
+// Operator *
+template<typename Data>
+const Data& BTPostOrderIterator<Data>::operator*() const{
+    
+    if(Terminated()){ throw std::out_of_range("Iteratore was terminated ! "); }
     return current->Element();
 }
 
-template<typename Data>
-bool BTPostOrderIterator<Data>::Terminated() const noexcept
-{
-    return (current==nullptr);
-}
 
+// Function Terminated
 template<typename Data>
-BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator++()
-{
-    if(Terminated())
-        throw std::out_of_range("Iterator was terminated !");
+bool BTPostOrderIterator<Data>::Terminated() const noexcept{
     
-    if(!elements.Empty()){
-        if(elements.Top()->HasLeftChild())
-            if(current==&(elements.Top()->LeftChild()))
-                if(elements.Top()->HasRightChild())
-                    LastLeftLeaf(&(elements.Top()->RightChild()));
-        current=elements.TopNPop();
-    }
-    else
-        current=nullptr;
-    
-    return *this;
-
-}
-
-template<typename Data>
-void BTPostOrderIterator<Data>::LastLeftLeaf(const typename BinaryTree<Data>::Node* actual_node)
-{
-    while(actual_node!=nullptr){
-        elements.Push(actual_node);
-        if(actual_node->HasLeftChild())
-            actual_node=&(actual_node->LeftChild());
-        else if (actual_node->HasRightChild())
-            actual_node=&(actual_node->RightChild());
-        else
-            actual_node=nullptr;
-    }
-}
-
-template<typename Data>
-void BTPostOrderIterator<Data>::Reset() noexcept
-{
-    elements.Clear();
-    LastLeftLeaf(root);
-    current = elements.Top();
-}
-/* ************************************************************************** */
-template<typename Data>
-BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator( MutableBinaryTree<Data>& tree) :BTPostOrderIterator<Data>(tree)
-{
-    //LastLeftLeaf(tree.Root());
-    //current=elements.TopNPop();
-    //root = tree.Root() ;
-}
-
-template<typename Data>
-BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator(const BTPostOrderMutableIterator<Data>& copyiterator) : BTPostOrderIterator<Data>(copyiterator)
-{
-    //root=copyiterator.root;
-    //current=copyiterator.current;
-    //elements=copyiterator.elements;
-}
-
-template<typename Data>
-BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator( BTPostOrderMutableIterator<Data>&& moveiterator) : BTPostOrderIterator<Data>(std::move(moveiterator))
-{
-    //std::swap(root,moveiterator.root);
-    //std::swap(current,moveiterator.current);
-    //std::swap(elements,moveiterator.elements);
-}
-
-template<typename Data>
-BTPostOrderMutableIterator<Data>::~BTPostOrderMutableIterator()
-{
-    elements.Clear();
-    root=current=nullptr;
-}
-
-template<typename Data>
-BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(const BTPostOrderMutableIterator<Data>& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
-
-    return *this;
-}
-
-template<typename Data>
-BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(BTPostOrderMutableIterator<Data>&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
-
-    return *this;
-}
-
-template<typename Data>
-bool BTPostOrderMutableIterator<Data>::operator==(const BTPostOrderMutableIterator<Data>& iterator) const noexcept
-{
-    if(root==iterator.root )
-        if(current==iterator.current)
-            if(elements==iterator.elements)
-                return true;
-    
+    if(current == nullptr){ return true; }
     return false;
 }
 
+
+// Operator ++
 template<typename Data>
-bool BTPostOrderMutableIterator<Data>::operator!=(const BTPostOrderMutableIterator<Data>& iterator) const noexcept
-{
-    return !(*this==iterator);
-}
+BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator++(){
 
-template<typename Data>
-Data& BTPostOrderMutableIterator<Data>::operator*()
-{
-    return const_cast<Data&>(BTPostOrderIterator<Data>::operator*());
-}
-/* ************************************************************************** */
-//BTInOrderIterator
-template<typename Data>
-BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data>& tree)
-{
-    LastLeftLeaf(&(tree.Root()));
-    current=elements.TopNPop();
-    root = &(tree.Root()) ;
-}
+    if(Terminated()){ throw std::out_of_range("Error: Iterator is terminated!"); }
 
-template<typename Data>
-BTInOrderIterator<Data>::BTInOrderIterator(const BTInOrderIterator& iterator)
-{
-    root = iterator.root;
-    current=iterator.current;
-    elements=iterator.elements;
-}
+    if(elements.Empty()){
 
-template<typename Data>
-BTInOrderIterator<Data>::BTInOrderIterator( BTInOrderIterator&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
-}
-
-template<typename Data>
-BTInOrderIterator<Data>::~BTInOrderIterator()
-{
-    elements.Clear();
-    current=nullptr;
-    root=nullptr ;
-}
-
-template<typename Data>
-BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator=(const BTInOrderIterator& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
-
-    return *this;
-}
-
-template<typename Data>
-BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator=( BTInOrderIterator&& moveiterator)
-{
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
-
-    return *this;
-}
-
-template<typename Data>
-const Data& BTInOrderIterator<Data>::operator*() const
-{
-    if(Terminated())
-        throw std::out_of_range("Iteratore was terminated ! ");
-
-    return current->Element();
-}
-
-template<typename Data>
-bool BTInOrderIterator<Data>::Terminated() const noexcept
-{
-    return (current==nullptr);
-}
-
-template<typename Data>
-BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++()
-{
-    if(Terminated())
-        throw std::out_of_range("Iterator was terminated !");
+        current = nullptr;
+        return *this;
+    }
     
-    if(current->HasRightChild())
-        LastLeftLeaf(&(current->RightChild()));
+    if(elements.Top()->HasLeftChild()){
+        if(current == &(elements.Top()->LeftChild())){
 
-    if(!elements.Empty())
-        current=elements.TopNPop();
-    else
-        current=nullptr;
+            if(elements.Top()->HasRightChild()){ MostLeftLeaf(&(elements.Top()->RightChild())); }
+        }
+    }       
 
+    current = elements.TopNPop();
     return *this;
 }
 
+
+// Auxiliary function MostLeftLeaf
 template<typename Data>
-void BTInOrderIterator<Data>::LastLeftLeaf(const typename BinaryTree<Data>::Node* actual_node)
-{
-    while(actual_node!=nullptr)
-    {
-    elements.Push(actual_node);
-    if (actual_node->HasLeftChild()) 
-        actual_node = &(actual_node->LeftChild());
-    else 
-        actual_node = nullptr;
+void BTPostOrderIterator<Data>::MostLeftLeaf(const typename BinaryTree<Data>::Node* theNode){
+
+    while(theNode != nullptr){
+
+        elements.Push(theNode);
+
+        if(theNode->HasLeftChild()){ theNode= &(theNode->LeftChild()); }
+        else if(theNode->HasRightChild()){ theNode= &(theNode->RightChild()); }
+        else{ theNode = nullptr; }
     }
 }
 
+
+// Function Reset
 template<typename Data>
-void BTInOrderIterator<Data>::Reset() noexcept
-{
+void BTPostOrderIterator<Data>::Reset() noexcept{
+
     elements.Clear();
-    LastLeftLeaf(root);
-    current=elements.Top();
+    MostLeftLeaf(root);
+    current = elements.Top();
 }
 
-/* ************************************************************************** */
-//BTInOrderIterator Mutable
-template<typename Data>
-BTInOrderMutableIterator<Data>::BTInOrderMutableIterator( MutableBinaryTree<Data>& tree) : BTInOrderIterator<Data>(tree)
-{
-    //current=tree.Root();
-    //root=current ;
-}
 
-template<typename Data>
-BTInOrderMutableIterator<Data>::BTInOrderMutableIterator(const BTInOrderMutableIterator<Data>& copyiterator) : BTInOrderIterator<Data>(copyiterator)
-{
-    //root=copyiterator.root;
-    //current=copyiterator.current;
-    //elements=StackLst<typename MutableBinaryTree<Data>::MutableNode* >(copyiterator.elements);
-}
+////////////////////////////////////////////////////////////////////// BTPostOrderMutableIterator
 
+// Specific constructor: Iterator over a given mutable binary tree
 template<typename Data>
-BTInOrderMutableIterator<Data>::BTInOrderMutableIterator(BTInOrderMutableIterator<Data>&& moveiterator) : BTInOrderIterator<Data>(std::move(moveiterator))
-{
-    //root=std::move(moveiterator.root);
-    //current=std::move(moveiterator.current);
-    //elements=StackLst<typename MutableBinaryTree<Data>::MutableNode* >(std::move(moveiterator.elements));
-}
+BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator( MutableBinaryTree<Data>& tree) :BTPostOrderIterator<Data>(tree){}
 
+// Copy constructor
 template<typename Data>
-BTInOrderMutableIterator<Data>::~BTInOrderMutableIterator()
-{
+BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator(const BTPostOrderMutableIterator<Data>& otherIterator) : BTPostOrderIterator<Data>(otherIterator){}
+
+// Move constructor
+template<typename Data>
+BTPostOrderMutableIterator<Data>::BTPostOrderMutableIterator( BTPostOrderMutableIterator<Data>&& otherIterator) : BTPostOrderIterator<Data>(std::move(otherIterator)){}
+
+// Destructor
+template<typename Data>
+BTPostOrderMutableIterator<Data>::~BTPostOrderMutableIterator(){
+    
     elements.Clear();
-    current=nullptr;
-    root=nullptr;
+    current = nullptr;
+    root = nullptr ;
 }
 
+
+// Copy assignment
 template<typename Data>
-BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=(const BTInOrderMutableIterator<Data>& copyiterator)
-{
-    root=copyiterator.root;
-    current=copyiterator.current;
-    elements=copyiterator.elements;
+BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(const BTPostOrderMutableIterator<Data>& otherIterator){
+   
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = otherIterator.elements;
 
     return *this;
 }
+
+
+// Move assignment
 template<typename Data>
-BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=( BTInOrderMutableIterator<Data>&& moveiterator)
+BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(BTPostOrderMutableIterator<Data>&& otherIterator){
+    
+    std::swap(root, otherIterator.root);
+    std::swap(current, otherIterator.current);
+    std::swap(elements, otherIterator.elements);
+
+    return *this;
+}
+
+
+// Operator ==
+template<typename Data>
+bool BTPostOrderMutableIterator<Data>::operator==(const BTPostOrderMutableIterator<Data>& iterator) const noexcept
 {
-    std::swap(root,moveiterator.root);
-    std::swap(current,moveiterator.current);
-    std::swap(elements,moveiterator.elements);
+    if(root != iterator.root){ return false; }
+    if(current != iterator.current){ return false; }
+    if(elements != iterator.elements){ return false; }
+    
+    return true;
+}
+
+
+// Operator !=
+template<typename Data>
+bool BTPostOrderMutableIterator<Data>::operator!=(const BTPostOrderMutableIterator<Data>& iterator) const noexcept{
+    
+    return !(*this==iterator);
+}
+
+
+// Operator *
+template<typename Data>
+Data& BTPostOrderMutableIterator<Data>::operator*(){
+    
+    return const_cast<Data&>(BTPostOrderIterator<Data>::operator*());
+}
+
+
+////////////////////////////////////////////////////////////////////// BTInOrderIterator
+
+// Specific constructor: Iterator over a given binary tree
+template<typename Data>
+BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data>& tree){
+    
+    MostLeftLeaf(&(tree.Root()));
+    current = elements.TopNPop();
+    root = &(tree.Root()) ;
+}
+
+
+// Copy constructor
+template<typename Data>
+BTInOrderIterator<Data>::BTInOrderIterator(const BTInOrderIterator& iterator){
+    
+    root = iterator.root;
+    current = iterator.current;
+    elements = iterator.elements;
+}
+
+
+// Move constructor
+template<typename Data>
+BTInOrderIterator<Data>::BTInOrderIterator( BTInOrderIterator&& iterator){
+   
+    std::swap(root, iterator.root);
+    std::swap(current, iterator.current);
+    std::swap(elements, iterator.elements);
+}
+
+
+// Destructor
+template<typename Data>
+BTInOrderIterator<Data>::~BTInOrderIterator(){
+    
+    elements.Clear();
+    current = nullptr;
+    root = nullptr ;
+}
+
+
+// Copy assignment
+template<typename Data>
+BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator = (const BTInOrderIterator& iterator){
+   
+    root = iterator.root;
+    current = iterator.current;
+    elements = iterator.elements;
+
+    return *this;
+}
+
+
+// Move assignment
+template<typename Data>
+BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator=( BTInOrderIterator&& iterator)
+{
+    std::swap(root, iterator.root);
+    std::swap(current, iterator.current);
+    std::swap(elements, iterator.elements);
+
+    return *this;
+}
+
+
+// Operator *
+template<typename Data>
+const Data& BTInOrderIterator<Data>::operator*() const{
+    
+    if(Terminated()){ throw std::out_of_range("Error: Iteratore is terminated!"); }
+    return current->Element();
+}
+
+
+// Function Terminated
+template<typename Data>
+bool BTInOrderIterator<Data>::Terminated() const noexcept{
+    
+    if(current == nullptr){ return true; }
+    return false;
+}
+
+
+// Operator ++
+template<typename Data>
+BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator++(){
+    
+    if(Terminated()){ throw std::out_of_range("Error: Iterator is terminated!"); }
+    
+    if(current->HasRightChild()){ MostLeftLeaf(&(current->RightChild())); }
+    if(!elements.Empty()){ current = elements.TopNPop(); }
+    else{ current=nullptr; }
+
+    return *this;
+}
+
+
+// Auxiliary function MostLeftLeaf
+template<typename Data>
+void BTInOrderIterator<Data>::MostLeftLeaf(const typename BinaryTree<Data>::Node* theNode){
+    
+    while(theNode != nullptr){
+
+        elements.Push(theNode);
+        if(theNode->HasLeftChild()){ theNode = &(theNode->LeftChild()); } 
+        else{ theNode = nullptr; }
+    }
+}
+
+
+// Function Reset
+template<typename Data>
+void BTInOrderIterator<Data>::Reset() noexcept{
+    
+    elements.Clear();
+    MostLeftLeaf(root);
+    current=elements.Top();
+}
+
+
+////////////////////////////////////////////////////////////////////// BTInOrderMutableIterator
+
+// Specific constructor: Iterator over a given mutable binary tree
+template<typename Data>
+BTInOrderMutableIterator<Data>::BTInOrderMutableIterator(MutableBinaryTree<Data>& tree) : BTInOrderIterator<Data>(tree){}
+
+// Copy constructor
+template<typename Data>
+BTInOrderMutableIterator<Data>::BTInOrderMutableIterator(const BTInOrderMutableIterator<Data>& iterator) : BTInOrderIterator<Data>(iterator){}
+
+// Move constructor
+template<typename Data>
+BTInOrderMutableIterator<Data>::BTInOrderMutableIterator(BTInOrderMutableIterator<Data>&& iterator) : BTInOrderIterator<Data>(std::move(iterator)){}
+
+// Destructor
+template<typename Data>
+BTInOrderMutableIterator<Data>::~BTInOrderMutableIterator(){
+    
+    elements.Clear();
+    current = nullptr;
+    root = nullptr;
+}
+
+
+// Copy assignment
+template<typename Data>
+BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=(const BTInOrderMutableIterator<Data>& iterator){
+    
+    root = iterator.root;
+    current = iterator.current;
+    elements = iterator.elements;
+
+    return *this;
+}
+
+
+// Move assignment 
+template<typename Data>
+BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=( BTInOrderMutableIterator<Data>&& iterator){
+    
+    std::swap(root, iterator.root);
+    std::swap(current, iterator.current);
+    std::swap(elements, iterator.elements);
     
     return *this;
 }
 
+
+// Operator ==
 template<typename Data>
-bool BTInOrderMutableIterator<Data>::operator==(const BTInOrderMutableIterator<Data>& iterator ) const noexcept
-{
-    return (BTBreadthIterator<Data>::operator==(iterator));
+bool BTInOrderMutableIterator<Data>::operator==(const BTInOrderMutableIterator<Data>& iterator ) const noexcept{
+    
+    return(BTBreadthIterator<Data>::operator==(iterator));
 }
 
+
+// Operator !=
 template<typename Data>
-bool BTInOrderMutableIterator<Data>::operator!=(const BTInOrderMutableIterator<Data>& iterator ) const noexcept
-{
-    return !(*this==iterator);
+bool BTInOrderMutableIterator<Data>::operator!=(const BTInOrderMutableIterator<Data>& iterator ) const noexcept{
+    
+    return !(*this == iterator);
 }
 
+
+// Operator *
 template<typename Data>
-Data& BTInOrderMutableIterator<Data>::operator*()
-{
+Data& BTInOrderMutableIterator<Data>::operator*(){
+    
     return const_cast<Data&>(BTInOrderMutableIterator<Data>::operator*());
 }
+
+
 /* ************************************************************************** */
 template<typename Data>
 BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& tree)
