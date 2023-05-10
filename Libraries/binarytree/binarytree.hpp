@@ -170,7 +170,7 @@ public:
     friend class MutableBinaryTree<Data>;
 
     // Destructor
-    virtual ~MutableNode() = default ;
+    virtual ~MutableNode() = default;
 
     // Copy assignment
     MutableNode& operator = (const MutableNode&) = delete;
@@ -191,7 +191,7 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  ~MutableBinaryTree() = default ;
+  ~MutableBinaryTree() = default;
 
   // Copy assignment
   MutableBinaryTree& operator = (const MutableBinaryTree&) const = delete;
@@ -248,7 +248,7 @@ class BTPreOrderIterator : public virtual ForwardIterator<Data>,
 private:
 
   const typename BinaryTree<Data>::Node * current =nullptr;
-  const typename BinaryTree<Data>::Node * root =nullptr;
+  const typename BinaryTree<Data>::Node * root = nullptr;
   StackLst<const typename BinaryTree<Data>::Node *> elements ;
 
 protected:
@@ -257,7 +257,7 @@ protected:
 
 public:
   
-  // Specific constructor: // Iterator over a given binary tree
+  // Specific constructor: Iterator over a given binary tree
   BTPreOrderIterator(const BinaryTree<Data>&) ;
 
   // Copy constructor
@@ -291,8 +291,6 @@ public:
 
   // Specific member function (inherited from ForwardIterator)
   BTPreOrderIterator<Data>& operator++() ;
-
-  /* ************************************************************************ */
 
   // Specific member function (inherited from ResettableIterator)
   void Reset() noexcept ;
