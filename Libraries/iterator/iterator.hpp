@@ -42,7 +42,7 @@ public:
 
   // Specific member functions
 
-  virtual Data& operator * () const = 0; // Non-mutable version // Concrete function must throw std::out_of_range when terminated
+  virtual const Data& operator * () const = 0; // Non-mutable version // Concrete function must throw std::out_of_range when terminated
 
   virtual bool Terminated() const noexcept = 0;
 
@@ -85,7 +85,7 @@ public:
 
   // Specific member functions
 
-  virtual operator * () = 0; // Mutable version // Concrete function must throw std::out_of_range when terminated
+  virtual Data& operator * () = 0; // Mutable version // Concrete function must throw std::out_of_range when terminated
 
 };
 

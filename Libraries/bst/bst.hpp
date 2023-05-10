@@ -66,22 +66,18 @@ public:
 
   // Specific member functions
 
-  Data& Min();
   const Data& Min() const;
   Data MinNRemove();
   void RemoveMin();
 
-  Data& Max();
   const Data& Max() const;
   Data MaxNRemove();
   void RemoveMax();
 
-  Data& Predecessor(const Data&);
   const Data& Predecessor(const Data&) const;
   Data PredecessorNRemove(const Data&);
   void RemovePredecessor(const Data&);
 
-  Data& Successor(const Data&);
   const Data& Successor(const Data&) const;
   Data SuccessorNRemove(const Data&);
   void RemoveSuccessor(const Data&);
