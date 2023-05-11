@@ -190,6 +190,7 @@ const Data& Vector<Data>::operator [] (const ulong index) const{
     else{ return elements[index]; }
 }
 
+
 // Operator [] (Mutable)
 template <typename Data>
 Data& Vector<Data>::operator [] (const ulong index){

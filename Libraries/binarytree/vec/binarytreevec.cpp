@@ -98,31 +98,108 @@ BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data>& otherTree){
 }
 
 // Move constructor
+template <typename Data>
+BinaryTreeVec<Data>::BinaryTreeVec(BinaryTreeVec<Data>&& otherTree) noexcept{
+
+    std::swap(this->size, otherTree.size);
+    for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
+
+    std::swap(this->nodeArray, otherTree.nodeArray);
+    for(ulong i = 0; i < size; i++){ nodeArray[i]->treePointer = this; }
+}
 
 
 // Destructor
+template <typename Data>
+BinaryTreeVec<Data>::~BinaryTreeVec(){ Clear(); }
 
 
 // Copy assignment
+template <typename Data>
+BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator = (const BinaryTreeVec<Data>& otherTree){
+
+    Clear();
+    this->size = otherTree.size;
+    for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
+
+    for(ulong i = 0; i < size; i++){
+        
+        Data temp = otherTree.nodeArray[i]->Element();
+
+        nodeArray[i] = new Node(temp);
+        nodeArray[i]->index = otherTree.nodeArray[i]->index;
+        nodeArray[i]->left = otherTree.nodeArray[i]->left;
+        nodeArray[i]->right = otherTree.nodeArray[i]->right;
+        nodeArray[i]->treePointer = this;
+    }
+
+    return *(this);
+} 
 
 
 // Move assignment
+template <typename Data>
+BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator = (BinaryTreeVec<Data>&& otherTree) noexcept{
+
+    std::swap(this->size, otherTree.size);
+    std::swap(this->nodeArray, otherTree.nodeArray);
+    for(ulong i = 0; i < size; i++){ nodeArray[i]->treePointer = this; }
+
+    return *(this);
+}
 
 
 // Operator ==
+template <typename Data>
+bool BinaryTreeVec<Data>::operator == (const BinaryTreeVec<Data>& otherTree) const noexcept{
 
+    if(this->size == 0 && otherTree.size == 0){ return true; }
+    if(this->size != otherTree.size){ return false; }
+
+    for(ulong i = 0; i < size; i++){
+
+        if(this->nodeArray[i] != otherTree.nodeArray[i]){ return false; }
+    }
+
+    return true;
+}
+ 
 
 // Operator !=
+template <typename Data>
+bool BinaryTreeVec<Data>::operator != (const BinaryTreeVec<Data>& otherTree) const noexcept{
+
+    return !(*(this) == otherTree);
+}
 
 
 // Override function Root (Non-Mutable)
+template <typename Data>
+const BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root() const{
+
+    if(size == 0){ throw std::length_error("Error: Tree is Empty!"); }
+    return *nodeArray[0];
+}
 
 
 // Override function Root (Mutable)
+template <typename Data>
+BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::Root(){
+
+    if(size == 0){ throw std::length_error("Error: Tree is Empty!"); }
+    return *nodeArray[0];
+}
 
 
 // Override function Clear
+template <typename Data>
+void BinaryTreeVec<Data>::Clear() noexcept{
 
+    delete[] nodeArray;
+    nodeArray = nullptr;
+
+    size = 0;
+}
 
 // Override function BreadthFold
 

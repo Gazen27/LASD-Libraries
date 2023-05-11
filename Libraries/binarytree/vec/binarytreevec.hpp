@@ -92,8 +92,8 @@ public:
   BinaryTreeVec& operator = (BinaryTreeVec&&) noexcept;
 
   // Comparison operators
-  bool operator == (const BinaryTree&) const noexcept;
-  bool operator != (const BinaryTree&) const noexcept;
+  bool operator == (const BinaryTreeVec&) const noexcept;
+  bool operator != (const BinaryTreeVec&) const noexcept;
 
   /* ************************************************************************ */
 
