@@ -40,6 +40,24 @@ void QueueTest2();
 void QueueTest3();
 void QueueTest4();
 
+// BinaryTree
+void BinaryTreeTest1();
+void BinaryTreeTest2();
+void BinaryTreeTest3();
+void BinaryTreeTest4();
+
+// BinarySearchTree
+void BinarySearchTreeTest1();
+void BinarySearchTreeTest2();
+void BinarySearchTreeTest3();
+void BinarySearchTreeTest4();
+
+// Iterator test
+void IteratorTest1();
+void IteratorTest2();
+void IteratorTest3();
+void IteratorTest4();
+
 /* ************************************************************************** */
 
 // Auxiliary functions

@@ -575,8 +575,8 @@ public:
   BTInOrderMutableIterator<Data>& operator = (BTInOrderMutableIterator<Data>&&) ;
 
   // Comparison operators
-  bool operator==(const BTInOrderMutableIterator<Data>& ) const noexcept ;
-  bool operator!=(const BTInOrderMutableIterator<Data>& ) const noexcept ;
+  bool operator == (const BTInOrderMutableIterator<Data>& ) const noexcept ;
+  bool operator != (const BTInOrderMutableIterator<Data>& ) const noexcept ;
 
   /* ************************************************************************ */
 

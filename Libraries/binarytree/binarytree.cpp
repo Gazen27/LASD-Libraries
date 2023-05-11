@@ -9,6 +9,8 @@ namespace lasd {
 template <typename Data>
 bool BinaryTree<Data>::Node::operator == (const Node& otherNode) const noexcept{
 
+    if(otherNode == nullptr){ return false; }
+    
     if(this->key != otherNode.key){ return false; }
 
     // Has no child
@@ -64,6 +66,7 @@ bool BinaryTree<Data>::Node::IsLeaf() const noexcept{
 template <typename Data>
 bool BinaryTree<Data>::operator == (const BinaryTree<Data>& otherTree) const noexcept{
 
+    if(this->size == 0 && otherTree.size == 0){ return true; }
     if(this->Root() == otherTree.Root()){ return true; }
     return false;
 }

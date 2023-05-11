@@ -192,6 +192,7 @@ BinaryTreeLnk<Data>& BinaryTreeLnk<Data>::operator = (BinaryTreeLnk<Data>&& othe
 template <typename Data>
 bool BinaryTreeLnk<Data>::operator == (const BinaryTreeLnk<Data>& otherTree) const noexcept{
 
+    if(this->size == 0 && otherTree.size == 0){ return true; }
     if(root == otherTree.Root()){ return true; }
     return false;
 }
