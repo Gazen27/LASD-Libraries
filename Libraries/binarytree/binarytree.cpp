@@ -1,4 +1,3 @@
-#include "binarytree.hpp"
 
 /* ************************************************************************** */
 
@@ -1051,5 +1050,7 @@ Data& BTBreadthMutableIterator<Data>::operator*(){
 
     return const_cast<Data&>(BTBreadthIterator<Data>::operator*());
 }
+
+/* ************************************************************************** */
 
 }
