@@ -30,7 +30,7 @@ void callMenu(){
     switch(option){
 
         case 1:
-        lasdtest();
+        //lasdtest();
         break;
 
         case 2:
@@ -86,7 +86,7 @@ void mytest(){
   // STARTING BINARYTREE TEST
   cout << endl;
   cout << BOLDCYAN << "+++ BinaryTree test +++" << RESET << endl;
-  //BinaryTreeTest1();
+  BinaryTreeTest1();
   //BinaryTreeTest2();
   //BinaryTreeTest3();
   //BinaryTreeTest4();

@@ -3,7 +3,136 @@ namespace lasd {
 
 /* ************************************************************************** */
 
-// ...
+//////////////////////////////////////////////////////////////////////////// BinaryTreeVec::NodeVec
+
+// Specific constructor 1
+template <typename Data>
+BinaryTreeVec<Data>::NodeVec::NodeVec(const Data& data){ key = data; }
+
+
+// Specific constructor 2
+template <typename Data>
+BinaryTreeVec<Data>::NodeVec::NodeVec(Data&& data){ key = std::move(data); }
+
+
+// Override function Element (Mutable)
+template <typename Data>
+Data& BinaryTreeVec<Data>::NodeVec::Element(){ return this->key; }
+
+
+// Override function Elemetn (Non-Mutable)
+template <typename Data>
+const Data& BinaryTreeVec<Data>::NodeVec::Element() const { return this->key; }
+
+
+// Override function IsLeaf
+template <typename Data>
+bool BinaryTreeVec<Data>::NodeVec::IsLeaf() const noexcept{
+
+    if(!HasLeftChild() && !HasRightChild()){ return true; }
+    return false;
+}
+
+
+// Overide function HasLeftChild
+template <typename Data>
+bool BinaryTreeVec<Data>::NodeVec::HasLeftChild() const noexcept{
+
+    if(this->left > size - 1){ return true; }
+    return false;
+}
+
+
+// Override function HasRightChild
+template <typename Data>
+bool BinaryTreeVec<Data>::NodeVec::HasRightChild() const noexcept{
+
+    if(this->right > size - 1){ return true; }
+    return false;
+}
+
+
+// Override function LeftChild
+template <typename Data>
+BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::LeftChild() const{
+
+    if(!this->HasLeftChild()){ throw std::out_of_range("Error: Left child does not exist!"); }
+    return *(treePointer-> nodeArray)[left];
+}
+
+
+// Override function RightChild
+template <typename Data>
+BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() const{
+
+    if(!this->HasRightChild()){ throw std::out_of_range("Error: Left child does not exist!"); }
+    return *(treePointer-> nodeArray)[right];
+}
+
+
+//////////////////////////////////////////////////////////////////////////// BinaryTreeVec
+
+// Specific constructor #1: BinaryTreeVec obtained from a MappableContainer
+
+
+// Specific constructor #2: BinaryTreeVec obtained from a MutableMappableContainer
+
+
+// Copy constructor
+template <typename Data>
+BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data>& otherTree){
+
+    this->size = otherTree.size;
+    for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
+
+    for(ulong i = 0; i < size; i++){
+        
+        Data temp = otherTree.nodeArray[i]->Element();
+
+        nodeArray[i] = new Node(temp);
+        nodeArray[i]->index = otherTree.nodeArray[i]->index;
+        nodeArray[i]->left = otherTree.nodeArray[i]->left;
+        nodeArray[i]->right = otherTree.nodeArray[i]->right;
+        nodeArray[i]->treePointer = this;
+    }
+}
+
+// Move constructor
+
+
+// Destructor
+
+
+// Copy assignment
+
+
+// Move assignment
+
+
+// Operator ==
+
+
+// Operator !=
+
+
+// Override function Root (Non-Mutable)
+
+
+// Override function Root (Mutable)
+
+
+// Override function Clear
+
+
+// Override function BreadthFold
+
+
+// Override function BreadthMap (from BreadthMappableContainer)
+
+
+// Override function BreadthMap (from MutableBreadthMappableContainer)
+
+
 
 /* ************************************************************************** */
 

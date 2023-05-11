@@ -44,6 +44,8 @@ public:
 
   protected:
 
+    Data key;
+
     // Comparison operators
     bool operator==(const Node&) const noexcept ;
     bool operator!=(const Node&) const noexcept ;
@@ -65,7 +67,7 @@ public:
 
     // Specific member functions
 
-    virtual const Data& Element() const  = 0;
+    virtual const Data& Element() const = 0;
 
     virtual bool IsLeaf() const noexcept ;
     virtual bool HasLeftChild() const noexcept = 0 ;
@@ -132,8 +134,6 @@ protected:
 
   void BreadthMap(MapFunctor , const Node& ) const ;
 
-  //Auxiliary function to compare two binary tree
-  bool AuxEqualsBinaryTree (const Node* , const Node*) const noexcept;
 };
 
 /* ************************************************************************** */
@@ -168,6 +168,7 @@ public:
     public:
 
     friend class MutableBinaryTree<Data>;
+    using BinaryTree<Data>::Node::key;
 
     // Destructor
     virtual ~MutableNode() = default;

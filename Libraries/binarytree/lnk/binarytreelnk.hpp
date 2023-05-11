@@ -22,9 +22,7 @@ private:
 
 protected:
 
-  using BinaryTree<Data>::size;
-
-  // ...
+  using MutableBinaryTree<Data>::size;
 
   struct NodeLnk : public virtual MutableBinaryTree<Data>::MutableNode{ // Must extend MutableNode
 
@@ -55,13 +53,17 @@ protected:
     NodeLnk(NodeLnk&&) noexcept;
 
     // NodeLnk Copy and Move Assignment
-    NodeLnk& operator = (const NodeLnk&) = delete;
-    NodeLnk& operator = (NodeLnk&&) noexcept = delete;
+    NodeLnk& operator = (const NodeLnk&);
+    NodeLnk& operator = (NodeLnk&&) noexcept;
 
     // NodeLnk Specific functions
-    virtual bool IsLeaf() const noexcept;
-    virtual bool HasLeftChild() const noexcept;
-    virtual bool HasRightChild() const noexcept;
+
+    Data& Element() override;
+    const Data& Element() const noexcept override;
+
+    virtual bool IsLeaf() const noexcept override;
+    virtual bool HasLeftChild() const noexcept override;
+    virtual bool HasRightChild() const noexcept override;
 
     // NodeLnk Override functions from MutableNode (and Node)
     NodeLnk& LeftChild() override;
@@ -98,15 +100,11 @@ public:
   // Destructor
   virtual ~BinaryTreeLnk();
 
-  /* ************************************************************************ */
-
   // Copy assignment
   BinaryTreeLnk<Data>& operator = (const BinaryTreeLnk&);
 
   // Move assignment
   BinaryTreeLnk<Data>& operator = (BinaryTreeLnk&&) noexcept;
-
-  /* ************************************************************************ */
 
   // Comparison operators 
   bool operator == (const BinaryTreeLnk&) const noexcept;
@@ -115,7 +113,7 @@ public:
   /* ************************************************************************ */
 
   // Override function from BinaryTree
-  NodeLnk& Root() const override;
+  const NodeLnk& Root() const override;
   
    // Override function from MutableBinaryTree
   NodeLnk& Root() override;
@@ -123,7 +121,7 @@ public:
   /* ************************************************************************ */
 
   // Override function from ClearableContainer
-  void Clear() override;
+  void Clear() noexcept override;
 
 };
 
