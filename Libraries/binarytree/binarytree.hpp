@@ -67,7 +67,7 @@ public:
 
     // Specific member functions
 
-    virtual const Data& Element() const = 0;
+    virtual const Data& Element() const noexcept = 0;
 
     virtual bool IsLeaf() const noexcept ;
     virtual bool HasLeftChild() const noexcept = 0 ;
@@ -184,8 +184,8 @@ public:
     // Specific member functions
 
     virtual Data& Element() noexcept = 0;
-    virtual MutableNode& LeftChild() = 0 ; // (concrete function must throw std::out_of_range when not existent)
-    virtual MutableNode& RightChild() = 0 ; // (concrete function must throw std::out_of_range when not existent)
+    virtual MutableNode& LeftChild() const = 0 ; // (concrete function must throw std::out_of_range when not existent)
+    virtual MutableNode& RightChild() const = 0 ; // (concrete function must throw std::out_of_range when not existent)
 
   };
 

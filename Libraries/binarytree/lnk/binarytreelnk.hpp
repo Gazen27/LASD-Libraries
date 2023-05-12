@@ -58,7 +58,7 @@ protected:
 
     // NodeLnk Specific functions
 
-    Data& Element() override;
+    Data& Element() noexcept override;
     const Data& Element() const noexcept override;
 
     virtual bool IsLeaf() const noexcept override;

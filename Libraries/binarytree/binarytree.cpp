@@ -8,8 +8,6 @@ namespace lasd {
 // Operator ==
 template <typename Data>
 bool BinaryTree<Data>::Node::operator == (const Node& otherNode) const noexcept{
-
-    if(otherNode == nullptr){ return false; }
     
     if(this->key != otherNode.key){ return false; }
 

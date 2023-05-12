@@ -17,12 +17,12 @@ BinaryTreeVec<Data>::NodeVec::NodeVec(Data&& data){ key = std::move(data); }
 
 // Override function Element (Mutable)
 template <typename Data>
-Data& BinaryTreeVec<Data>::NodeVec::Element(){ return this->key; }
+Data& BinaryTreeVec<Data>::NodeVec::Element() noexcept{ return this->key; }
 
 
 // Override function Elemetn (Non-Mutable)
 template <typename Data>
-const Data& BinaryTreeVec<Data>::NodeVec::Element() const { return this->key; }
+const Data& BinaryTreeVec<Data>::NodeVec::Element() const noexcept{ return this->key; }
 
 
 // Override function IsLeaf
@@ -76,20 +76,20 @@ BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() const{
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(const MappableContainer<Data>& container) noexcept{
 
-    index = 0;
-    this->size = container.size;
+    ulong point = 0;
+    this->size = container.Size();
     for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
 
     container.Map(
 
-        [this](const Data& data){
+        [this, &point](const Data& data){
 
-            nodeArray[index] = new Node(data);
-            nodeArray[index]->left = (index + 1) * 2 - 1;
-            nodeArray[index]->right = (index + 1) * 2;
-            nodeArray[index]->treePointer = this;
-
-            index ++;
+            nodeArray[point] = new NodeVec(data);
+            nodeArray[point]->left = (point + 1) * 2 - 1;
+            nodeArray[point]->right = (point + 1) * 2;
+            nodeArray[point]->index = point;
+            nodeArray[point]->treePointer = this;
+            point ++;
         }
     );
 }
@@ -99,20 +99,20 @@ BinaryTreeVec<Data>::BinaryTreeVec(const MappableContainer<Data>& container) noe
 template <typename Data>
 BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data>&& container) noexcept{
 
-    index = 0;
-    this->size = container.size;
+    ulong point = 0;
+    this->size = container.Size();
     for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
 
     container.Map(
 
-        [this](const Data& data){
+        [this, &point](const Data& data){
 
-            nodeArray[index] = new Node(std::move(data));
-            nodeArray[index]->left = (index + 1) * 2 - 1;
-            nodeArray[index]->right = (index + 1) * 2;
-            nodeArray[index]->treePointer = this;
-
-            index ++;
+            nodeArray[point] = new NodeVec(std::move(data));
+            nodeArray[point]->left = (point + 1) * 2 - 1;
+            nodeArray[point]->right = (point + 1) * 2;
+            nodeArray[point]->index = point;
+            nodeArray[point]->treePointer = this;
+            point ++;
         }
     );
 }
@@ -129,7 +129,7 @@ BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data>& otherTree){
         
         Data temp = otherTree.nodeArray[i]->Element();
 
-        nodeArray[i] = new Node(temp);
+        nodeArray[i] = new NodeVec(temp);
         nodeArray[i]->index = otherTree.nodeArray[i]->index;
         nodeArray[i]->left = otherTree.nodeArray[i]->left;
         nodeArray[i]->right = otherTree.nodeArray[i]->right;
@@ -167,7 +167,7 @@ BinaryTreeVec<Data>& BinaryTreeVec<Data>::operator = (const BinaryTreeVec<Data>&
         
         Data temp = otherTree.nodeArray[i]->Element();
 
-        nodeArray[i] = new Node(temp);
+        nodeArray[i] = new NodeVec(temp);
         nodeArray[i]->index = otherTree.nodeArray[i]->index;
         nodeArray[i]->left = otherTree.nodeArray[i]->left;
         nodeArray[i]->right = otherTree.nodeArray[i]->right;
@@ -249,7 +249,7 @@ void BinaryTreeVec<Data>::BreadthFold(FoldFunctor f, void* acc) const{
 
     for(ulong i = 0; i < size; i++){
         
-        temp = nodeArray[i]->Element();
+        Data temp = nodeArray[i]->Element();
         f(temp, acc);
     }
 }

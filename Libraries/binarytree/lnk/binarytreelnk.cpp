@@ -56,9 +56,9 @@ BinaryTreeLnk<Data>::NodeLnk::NodeLnk(BinaryTreeLnk<Data>::NodeLnk&& otherNodeLn
 
 // Copy assignment
 template <typename Data>
-BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::operator = (const NodeLnk& otherNode){
+BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::operator = (const NodeLnk& otherNodeLnk){
 
-    this.key = oterNodeLnk.key;
+    this.key = otherNodeLnk.key;
     if(otherNodeLnk.HasLeftChild()){ this->left = new NodeLnk(otherNodeLnk.LeftChild()); }
     if(otherNodeLnk.HasRightChild()){ this->right = new NodeLnk(otherNodeLnk.RightChild()); }
 
@@ -70,9 +70,9 @@ BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::operator = (const No
 template <typename Data>
 BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::operator = (NodeLnk&& otherNode) noexcept{
 
-    std::swap(this->key, otherNodeLnk.key);
-    std::swap(this->left, otherNodeLnk.left);
-    std::swap(this->right, otherNodeLnk.right);
+    std::swap(this->key, otherNode.key);
+    std::swap(this->left, otherNode.left);
+    std::swap(this->right, otherNode.right);
 
     return *this;
 }
@@ -80,7 +80,7 @@ BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::operator = (NodeLnk&
 
 // Override function Element (Mutable)
 template <typename Data>
-Data& BinaryTreeLnk<Data>::NodeLnk::Element(){ return this->key; }
+Data& BinaryTreeLnk<Data>::NodeLnk::Element() noexcept{ return this->key; }
 
 
 // Override function Element (Non-Mutable)
@@ -160,7 +160,7 @@ BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::RightChild() const{
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data>& container) noexcept{
 
-    lasd::QueueList<NodeLnk*> mainQueue;
+    lasd::QueueLst<NodeLnk*> mainQueue;
     
     container.Map(
 
@@ -188,7 +188,7 @@ BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data>& container) noe
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(MutableMappableContainer<Data>&& container) noexcept{
 
-    lasd::QueueList<NodeLnk*> mainQueue;
+    lasd::QueueLst<NodeLnk*> mainQueue;
     
     container.Map(
 
@@ -285,7 +285,7 @@ template <typename Data>
 const BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::Root() const{
     
     if(size == 0){ throw std::length_error("Error: Tree is Empty!"); }
-    return root;
+    return *root;
 }
 
 
@@ -294,7 +294,7 @@ template <typename Data>
 BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::Root(){
     
     if(size == 0){ throw std::length_error("Error: Tree is Empty!"); }
-    return root;
+    return *root;
 }
 
 

@@ -51,8 +51,8 @@ protected:
     NodeVec(Data&&);
 
     // NodeVec Override functions
-    Data& Element() override;
-    const Data& Element() const override;
+    Data& Element() noexcept override;
+    const Data& Element() const noexcept override;
 
     bool IsLeaf() const noexcept override;
     bool HasLeftChild() const noexcept override;
@@ -68,7 +68,7 @@ protected:
 public:
 
   // Default constructor
-  virtual BinaryTreeVec() = default;
+  BinaryTreeVec() = default;
 
   // Specific constructor #1: BinaryTreeVec obtained from a MappableContainer
   BinaryTreeVec(const MappableContainer<Data>&) noexcept;
