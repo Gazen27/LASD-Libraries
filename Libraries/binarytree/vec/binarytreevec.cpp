@@ -201,14 +201,33 @@ void BinaryTreeVec<Data>::Clear() noexcept{
     size = 0;
 }
 
+
 // Override function BreadthFold
+template <typename Data>
+void BinaryTreeVec<Data>::BreadthFold(FoldFunctor f, void* acc) const{
+
+    for(ulong i = 0; i < size; i++){
+        
+        temp = nodeArray[i]->Element();
+        f(temp, acc);
+    }
+}
 
 
 // Override function BreadthMap (from BreadthMappableContainer)
+template <typename Data>
+void BinaryTreeVec<Data>::BreadthMap(MapFunctor mapFunctor) const{
+
+    for(ulong i = 0; i < size; i++){ mapFunctor(nodeArray[i]->Element()); }
+}
 
 
 // Override function BreadthMap (from MutableBreadthMappableContainer)
+template <typename Data>
+void BinaryTreeVec<Data>::BreadthMap(MutableMapFunctor mapFunctor){
 
+    for(ulong i = 0; i < size; i++){ mapFunctor(nodeArray[i]->Element()); }
+}
 
 
 /* ************************************************************************** */
