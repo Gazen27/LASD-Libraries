@@ -43,12 +43,21 @@ protected:
 
     friend class BinaryTreeVec<Data>;
 
+    // NodeVec Default constructor
+    NodeVec() = default;
+
     // NodeVec Destructor
     virtual ~NodeVec() = default;
 
     // NodeVec Specific constructors
     NodeVec(const Data&);
     NodeVec(Data&&);
+
+    // NodeVec Copy assignment
+    NodeVec& operator = (const NodeVec&) noexcept;
+
+    // NodeVec Move assignment
+    //NodeVec& operator = (NodeVec&&) noexcept = default;
 
     // NodeVec Override functions
     Data& Element() noexcept override;
@@ -57,13 +66,18 @@ protected:
     bool IsLeaf() const noexcept override;
     bool HasLeftChild() const noexcept override;
     bool HasRightChild() const noexcept override;
-        
-    NodeVec& LeftChild() const override;
-    NodeVec& RightChild() const override;
+
+    // Left and Right child (Mutable)  
+    NodeVec& LeftChild() override;
+    NodeVec& RightChild() override;
+
+    // Left and Right child (Non-Mutable)  
+    const NodeVec& LeftChild() const override;
+    const NodeVec& RightChild() const override;
 
   };
 
-  Data* nodeArray = new NodeVec[size];
+  NodeVec* nodeArray;
 
 public:
 

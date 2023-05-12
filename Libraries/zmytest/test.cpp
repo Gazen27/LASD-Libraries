@@ -30,7 +30,7 @@ void callMenu(){
     switch(option){
 
         case 1:
-        //lasdtest();
+        lasdtest();
         break;
 
         case 2:

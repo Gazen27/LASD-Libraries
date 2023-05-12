@@ -38,6 +38,8 @@ bool BinaryTree<Data>::Node::operator == (const Node& otherNode) const noexcept{
         if(this->RightChild() != otherNode.RightChild()){ return false; }
         return true;
     }
+
+    return false;
 }
 
 
@@ -64,7 +66,8 @@ bool BinaryTree<Data>::Node::IsLeaf() const noexcept{
 template <typename Data>
 bool BinaryTree<Data>::operator == (const BinaryTree<Data>& otherTree) const noexcept{
 
-    if(this->size == 0 && otherTree.size == 0){ return true; }
+    if(this->Size() == 0 && otherTree.Size() == 0){ return true; }
+    if(this->Size() != otherTree.Size()){ return false; }
     if(this->Root() == otherTree.Root()){ return true; }
     return false;
 }
@@ -80,13 +83,13 @@ bool BinaryTree<Data>::operator!=(const BinaryTree<Data>& otherTree) const noexc
 template <typename Data>
 void BinaryTree<Data>::Fold(FoldFunctor f , void * acc) const{
 
-    this->PreOrderMap([acc, f](const Data& value){ f(value,acc); });
+    this->PreOrderMap([acc, f](const Data& value){ f(value, acc); });
 }
 
 
 // Function Map
 template <typename Data>
-void BinaryTree<Data>::Map(MapFunctor foldfunc ) const{ this->PreOrderMap(foldfunc); }
+void BinaryTree<Data>::Map(MapFunctor foldfunc) const{ this->PreOrderMap(foldfunc); }
 
 
 // Function PreOrderMap (Normal)
