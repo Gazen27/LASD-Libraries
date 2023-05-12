@@ -73,9 +73,49 @@ BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() const{
 //////////////////////////////////////////////////////////////////////////// BinaryTreeVec
 
 // Specific constructor #1: BinaryTreeVec obtained from a MappableContainer
+template <typename Data>
+BinaryTreeVec<Data>::BinaryTreeVec(const MappableContainer<Data>& container) noexcept{
+
+    index = 0;
+    this->size = container.size;
+    for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
+
+    container.Map(
+
+        [this](const Data& data){
+
+            nodeArray[index] = new Node(data);
+            nodeArray[index]->left = (index + 1) * 2 - 1;
+            nodeArray[index]->right = (index + 1) * 2;
+            nodeArray[index]->treePointer = this;
+
+            index ++;
+        }
+    );
+}
 
 
 // Specific constructor #2: BinaryTreeVec obtained from a MutableMappableContainer
+template <typename Data>
+BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data>&& container) noexcept{
+
+    index = 0;
+    this->size = container.size;
+    for(ulong i = 0; i < size; i++){ nodeArray[i] = nullptr; }
+
+    container.Map(
+
+        [this](const Data& data){
+
+            nodeArray[index] = new Node(std::move(data));
+            nodeArray[index]->left = (index + 1) * 2 - 1;
+            nodeArray[index]->right = (index + 1) * 2;
+            nodeArray[index]->treePointer = this;
+
+            index ++;
+        }
+    );
+}
 
 
 // Copy constructor
@@ -96,6 +136,7 @@ BinaryTreeVec<Data>::BinaryTreeVec(const BinaryTreeVec<Data>& otherTree){
         nodeArray[i]->treePointer = this;
     }
 }
+
 
 // Move constructor
 template <typename Data>
