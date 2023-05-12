@@ -87,7 +87,7 @@ void mytest(){
   cout << endl;
   cout << BOLDCYAN << "+++ BinaryTree test +++" << RESET << endl;
   BinaryTreeTest1();
-  //BinaryTreeTest2();
+  BinaryTreeTest2();
   //BinaryTreeTest3();
   //BinaryTreeTest4();
 
