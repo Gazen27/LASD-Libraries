@@ -71,13 +71,57 @@ void BinaryTreeTest1(){
 
 
 //BinaryTree test 2:
-// (lnk)
+// (lnk) 
 void BinaryTreeTest2(){
 
     BTresult = BTcorrect;
 
-    try{ }
+    try{
+
+        uint isRoot = 9999;
+        lasd::List<int> lst1;
+        for(ulong i = 0; i < 99; i++){ lst1.InsertAtBack(BTdist(BTgenerator));}
+        lst1.InsertAtFront(isRoot);
+
+        lasd::BinaryTreeLnk<int> btlnk(lst1);
+        lasd::BinaryTreeLnk<int> copylnk(btlnk);
+
+        copylnk.Clear();
+
+        try{
+            uint check = copylnk.Root().Element();
+            BTresult = BTerror;
+        }
+        catch(...){ }
+
+        lasd::BinaryTreeLnk<int> otherbt;
+        otherbt = btlnk;
+
+        try{
+            otherbt.PreOrderMap(IncrementOnList<int>);
+            otherbt.PreOrderMap(DoubleOnList<int>);
+        }
+        catch(...){ BTresult = BTerror; }
+
+        if(copylnk.Size() != 0){ BTresult = BTerror; }
+        if(otherbt.Root().Element() != 20000){ BTresult = BTerror; }
+        if(otherbt.Size() != 100){ BTresult = BTerror; }
+    }
     catch(...){ BTresult = BTerror; }
 
     cout << endl << "• Test 2: " << BTresult << RESET << endl;  
+}
+
+
+//  Auxiliary
+template <typename Data>
+void IncrementOnList(Data& e) {
+  e++;
+}
+
+
+// Auxiliary
+template <typename Data>
+void DoubleOnList(Data& e) {
+  e *= 2;
 }
