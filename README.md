@@ -11,7 +11,7 @@ Academic assignments made for the "Laboratory of Algorithm and Data Structures" 
 
 > [Assignment 2](https://github.com/Gazen27/LASD-Libraries/blob/main/Assignments/Exercise2.pdf): Iterators, BinaryTree, BinarySearchTree
 
-> Assignment 3: ???
+> [Assignment 3](https://github.com/Gazen27/LASD-Libraries/blob/main/Assignments/Exercise3.pdf): HashTable
 
 # Languages and Tools
 ![cpp](https://user-images.githubusercontent.com/43990877/221264171-0ed9c86f-7cb2-405a-b44e-508965305c0c.png)
