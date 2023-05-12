@@ -160,6 +160,7 @@ BinaryTreeLnk<Data>::NodeLnk& BinaryTreeLnk<Data>::NodeLnk::RightChild() const{
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data>& container) noexcept{
 
+    size = container.Size();
     lasd::QueueLst<NodeLnk*> mainQueue;
     
     container.Map(
@@ -188,6 +189,7 @@ BinaryTreeLnk<Data>::BinaryTreeLnk(const MappableContainer<Data>& container) noe
 template <typename Data>
 BinaryTreeLnk<Data>::BinaryTreeLnk(MutableMappableContainer<Data>&& container) noexcept{
 
+    size = container.Size();
     lasd::QueueLst<NodeLnk*> mainQueue;
     
     container.Map(

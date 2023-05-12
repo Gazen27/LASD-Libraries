@@ -108,19 +108,19 @@ public:
   using typename MappableContainer<Data>::MapFunctor;
 
   // Override function from MappableContainer
-  virtual void Map(MapFunctor) const override;
+  void Map(MapFunctor) const override;
 
   // Override function from PreOrderMappableContainer
-  virtual void PreOrderMap(MapFunctor) const override;
+  void PreOrderMap(MapFunctor) const override;
 
   // Override function from PostOrderMappableContainer
-  virtual void PostOrderMap(MapFunctor) const override;
+  void PostOrderMap(MapFunctor) const override;
 
   // Override function from InOrderMappableContainer
-  virtual void InOrderMap(MapFunctor) const override;
+  void InOrderMap(MapFunctor) const override;
 
   // Override function from BreadthMappableContainer
-  virtual void BreadthMap(MapFunctor) const override;
+  void BreadthMap(MapFunctor) const override;
 
 protected:
 
@@ -213,16 +213,16 @@ public:
   void Map(MutableMapFunctor) override ;
 
   // Override function from MutablePreOrderMappableContainer
-  virtual void PreOrderMap(MutableMapFunctor) override;
+  void PreOrderMap(MutableMapFunctor) override;
 
   // Override function from MutablePostOrderMappableContainer
-  virtual void PostOrderMap(MutableMapFunctor) override;
+  void PostOrderMap(MutableMapFunctor) override;
 
   // Override function from MutableInOrderMappableContainer
-  virtual void InOrderMap(MutableMapFunctor) override;
+  void InOrderMap(MutableMapFunctor) override;
 
   // Override function from MutableBreadthMappableContainer
-  virtual void BreadthMap(MutableMapFunctor) override;
+  void BreadthMap(MutableMapFunctor) override;
 
 protected:
 
@@ -274,7 +274,7 @@ public:
   BTPreOrderIterator& operator = (const BTPreOrderIterator&) ;
 
   // Move assignment
-  BTPreOrderIterator& operator = (BTPreOrderIterator&&) ;
+  BTPreOrderIterator& operator = (BTPreOrderIterator&&);
 
   // Comparison operators
   bool operator == (const BTPreOrderIterator&) const noexcept ;

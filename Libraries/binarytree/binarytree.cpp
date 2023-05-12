@@ -168,8 +168,8 @@ void BinaryTree<Data>::BreadthMap(MapFunctor mapfunc ,const Node& temp) const{
         const Node* current = que.HeadNDequeue();
         mapfunc(current->Element());
 
-        if(temp.HasLeftChild()){ que.Enqueue(&(current->LeftChild())); }
-        if(temp.HasRightChild()){ que.Enqueue(&(current->RightChild())); }
+        if(current->HasLeftChild()){ que.Enqueue(&(current->LeftChild())); }
+        if(current->HasRightChild()){ que.Enqueue(&(current->RightChild())); }
     }
 }
 
@@ -280,9 +280,9 @@ BTPreOrderIterator<Data>::BTPreOrderIterator(const BTPreOrderIterator& otherIter
 template<typename Data>
 BTPreOrderIterator<Data>::BTPreOrderIterator(BTPreOrderIterator&& otherIterator){
 
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 }
 
 
@@ -310,11 +310,11 @@ BTPreOrderIterator<Data>& BTPreOrderIterator<Data>::operator = (const BTPreOrder
 
 // Move assignment
 template<typename Data>
-BTPreOrderIterator<Data>& BTPreOrderIterator<Data>::operator=( BTPreOrderIterator&& otherIterator){
+BTPreOrderIterator<Data>& BTPreOrderIterator<Data>::operator = (BTPreOrderIterator&& otherIterator){
     
-    std::swap(root, otherIterator.root);
-    std::swap(current , otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+    root = otherIterator.root ;
+    current = otherIterator.current ;
+    elements = otherIterator.elements;
 
     return *this;
 }
@@ -419,11 +419,11 @@ BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=(cons
 
 // Move assignment
 template<typename Data>
-BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=( BTPreOrderMutableIterator<Data>&& iterator){
+BTPreOrderMutableIterator<Data>& BTPreOrderMutableIterator<Data>::operator=( BTPreOrderMutableIterator<Data>&& otherIterator){
 
-    std::swap(root,iterator.root);
-    std::swap(current,iterator.current);
-    std::swap(elements,iterator.elements);
+    root = otherIterator.root ;
+    current = otherIterator.current ;
+    elements = otherIterator.elements;
 
     return *this;
 }
@@ -477,11 +477,11 @@ BTPostOrderIterator<Data>::BTPostOrderIterator(const BTPostOrderIterator& iterat
 
 // Move constructor
 template<typename Data>
-BTPostOrderIterator<Data>::BTPostOrderIterator(BTPostOrderIterator&& iterator){
+BTPostOrderIterator<Data>::BTPostOrderIterator(BTPostOrderIterator&& otherIterator){
 
-    std::swap(root, iterator.root);
-    std::swap(current, iterator.current);
-    std::swap(elements, iterator.elements);
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 }
 
 
@@ -509,12 +509,11 @@ BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=(const BTPostOrde
 
 // Move assignment
 template<typename Data>
-BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=( BTPostOrderIterator&& otherIterator)
-{
+BTPostOrderIterator<Data>& BTPostOrderIterator<Data>::operator=( BTPostOrderIterator&& otherIterator){
 
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 
     return *this;
 }
@@ -583,7 +582,7 @@ void BTPostOrderIterator<Data>::Reset() noexcept{
 
     elements.Clear();
     MostLeftLeaf(root);
-    current = elements.Top();
+    current = elements.TopNPop();
 }
 
 
@@ -627,9 +626,9 @@ BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(co
 template<typename Data>
 BTPostOrderMutableIterator<Data>& BTPostOrderMutableIterator<Data>::operator=(BTPostOrderMutableIterator<Data>&& otherIterator){
     
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+    root = otherIterator.root ;
+    current = otherIterator.current ;
+    elements = otherIterator.elements;
 
     return *this;
 }
@@ -687,11 +686,11 @@ BTInOrderIterator<Data>::BTInOrderIterator(const BTInOrderIterator& iterator){
 
 // Move constructor
 template<typename Data>
-BTInOrderIterator<Data>::BTInOrderIterator( BTInOrderIterator&& iterator){
+BTInOrderIterator<Data>::BTInOrderIterator( BTInOrderIterator&& otherIterator){
    
-    std::swap(root, iterator.root);
-    std::swap(current, iterator.current);
-    std::swap(elements, iterator.elements);
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 }
 
 
@@ -719,11 +718,11 @@ BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator = (const BTInOrderIte
 
 // Move assignment
 template<typename Data>
-BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator=( BTInOrderIterator&& iterator)
-{
-    std::swap(root, iterator.root);
-    std::swap(current, iterator.current);
-    std::swap(elements, iterator.elements);
+BTInOrderIterator<Data>& BTInOrderIterator<Data>::operator=( BTInOrderIterator&& otherIterator){
+
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 
     return *this;
 }
@@ -780,7 +779,7 @@ void BTInOrderIterator<Data>::Reset() noexcept{
     
     elements.Clear();
     MostLeftLeaf(root);
-    current=elements.Top();
+    current=elements.TopNPop();
 }
 
 
@@ -822,12 +821,12 @@ BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=(const 
 
 // Move assignment 
 template<typename Data>
-BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=( BTInOrderMutableIterator<Data>&& iterator){
+BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=( BTInOrderMutableIterator<Data>&& otherIterator){
     
-    std::swap(root, iterator.root);
-    std::swap(current, iterator.current);
-    std::swap(elements, iterator.elements);
-    
+    root = otherIterator.root ;
+    current = otherIterator.current ;
+    elements = otherIterator.elements;
+
     return *this;
 }
 
@@ -881,9 +880,9 @@ BTBreadthIterator<Data>::BTBreadthIterator(const BTBreadthIterator<Data>& otherI
 template<typename Data>
 BTBreadthIterator<Data>::BTBreadthIterator(BTBreadthIterator<Data>&& otherIterator){
     
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 }
 
 
@@ -911,11 +910,11 @@ BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=(const BTBreadthItera
 
 // Move assignment
 template<typename Data>
-BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=( BTBreadthIterator<Data>&& otherIterator)
-{
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
+BTBreadthIterator<Data>& BTBreadthIterator<Data>::operator=( BTBreadthIterator<Data>&& otherIterator){
+
+    root = otherIterator.root;
+    current = otherIterator.current;
+    elements = std::move(otherIterator.elements);
 
     return *this;
 }
@@ -1024,10 +1023,10 @@ BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=(const 
 template<typename Data>
 BTBreadthMutableIterator<Data>& BTBreadthMutableIterator<Data>::operator=( BTBreadthMutableIterator<Data>&& otherIterator){
 
-    std::swap(root, otherIterator.root);
-    std::swap(current, otherIterator.current);
-    std::swap(elements, otherIterator.elements);
-    
+    root = otherIterator.root ;
+    current = otherIterator.current ;
+    elements = otherIterator.elements;
+
     return *this;
 }
 

@@ -54,7 +54,7 @@ bool BinaryTreeVec<Data>::NodeVec::HasLeftChild() const noexcept{
 
     ulong tempSize = treePointer->Size();
 
-    if(this->left < tempSize - 1){ return true; }
+    if(this->left < tempSize){ return true; }
     return false;
 }
 
@@ -65,7 +65,7 @@ bool BinaryTreeVec<Data>::NodeVec::HasRightChild() const noexcept{
 
     ulong tempSize = treePointer->Size();
 
-    if(this->right < tempSize - 1){ return true; }
+    if(this->right < tempSize){ return true; }
     return false;
 }
 
