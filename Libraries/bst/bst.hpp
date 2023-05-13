@@ -39,17 +39,17 @@ public:
   // Default constructor
   BST() = default;
 
-  // Specific constructor #1: BinaryTreeLnk obtained from a MappableContainer
+  // Specific constructor #1: BST obtained from a MappableContainer
   BST(const MappableContainer<Data>&) noexcept;
 
-  // Specific constructor #2: BinaryTreeLnk obtained from a MutableMappableContainer
+  // Specific constructor #2: BST obtained from a MutableMappableContainer
   BST(MutableMappableContainer<Data>&&) noexcept;
 
   // Copy constructor
-  BST(const BST& tree) : BinaryTreeLnk<Data>::BinaryTreeLnk(tree){ };
+  BST(const BST& tree);
 
   // Move constructor
-  BST(BST&& tree) : BinaryTreeLnk<Data>::BinaryTreeLnk(std::move(tree)){ };
+  BST(BST&& tree);
 
   // Destructor
   virtual ~BST() = default;
@@ -76,13 +76,13 @@ public:
   Data MaxNRemove(); // (concrete function must throw std::length_error when empty)
   void RemoveMax(); // (concrete function must throw std::length_error when empty)
 
-  // type Predecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type PredecessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type RemovePredecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+  const Data& Predecessor(const Data&) const; // (concrete function must throw std::length_error when not found)
+  Data PredecessorNRemove(const Data&); // (concrete function must throw std::length_error when not found)
+  void RemovePredecessor (const Data&); // (concrete function must throw std::length_error when not found)
 
-  // type Successor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type SuccessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-  // type RemoveSuccessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+  const Data& Successor(const Data&) const; // (concrete function must throw std::length_error when not found)
+  Data SuccessorNRemove(const Data&); // (concrete function must throw std::length_error when not found)
+  void RemoveSuccessor(const Data&); // (concrete function must throw std::length_error when not found)
 
   /* ************************************************************************ */
 
@@ -95,40 +95,43 @@ public:
   /* ************************************************************************ */
 
   // Override function from TestableContainer
-  bool Exists(const Data&) const noexcept;
+  bool Exists(const Data&) const noexcept override;
 
   // Override function from ClearableContainer
   using BinaryTreeLnk<Data>::Clear;
+  
+  using BinaryTree<Data>::Map;
+  using BinaryTree<Data>::PreOrderMap;
+  using BinaryTree<Data>::InOrderMap;
+  using BinaryTree<Data>::PostOrderMap;
+  using BinaryTree<Data>::BreadthMap;
 
 protected:
 
   // Auxiliary member functions
 
-  // type DataNDelete(argument) specifiers;
-
   void Detach(NodeLnk*&);
+  NodeLnk*& DetachMin(NodeLnk*&, NodeLnk*&) ;
 
-  // type DetachMin(argument) specifiers;
-  // type DetachMax(argument) specifiers;
+  NodeLnk* Skip2Left(NodeLnk*&);
+  NodeLnk* Skip2Right(NodeLnk*&);
 
-  // type Skip2Left(argument) specifiers;
-  // type Skip2Right(argument) specifiers;
+  NodeLnk* const & FindPointerToMin(NodeLnk*const&) const;
+  NodeLnk*& FindPointerToMin(NodeLnk*&);
 
-  // type FindPointerToMin(argument) specifiers; // Both mutable & unmutable versions
-  // type FindPointerToMax(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk* const & FindPointerToMax(NodeLnk*const&) const;
+  NodeLnk*& FindPointerToMax(NodeLnk*&);
 
-  // type FindPointerTo(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk* const & FindPointerTo(NodeLnk* const&, const Data&) const;
+  NodeLnk*& FindPointerTo(NodeLnk*&, const Data&);
 
-  // type FindPointerToPredecessor(argument) specifiers; // Both mutable & unmutable versions
-  // type FindPointerToSuccessor(argument) specifiers; // Both mutable & unmutable versions
+  NodeLnk* const & FindPointerToPredecessor( NodeLnk* const&, const Data&) const;
+  NodeLnk*& FindPointerToPredecessor(NodeLnk*&, const Data&) ;
 
-  // Auxiliary functions
+  NodeLnk* const & FindPointerToSuccessor( NodeLnk* const &, const Data&) const;
+  NodeLnk*& FindPointerToSuccessor(NodeLnk*&, const Data&);
 
-  NodeLnk*& Search(const Data&, NodeLnk*&) noexcept;
-
-  void RemoveLeaf(NodeLnk*&);
-  void SimpleRemove(NodeLnk*&);
-  void FullRemove(NodeLnk*&);
+  // type DataNDelete(argument) specifiers;
 
 };
 
