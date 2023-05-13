@@ -294,7 +294,7 @@ public:
   BTPreOrderIterator<Data>& operator++() ;
 
   // Specific member function (inherited from ResettableIterator)
-  void Reset() noexcept ;
+  void Reset() noexcept;
 
 };
 

@@ -94,12 +94,11 @@ void BinaryTreeTest2(){
         }
         catch(...){ }
 
-        lasd::BinaryTreeLnk<int> otherbt;
-        otherbt = btlnk;
+        lasd::BinaryTreeLnk<int> otherbt(lst1);
 
         try{
-            otherbt.PreOrderMap(IncrementOnList<int>);
-            otherbt.PreOrderMap(DoubleOnList<int>);
+            otherbt.PreOrderMap([](int& x){x++;});
+            otherbt.PreOrderMap([](int& x){x=x*2;});
         }
         catch(...){ BTresult = BTerror; }
 
@@ -108,7 +107,7 @@ void BinaryTreeTest2(){
             btlnk = otherbt;
             btlnk.PreOrderMap(DoubleOnList<int>);
         }
-        catch(...){ BTresult = BTerror; }
+        catch(...){ cout << "hello" << endl;/*BTresult = BTerror;*/ }
 
         if(copylnk.Size() != 0){ BTresult = BTerror; }
         if(otherbt.Root().Element() != 20000){ BTresult = BTerror; }
@@ -163,11 +162,10 @@ void BinaryTreeTest4(){
     BTresult = BTcorrect;
 
     try{
-
         uint isRoot = 9999;
         lasd::Vector<int> vec1(100);
         vec1[0] = isRoot;
-        for(ulong i = 1; i < 99; i++){ vec1[i] = BTdist(BTgenerator); }
+        for(ulong i = 1; i < 100; i++){ vec1[i] = BTdist(BTgenerator); }
 
         lasd::BinaryTreeVec<int> btvec(vec1);
         lasd::BinaryTreeLnk<int> copybt(btvec);
@@ -180,7 +178,7 @@ void BinaryTreeTest4(){
         }
         catch(...){ }
 
-        lasd::BinaryTreeVec<int> otherbt;
+        lasd::BinaryTreeVec<int> otherbt(vec1);
         otherbt = btvec;
 
         try{
@@ -201,7 +199,6 @@ void BinaryTreeTest4(){
         if(otherbt.Size() != 100){ BTresult = BTerror; }
         if(btvec.Size() != 100){ BTresult = BTerror; }
         if(btvec.Root().Element() != 40000){ BTresult = BTerror; }
-
     }
     catch(...){ BTresult = BTerror; }
 

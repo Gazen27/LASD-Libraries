@@ -82,7 +82,7 @@ protected:
 public:
 
   // Default constructor
-  BinaryTreeVec() = default;
+  BinaryTreeVec() = delete;
 
   // Specific constructor #1: BinaryTreeVec obtained from a MappableContainer
   BinaryTreeVec(const MappableContainer<Data>&) noexcept;

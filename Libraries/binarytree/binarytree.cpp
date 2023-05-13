@@ -261,7 +261,8 @@ void MutableBinaryTree<Data>::BreadthMap(MutableMapFunctor mapfunc, MutableNode&
 template <typename Data>
 BTPreOrderIterator<Data>::BTPreOrderIterator(const BinaryTree<Data>& tree){
     
-    current = &(tree.Root());
+    if(tree.Size() == 0){ current = nullptr; }
+    else{current = &(tree.Root());}
     root = current;
 }
 

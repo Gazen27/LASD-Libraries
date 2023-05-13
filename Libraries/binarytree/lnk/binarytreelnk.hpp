@@ -81,7 +81,7 @@ protected:
 public:
 
   // Default constructor
-  BinaryTreeLnk() = default;
+  BinaryTreeLnk() = delete;
 
   // Specific constructor #1: BinaryTreeLnk obtained from a MappableContainer
   BinaryTreeLnk(const MappableContainer<Data>&) noexcept;

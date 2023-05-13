@@ -102,7 +102,7 @@ void mytest(){
   // STARTING ITERATOR TEST
   cout << endl;
   cout << BOLDCYAN << "+++ Iterator test +++" << RESET << endl;
-  //IteratorTest1();
+  IteratorTest1();
   //IteratorTest2();
   //IteratorTest3();
   //IteratorTest4();
