@@ -88,8 +88,8 @@ void mytest(){
   cout << BOLDCYAN << "+++ BinaryTree test +++" << RESET << endl;
   BinaryTreeTest1();
   BinaryTreeTest2();
-  //BinaryTreeTest3();
-  //BinaryTreeTest4();
+  BinaryTreeTest3();
+  BinaryTreeTest4();
 
   // STARTING BINARYSEARCHTREE TEST
   cout << endl;

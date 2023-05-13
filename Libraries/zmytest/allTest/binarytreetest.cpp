@@ -71,7 +71,7 @@ void BinaryTreeTest1(){
 
 
 //BinaryTree test 2:
-// (lnk) 
+// (lnk) Testing combinations of Clear functions, Map and assignments
 void BinaryTreeTest2(){
 
     BTresult = BTcorrect;
@@ -103,13 +103,109 @@ void BinaryTreeTest2(){
         }
         catch(...){ BTresult = BTerror; }
 
+        try{
+            btlnk.Clear();
+            btlnk = otherbt;
+            btlnk.PreOrderMap(DoubleOnList<int>);
+        }
+        catch(...){ BTresult = BTerror; }
+
         if(copylnk.Size() != 0){ BTresult = BTerror; }
         if(otherbt.Root().Element() != 20000){ BTresult = BTerror; }
         if(otherbt.Size() != 100){ BTresult = BTerror; }
+        if(btlnk.Size() != 100){ BTresult = BTerror; }
+        if(btlnk.Root().Element() != 40000){ BTresult = BTerror; }
     }
     catch(...){ BTresult = BTerror; }
 
     cout << endl << "• Test 2: " << BTresult << RESET << endl;  
+}
+
+
+//BinaryTree test 3:
+// (vec) Testing main functionalities and constructors
+void BinaryTreeTest3(){
+
+    BTresult = BTcorrect;
+
+    try{
+        uint isRoot = 9999;
+        lasd::Vector<int> vec(150);
+        vec[0] = isRoot;
+        for(uint i = 1; i < 149; i++){ vec[i] = BTdist(BTgenerator); }
+
+        lasd::BinaryTreeVec<int> btvec(vec);
+        lasd::BinaryTreeVec<int> copybt(btvec);
+        lasd::BinaryTreeVec<int> movebt(std::move(btvec));
+
+        try{
+            int check = btvec.Root().Element();
+            if(check = copybt.Root().Element()){ BTresult = BTerror;}
+            BTresult = BTerror;
+        }
+        catch(...){ }
+
+        if(btvec.Size() != 0){ BTresult = BTerror; }
+        if(copybt.Root().Element() != isRoot){ BTresult = BTerror; }
+        if(copybt != movebt){ BTresult = BTerror; }
+        if(movebt.Size() != copybt.Size()){ BTresult = BTerror; }
+    }
+    catch(...){ BTresult = BTerror; }
+
+    cout << endl << "• Test 3: " << BTresult << RESET << endl;  
+}
+
+
+//BinaryTree test 4:
+// (vec) Testing combinations of Clear functions, Map and assignments
+void BinaryTreeTest4(){
+
+    BTresult = BTcorrect;
+
+    try{
+
+        uint isRoot = 9999;
+        lasd::Vector<int> vec1(100);
+        vec1[0] = isRoot;
+        for(ulong i = 1; i < 99; i++){ vec1[i] = BTdist(BTgenerator); }
+
+        lasd::BinaryTreeVec<int> btvec(vec1);
+        lasd::BinaryTreeLnk<int> copybt(btvec);
+
+        copybt.Clear();
+
+        try{
+            uint check = copybt.Root().Element();
+            BTresult = BTerror;
+        }
+        catch(...){ }
+
+        lasd::BinaryTreeVec<int> otherbt;
+        otherbt = btvec;
+
+        try{
+            otherbt.PreOrderMap(IncrementOnList<int>);
+            otherbt.PreOrderMap(DoubleOnList<int>);
+        }
+        catch(...){ BTresult = BTerror; }
+
+        try{
+            btvec.Clear();
+            btvec = otherbt;
+            btvec.PreOrderMap(DoubleOnList<int>);
+        }
+        catch(...){ BTresult = BTerror; }
+
+        if(copybt.Size() != 0){ BTresult = BTerror; }
+        if(otherbt.Root().Element() != 20000){ BTresult = BTerror; }
+        if(otherbt.Size() != 100){ BTresult = BTerror; }
+        if(btvec.Size() != 100){ BTresult = BTerror; }
+        if(btvec.Root().Element() != 40000){ BTresult = BTerror; }
+
+    }
+    catch(...){ BTresult = BTerror; }
+
+    cout << endl << "• Test 4: " << BTresult << RESET << endl;  
 }
 
 

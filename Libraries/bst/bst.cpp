@@ -44,6 +44,7 @@ template <typename Data>
 BST<Data>& BST<Data>::operator = (const BST<Data>& tree){
 
     BinaryTreeLnk<Data>::operator = (tree);
+    return *this;
 }
 
 
@@ -52,6 +53,7 @@ template <typename Data>
 BST<Data>& BST<Data>::operator = (BST<Data>&& tree) noexcept{
 
     BinaryTreeLnk<Data>::operator = (std::move(tree));
+    return *this;
 }
 
 
@@ -88,9 +90,9 @@ const Data& BST<Data>::Min() const{
     if(this->Size() == 0){ throw std::length_error("Error: Tree is Empty!"); }
 
     using Node = typename BinaryTree<Data>::Node;
-    Node current = this->Root();
-    while(current.HasLeftChild()){ current = current.LeftChild(); }
-    return current.Element();
+    Node const* current = root;
+    while(current->HasLeftChild()){ current = &(current->LeftChild()); }
+    return current->Element();
 }
 
 
@@ -116,9 +118,9 @@ const Data& BST<Data>::Max() const{
     if(this->Size() == 0){ throw std::length_error("Error: Tree is Empty!"); }
 
     using Node = typename BinaryTree<Data>::Node;
-    Node current = this->Root();
-    while(current.HasRightChild()){ current = current.RightChild(); }
-    return current.Element();
+    Node const* current = root;
+    while(current->HasRightChild()){ current = &(current->RightChild()); }
+    return current->Element();
 }
 
 
@@ -127,7 +129,7 @@ template <typename Data>
 Data BST<Data>::MaxNRemove(){
 
     Data temp = std::move(this->Max());
-    Remove temp;
+    Remove(temp);
     return temp;
 }
 

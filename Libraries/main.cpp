@@ -12,13 +12,13 @@
 int main() {
 
   // Menu from where is possible to choose the test
-  //callMenu();
+  callMenu();
 
   // Teacher test
-  // lasdtest();
+  //lasdtest();
 
   // Student test
-  // ????????????
+  //mytest();
 
   // vvv Quick-Test Area vvv
 
