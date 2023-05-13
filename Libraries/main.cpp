@@ -5,19 +5,22 @@
 /* ************************************************************************** */
 
 #include <iostream>
+#include "bst/bst.hpp"
 
 /* ************************************************************************** */
 
 int main() {
 
   // Menu from where is possible to choose the test
-  callMenu();
+  //callMenu();
 
   // Teacher test
   // lasdtest();
 
   // Student test
   // ????????????
+
+  // vvv Quick-Test Area vvv
 
   return 0;
 }

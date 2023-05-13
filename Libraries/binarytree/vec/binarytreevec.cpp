@@ -140,7 +140,7 @@ BinaryTreeVec<Data>::BinaryTreeVec(MutableMappableContainer<Data>&& container) n
 
     container.Map(
 
-        [this, &point](const Data& data){
+        [this, &point](Data& data){
 
             nodeArray[point] = NodeVec(std::move(data));
             nodeArray[point].left = (point + 1) * 2 - 1;

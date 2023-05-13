@@ -194,7 +194,7 @@ BinaryTreeLnk<Data>::BinaryTreeLnk(MutableMappableContainer<Data>&& container) n
     
     container.Map(
 
-        [this, &mainQueue](const Data& data){
+        [this, &mainQueue](Data& data){
 
             NodeLnk* temp = new NodeLnk(std::move(data));
             

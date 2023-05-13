@@ -30,59 +30,51 @@ protected:
 
   using BinaryTreeLnk<Data>::size;
   using BinaryTreeLnk<Data>::root;
-  using typename BinaryTreeLnk<Data>::NodeLnk
+  using typename BinaryTreeLnk<Data>::NodeLnk;
   
   // ...
 
 public:
 
   // Default constructor
-  // BST() specifiers;
+  BST() = default;
 
-  /* ************************************************************************ */
+  // Specific constructor #1: BinaryTreeLnk obtained from a MappableContainer
+  BST(const MappableContainer<Data>&) noexcept;
 
-  // Specific constructors
-  // BST(argument) specifiers; // A bst obtained from a MutableContainer
-  // BST(argument) specifiers; // A bst obtained from a MappableMutableContainer
-
-  /* ************************************************************************ */
+  // Specific constructor #2: BinaryTreeLnk obtained from a MutableMappableContainer
+  BST(MutableMappableContainer<Data>&&) noexcept;
 
   // Copy constructor
-  // BST(argument) specifiers;
+  BST(const BST& tree) : BinaryTreeLnk<Data>::BinaryTreeLnk(tree){ };
 
   // Move constructor
-  // BST(argument) specifiers;
-
-  /* ************************************************************************ */
+  BST(BST&& tree) : BinaryTreeLnk<Data>::BinaryTreeLnk(std::move(tree)){ };
 
   // Destructor
-  // ~BST() specifiers;
-
-  /* ************************************************************************ */
+  virtual ~BST() = default;
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  BST& operator = (const BST&);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  BST& operator = (BST&&) noexcept;
 
-  /* ************************************************************************ */
-
-  // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  // Comparison operators 
+  bool operator == (const BST&) const noexcept;
+  bool operator != (const BST&) const noexcept;
 
   /* ************************************************************************ */
 
   // Specific member functions
 
-  // type Min(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type MinNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type RemoveMin(argument) specifiers; // (concrete function must throw std::length_error when empty)
+  const Data& Min() const; // (concrete function must throw std::length_error when empty)
+  Data MinNRemove(); // (concrete function must throw std::length_error when empty)
+  inline void RemoveMin(); // (concrete function must throw std::length_error when empty)
 
-  // type Max(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type MaxNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-  // type RemoveMax(argument) specifiers; // (concrete function must throw std::length_error when empty)
+  const Data& Max() const; // (concrete function must throw std::length_error when empty)
+  Data MaxNRemove(); // (concrete function must throw std::length_error when empty)
+  void RemoveMax(); // (concrete function must throw std::length_error when empty)
 
   // type Predecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
   // type PredecessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
@@ -94,23 +86,19 @@ public:
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from DictionaryContainer)
+  // Override functions from DictionaryContainer
 
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Copy of the value)
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Move of the value)
-  // type Remove(argument) specifiers; // Override DictionaryContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from TestableContainer)
-
-  // type Exists(argument) specifiers; // Override TestableContainer member
+  bool Insert(const Data&) noexcept override; // Copy of the value
+  bool Insert(Data&&) noexcept override; // Move of the value
+  bool Remove(const Data&) noexcept override;
 
   /* ************************************************************************ */
 
-  // Specific member function (inherited from ClearableContainer)
+  // Override function from TestableContainer
+  bool Exists(const Data&) const noexcept;
 
-  // type Clear(argument) specifiers; // Override ClearableContainer member
+  // Override function from ClearableContainer
+  using BinaryTreeLnk<Data>::Clear;
 
 protected:
 
@@ -118,7 +106,7 @@ protected:
 
   // type DataNDelete(argument) specifiers;
 
-  // type Detach(argument) specifiers;
+  void Detach(NodeLnk*&);
 
   // type DetachMin(argument) specifiers;
   // type DetachMax(argument) specifiers;
@@ -133,6 +121,14 @@ protected:
 
   // type FindPointerToPredecessor(argument) specifiers; // Both mutable & unmutable versions
   // type FindPointerToSuccessor(argument) specifiers; // Both mutable & unmutable versions
+
+  // Auxiliary functions
+
+  NodeLnk*& Search(const Data&, NodeLnk*&) noexcept;
+
+  void RemoveLeaf(NodeLnk*&);
+  void SimpleRemove(NodeLnk*&);
+  void FullRemove(NodeLnk*&);
 
 };
 
