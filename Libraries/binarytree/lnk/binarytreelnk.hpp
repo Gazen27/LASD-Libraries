@@ -78,10 +78,10 @@ protected:
 
   NodeLnk* root = nullptr;
 
-public:
-
   // Default constructor
-  BinaryTreeLnk() = delete;
+  BinaryTreeLnk() = default;
+
+public:
 
   // Specific constructor #1: BinaryTreeLnk obtained from a MappableContainer
   BinaryTreeLnk(const MappableContainer<Data>&) noexcept;

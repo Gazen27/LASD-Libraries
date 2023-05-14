@@ -69,6 +69,9 @@ void IteratorTest1(){
         catch(...){ }
         if(!it2.Terminated()){ ITresult = ITerror; }
 
+        lasd::BTPreOrderIterator<int> it4(bt);
+        if(*it4 != isRoot){ ITresult = ITerror; }
+        
         ///////////////////////////////// TEST ON EMPTY BST
     }
     catch(...){ ITresult = ITerror; }
