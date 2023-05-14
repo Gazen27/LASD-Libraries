@@ -132,6 +132,23 @@ void BinarySearchTreeTest4(){
         if(!validBST(tree.Root())){ BSTresult = BSTerror; }
 
 
+        // LIMIT CASE: Remove of 150 (other side)
+        lasd::BST<int> otherTree;
+        otherTree.Insert(100);
+        otherTree.Insert(99);
+        otherTree.Insert(150);
+        otherTree.Insert(160);
+        otherTree.Insert(120);
+        otherTree.Insert(125);
+        otherTree.Insert(158);
+        otherTree.Insert(152);
+        otherTree.Insert(154);
+
+        otherTree.Remove(150);
+
+        if(otherTree.Size() == 9){ BSTresult = BSTerror; }
+        if(!validBST(otherTree.Root())){ BSTresult = BSTerror; }
+
         // Other tests:
 
         lasd::BST<int> oak;
