@@ -76,24 +76,6 @@ bool BST<Data>::operator == (const BST<Data>& tree) const noexcept{
     }   
 
     return true; 
-
-/* ISAAC
-
-    if(size != tree.size){ return false; }
-    if(size == 0){ return true; }
-
-    BTInOrderIterator<Data> iterator_on_second_tree(tree);
-    BTInOrderIterator<Data> iterator_on_first_tree(*this);
-    while(!iterator_on_first_tree.Terminated() && !iterator_on_second_tree.Terminated()){
-        if(*iterator_on_first_tree!=*iterator_on_second_tree)
-            return false;
-
-        ++iterator_on_first_tree;
-        ++iterator_on_second_tree;
-    }
-
-    return true;
-*/    
 }
 
 

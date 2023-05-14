@@ -414,7 +414,7 @@ public:
 private:
 
   // Auxiliary function
-  void MostLeftLeaf(const typename BinaryTree<Data>::Node* );
+  void MostLeftLeaf(const typename BinaryTree<Data>::Node*);
 
 };
 

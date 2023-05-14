@@ -94,18 +94,18 @@ void mytest(){
   // STARTING BINARYSEARCHTREE TEST
   cout << endl;
   cout << BOLDCYAN << "+++ BinarySearchTree test +++" << RESET << endl;
-  //BinarySearchTreeTest1();
-  //BinarySearchTreeTest2();
-  //BinarySearchTreeTest3();
-  //BinarySearchTreeTest4();
+  BinarySearchTreeTest1();
+  BinarySearchTreeTest2();
+  BinarySearchTreeTest3();
+  BinarySearchTreeTest4();
 
   // STARTING ITERATOR TEST
   cout << endl;
   cout << BOLDCYAN << "+++ Iterator test +++" << RESET << endl;
   IteratorTest1();
-  //IteratorTest2();
-  //IteratorTest3();
-  //IteratorTest4();
+  IteratorTest2();
+  IteratorTest3();
+  IteratorTest4();
 
   /* ************************************************************************ */
 

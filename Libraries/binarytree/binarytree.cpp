@@ -460,9 +460,13 @@ Data& BTPreOrderMutableIterator<Data>::operator*(){
 template<typename Data>
 BTPostOrderIterator<Data>::BTPostOrderIterator(const BinaryTree<Data>& tree){
     
-    MostLeftLeaf(&(tree.Root()));
-    current = elements.TopNPop();
-    root = &(tree.Root()) ;
+    if(tree.Size() == 0){ current = nullptr; }
+    else{
+
+        MostLeftLeaf(&(tree.Root()));
+        current = elements.TopNPop();
+        root = &(tree.Root());
+    }
 }
 
 
@@ -669,9 +673,12 @@ Data& BTPostOrderMutableIterator<Data>::operator*(){
 template<typename Data>
 BTInOrderIterator<Data>::BTInOrderIterator(const BinaryTree<Data>& tree){
     
-    MostLeftLeaf(&(tree.Root()));
-    current = elements.TopNPop();
-    root = &(tree.Root()) ;
+    if(tree.Size() == 0){ current = nullptr; }
+    else{
+        MostLeftLeaf(&(tree.Root()));
+        current = elements.TopNPop();
+        root = &(tree.Root());
+    }
 }
 
 
@@ -862,7 +869,8 @@ Data& BTInOrderMutableIterator<Data>::operator*(){
 template<typename Data>
 BTBreadthIterator<Data>::BTBreadthIterator(const BinaryTree<Data>& tree){
 
-    current = &(tree.Root());
+    if(tree.Size() == 0){ current = nullptr; }
+    else{ current = &(tree.Root()); }
     root = current;
 }
 
