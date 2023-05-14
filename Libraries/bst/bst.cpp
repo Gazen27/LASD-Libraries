@@ -239,7 +239,7 @@ typename BST<Data>::NodeLnk*& BST<Data>::FindPointerToMax(NodeLnk*& node){
 template<typename Data>
 bool BST<Data>::Remove(const Data& value) noexcept{
 
-    if(size==0){ return false; }
+    if(size == 0){ return false; }
     
     NodeLnk*& toDelete =(FindPointerTo(root, value));
 
@@ -253,24 +253,26 @@ bool BST<Data>::Remove(const Data& value) noexcept{
 
 // Defining function Detach
 template<typename Data>
-void BST<Data>::Detach(NodeLnk*& toDelete){
+void BST<Data>::Detach(NodeLnk*& node){
 
-    if(toDelete->left == nullptr && toDelete->right == nullptr){
-        delete toDelete;
-        toDelete = nullptr;
+    if(node->left == nullptr && node->right == nullptr){
+        delete node;
+        node = nullptr;
     }
 
-    else if(toDelete->left != nullptr && toDelete->right == nullptr){ delete Skip2Left(toDelete); }
+    else if(node->left != nullptr && node->right == nullptr){ delete Skip2Left(node); }
         
-    else if(toDelete->left == nullptr && toDelete->right != nullptr){ delete Skip2Right(toDelete); }
+    else if(node->left == nullptr && node->right != nullptr){ delete Skip2Right(node); }
     
     else{
 
-        NodeLnk*& temp = DetachMin(toDelete->right, toDelete);
-        
-        std::swap(toDelete->Element(), temp->Element());
-        delete temp;
-        temp = nullptr;
+        NodeLnk*& min = FindPointerToMin(node->right);
+        std::swap(min->Element(), node->Element());
+        NodeLnk* skulled = min;
+        min = min->right;
+        skulled->left = nullptr;
+        skulled->right = nullptr;
+        delete skulled;
     }
 
 }
@@ -311,7 +313,7 @@ BST<Data>::NodeLnk*& BST<Data>::DetachMin(BST<Data>::NodeLnk*& current, BST<Data
         if(parent != nullptr){
                 
             if(parent->left == current){ parent->left = current->right; }
-            else { parent->right = current->right; }
+            else { parent->right = current->left; }
         }
 
         else { root = root->right; }

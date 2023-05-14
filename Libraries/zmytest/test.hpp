@@ -7,6 +7,7 @@
 
 #include "../vector/vector.hpp"
 #include "../list/list.hpp"
+#include "../binarytree/binarytree.hpp"
 
 /* ************************************************************************** */
 
@@ -67,5 +68,7 @@ void DoubleOnList(Data&);
 
 template <typename Data>
 void IncrementOnList(Data&);
+
+bool validBST(lasd::BinaryTree<int>::Node const& node);
 
 #endif

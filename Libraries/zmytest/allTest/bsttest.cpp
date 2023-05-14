@@ -111,9 +111,11 @@ void BinarySearchTreeTest3(){
 void BinarySearchTreeTest4(){
 
     BSTresult = BSTcorrect;
+    bool check = false;
 
     try{
 
+        // LIMIT CASE: Remove of 150
         lasd::BST<int> tree;
         tree.Insert(100);
         tree.Insert(99);
@@ -123,46 +125,54 @@ void BinarySearchTreeTest4(){
         tree.Insert(125);
         tree.Insert(130);
         tree.Insert(127);
-
-
-        lasd::BTPreOrderIterator<int> it1(tree);
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
-        ++it1;
-        cout << *it1 << endl;
         
         tree.Remove(150);
 
-        lasd::BTPreOrderIterator<int> it2(tree);
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
-        ++it2;
-        cout << *it2 << endl;
+        if(tree.Size() == 8){ BSTresult = BSTerror; }
+        if(!validBST(tree.Root())){ BSTresult = BSTerror; }
 
+
+        // Other tests:
+
+        lasd::BST<int> oak;
+        oak.Insert(100);
+        oak.Insert(99);
+        oak.Insert(150);
+        oak.Insert(160);
+        oak.Insert(120);
+        oak.Insert(125);
+
+        oak.Remove(125);
+        if(oak.Size() == 6){ BSTresult = BSTerror; }
+        if(!validBST(oak.Root())){ BSTresult = BSTerror; }
+
+        lasd::BST<int> birch;
+        birch.Insert(100);
+        birch.Insert(99);
+        birch.Insert(150);
+        birch.Insert(160);
+        birch.Insert(120);
+        birch.Insert(125);
+        birch.Insert(130);
+        birch.Insert(127);
+
+        birch.Remove(100);
+        if(birch.Size() == 8){ BSTresult = BSTerror; }
+        if(!validBST(birch.Root())){ BSTresult = BSTerror; }
     }
     catch(...){ BSTresult = BSTerror; }
 
     cout << endl << "• Test 4: " << BSTresult << RESET << endl;  
 }
+
+
+// AUXILIARY
+bool validBST(lasd::BinaryTree<int>::Node const& node){
+
+    if(node.HasRightChild() && !validBST(node.RightChild())){ return false; }
+    if(node.HasLeftChild() && !validBST(node.LeftChild())){ return false; }
+    if(node.HasRightChild() && node.RightChild().Element() < node.Element()){ return false; }
+    if(node.HasLeftChild() && node.LeftChild().Element() > node.Element()){ return false; }
+
+    return true;
+};
