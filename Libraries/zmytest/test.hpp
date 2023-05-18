@@ -59,6 +59,12 @@ void IteratorTest2();
 void IteratorTest3();
 void IteratorTest4();
 
+// Hashtable
+void HashTableTest1();
+void HashTableTest2();
+void HashTableTest3();
+void HashTableTest4();
+
 /* ************************************************************************** */
 
 // Auxiliary functions

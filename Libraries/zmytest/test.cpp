@@ -107,6 +107,14 @@ void mytest(){
   IteratorTest3();
   IteratorTest4();
 
+  // STARTING HASHTABLE TEST
+  cout << endl;
+  cout << BOLDCYAN << "+++ HashTable test +++" << RESET << endl;
+  HashTableTest1();
+  HashTableTest2();
+  HashTableTest3();
+  HashTableTest4(); 
+
   /* ************************************************************************ */
 
   // INFO
