@@ -1,55 +1,49 @@
 
+#include <string>
+
 namespace lasd {
 
 ////////////////////////////////////////////////////////////// Hashable
 
-// Defining Hashable class for int
-template <>
-class Hashable<int>{
-
-    public:
-
-        ulong operator()(const int& value) const noexcept{
-            return (value * value);
-        }
-};
+// Defining Operator () for int
+template<>
+inline ulong Hashable<int>::operator()(const int& value) noexcept{ return value * value; }
 
 
-// Defining Hashable class for double
-template <>
-class Hashable<double>{
+// Defining Operator () for double
+template<>
+inline ulong Hashable<double>::operator()(const double& val) noexcept{
 
-    public:
+    double decimalPart = fmod(val, 1.0);
 
-        ulong operator()(const double& value) const noexcept{
+    const double scale = 1000000.0;
+    unsigned int scaledDecimal = static_cast<unsigned int>(round(decimalPart * scale));
 
-            long intpart = floor(value);
-            long fracpart = pow(2, 24) * (value - intpart);
-            return (intpart * fracpart);
-        }
-};
+    unsigned int hash = scaledDecimal % 997;
+
+    return hash;
+}
 
 
-// Defining Hashable class for string
-template <>
-class Hashable<string>{
+// Defining Operator () for string
+template<>
+inline ulong Hashable<string>::operator()(const string& value) noexcept{
+    
+    unsigned int hash = 5381;
 
-    public:
-
-        ulong operator()(const string& value) const noexcept{
-
-            /////////////////////// TODO
-        }
-};
+    for (char carattere : value) { hash = ((hash << 5) + hash) + carattere; }
+    return hash;
+}
 
 
 ////////////////////////////////////////////////////////////// Hashtable
 
-// Defining function HashKey
+//Defining function HashKey
 template <typename Data>
-ulong HashTable<Data>::HashKey(const Data&) noexcept{
+inline ulong HashTable<Data>::HashKey(const Data& element) const{
 
-    ///////////////////////////////////// TODO
+   Hashable<Data> hasher;
+   return hasher(element);
 }
 
 
