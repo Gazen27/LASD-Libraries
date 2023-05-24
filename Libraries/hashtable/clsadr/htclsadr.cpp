@@ -189,7 +189,7 @@ bool HashTableClsAdr<Data>::Exists(const Data& data) const noexcept{
 
 // Override function Resize
 template <typename Data>
-void HashTableClsAdr<Data>::Resize(const ulong newSize){
+void HashTableClsAdr<Data>::Resize(const ulong newSize) noexcept{
 
     if(newSize == 0){ Clear(); }
 
@@ -212,7 +212,7 @@ void HashTableClsAdr<Data>::Resize(const ulong newSize){
 
 // Override function Clear
 template <typename Data>
-void HashTableClsAdr<Data>::Clear(){
+void HashTableClsAdr<Data>::Clear() noexcept{
     
     size = 0;    
     vec.Clear();
