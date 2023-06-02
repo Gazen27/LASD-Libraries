@@ -1,50 +1,76 @@
-
 #include <string>
 
 namespace lasd {
 
-////////////////////////////////////////////////////////////// Hashable
+/* ************************************************************************** */
 
-// Defining Operator () for int
-template<>
-inline ulong Hashable<int>::operator()(const int& value) noexcept{ return value * value; }
+////////////////////////////////////////////////////////////////////////// Hashable
 
+// Defining class for int type
+template <>
+class Hashable<int>{
+    private:
 
-// Defining Operator () for double
-template<>
-inline ulong Hashable<double>::operator()(const double& val) noexcept{
-
-    double decimalPart = fmod(val, 1.0);
-
-    const double scale = 1000000.0;
-    unsigned int scaledDecimal = static_cast<unsigned int>(round(decimalPart * scale));
-
-    unsigned int hash = scaledDecimal % 997;
-
-    return hash;
-}
-
-
-// Defining Operator () for string
-template<>
-inline ulong Hashable<string>::operator()(const string& value) noexcept{
+        ulong A = Random();
+        ulong B = Random();
     
-    unsigned int hash = 5381;
-
-    for (char carattere : value) { hash = ((hash << 5) + hash) + carattere; }
-    return hash;
-}
+    public:
+        ulong operator()(const int& value) const noexcept{ return A * (value * value) + B;}
+};
 
 
-////////////////////////////////////////////////////////////// Hashtable
+// Defining class for double type
+template <>
+class Hashable<double>{
+    private:
 
-//Defining function HashKey
+        ulong A = Random();
+        ulong B = Random();
+        ulong C = Random();
+        ulong D = Random();
+    
+    public:
+        ulong operator()(const double& value) const noexcept{
+            long intergerpart = floor(value);
+            long fracpart = value - intergerpart;
+            return (A * intergerpart + B) + (C * fracpart + D);
+        }
+};
+
+
+// Defining class for double type
+template <>
+class Hashable<std::string>{
+    private:
+
+        ulong A = Random();
+    
+    public:
+        ulong operator()(const std::string& value) const noexcept{
+            ulong hashcrypt = A;
+            for(ulong i = 0; i < value.size(); i++){
+                hashcrypt = (hashcrypt * 12763) ^ (21179 * (int)value[i]);
+            }
+            return hashcrypt;
+        }
+};
+
+
+// AUXILIARY - Random function
 template <typename Data>
-inline ulong HashTable<Data>::HashKey(const Data& element) const{
-
-   Hashable<Data> hasher;
-   return hasher(element);
+ulong Hashable<Data>::Random() noexcept{
+    ulong result;
+    default_random_engine randomGenerator(random_device{}());
+    uniform_int_distribution<uint> randomDist(1, 27457);
+    result = dist(generator)
 }
 
+////////////////////////////////////////////////////////////////////////// HashTable
+
+// Defining function HashKey
+template <typename Data>
+ulong HashTable<Data>::HashKey(const Data& element) const noexcept{
+    return (hash(element) % capacity);
+}
 
 }

@@ -859,7 +859,7 @@ bool BTInOrderMutableIterator<Data>::operator!=(const BTInOrderMutableIterator<D
 template<typename Data>
 Data& BTInOrderMutableIterator<Data>::operator*(){
     
-    return const_cast<Data&>(BTInOrderMutableIterator<Data>::operator*());
+    return const_cast<Data&>(BTInOrderIterator<Data>::operator*());
 }
 
 

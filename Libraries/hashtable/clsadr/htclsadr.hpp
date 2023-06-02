@@ -2,17 +2,20 @@
 #ifndef HTCLSADR_HPP
 #define HTCLSADR_HPP
 
-#include "../hashtable.hpp"
-#include "../../list/list.hpp"
-#include "../../vector/vector.hpp"
+/* ************************************************************************** */
 
+#include "../hashtable.hpp"
+#include "../../vector/vector.hpp"
+#include "../../list/list.hpp"
+
+/* ************************************************************************** */
 
 namespace lasd {
 
 /* ************************************************************************** */
 
 template <typename Data>
-class HashTableClsAdr : virtual public HashTable<Data>{
+class HashTableClsAdr : public virtual HashTable<Data>{
                         // Must extend HashTable<Data>
 
 private:
@@ -21,66 +24,59 @@ private:
 
 protected:
 
-  Vector<List<Data>> vec;
+  using HashTable<Data>::size;
+  using HashTable<Data>::capacity;
+  using HashTable<Data>::HashKey;
+
+  Vector<List<Data>> table;
 
 public:
-
-  using HashTable<Data>::size;
-  using HashTable<Data>::HashKey;
 
   // Default constructor
   HashTableClsAdr();
 
   // Specific constructor #1: HashTable of a given size
-  HashTableClsAdr(const ulong);
+  HashTableClsAdr(ulong) noexcept;
 
-  // Specific constructor #2: HashTable obtained from a MappableContainer
-  HashTableClsAdr(const MappableContainer<Data>&);
+  // Specific constructor #2 and #3: HashTable obtained from MappableContainer
+  HashTableClsAdr(const MappableContainer<Data>&) noexcept;
+  HashTableClsAdr(ulong, const MappableContainer<Data>&) noexcept;
   
-  // Specific constructor #3: HashTable of a given size obtained from a MappableContainer
-  HashTableClsAdr(const ulong, const MappableContainer<Data>&);
-  
-  // Specific constructor #4: HashTable obtained from a MutableMappableContainer
-  HashTableClsAdr(MutableMappableContainer<Data>&&);
-  
-  // Specific constructor #5: HashTable of a given size obtained from a MutableMappableContainer
-  HashTableClsAdr(const ulong, MutableMappableContainer<Data>&&);
+  // Specific constructor #4 and #5: HashTable obtained from MutableMappableContainer
+  HashTableClsAdr(MutableMappableContainer<Data>&&) noexcept;
+  HashTableClsAdr(ulong, MutableMappableContainer<Data>&&) noexcept;
 
   // Copy constructor
-  HashTableClsAdr(const HashTableClsAdr<Data>&);
-
+  HashTableClsAdr(const HashTableClsAdr&) noexcept;
+    
   // Move constructor
-  HashTableClsAdr(HashTableClsAdr<Data>&&);
-
+  HashTableClsAdr(HashTableClsAdr&&) noexcept;
+    
   // Destructor
   virtual ~HashTableClsAdr() = default;
 
-  // Copy assignment
-  HashTableClsAdr<Data>& operator = (const HashTableClsAdr<Data>&);
-
+  // Copy assignment  
+  HashTableClsAdr& operator = (const HashTableClsAdr&) noexcept;
+    
   // Move assignment
-  HashTableClsAdr<Data>& operator = (HashTableClsAdr<Data>&&) noexcept;
+  HashTableClsAdr& operator = (HashTableClsAdr&&) noexcept;
 
   // Comparison operators
-  bool operator == (const HashTableClsAdr<Data>&) const noexcept;
-  bool operator != (const HashTableClsAdr<Data>&) const noexcept;
+  bool operator == (const HashTableClsAdr&) const noexcept;
+  bool operator != (const HashTableClsAdr&) const noexcept;
 
- 
   /* ************************************************************************ */
 
   // Override functions from DictionaryContainer
-
-  bool Insert(const Data&) noexcept override; // Copy of the value
-  bool Insert(Data&&) noexcept override; // Move of the value
+  bool Insert(const Data&) noexcept override; // Copy of value
+  bool Insert(Data&&) noexcept override; // Move of value
   bool Remove(const Data&) noexcept override;
-
-  /* ************************************************************************ */
-
+    
   // Override function from TestableContainer
   bool Exists(const Data&) const noexcept override;
 
   // Override function from ResizableContainer
-  void Resize(const ulong) noexcept override;
+  void Resize(ulong) noexcept override;
 
   // Override function from ClearableContainer
   void Clear() noexcept override;

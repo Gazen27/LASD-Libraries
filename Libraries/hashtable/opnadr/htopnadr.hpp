@@ -14,7 +14,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class HashTableOpnAdr {
+class HashTableOpnAdr : public virtual HashTable<Data>{
                         // Must extend HashTable<Data>
 
 private:
@@ -23,9 +23,11 @@ private:
 
 protected:
 
-  // using HashTable<Data>::???;
+  using HashTable<Data>::size;
+  using HashTable<Data>::capacity;
 
-  // ...
+  Vector<Data> table(capacity);
+  Vector<short> flags(capacity); // 0 - free // 1 - not free // 2 - removed
 
 public:
 
