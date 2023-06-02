@@ -42,7 +42,7 @@ class Hashable<double>{
 template <>
 class Hashable<std::string>{
     private:
-
+        
         ulong A = Random();
     
     public:
@@ -60,9 +60,9 @@ class Hashable<std::string>{
 template <typename Data>
 ulong Hashable<Data>::Random() noexcept{
     ulong result;
-    default_random_engine randomGenerator(random_device{}());
-    uniform_int_distribution<uint> randomDist(1, 27457);
-    result = dist(generator)
+    std::default_random_engine randomGenerator(std::random_device{}());
+    std::uniform_int_distribution<uint> randomDist(1, 27457);
+    return result = randomDist(randomGenerator);
 }
 
 ////////////////////////////////////////////////////////////////////////// HashTable

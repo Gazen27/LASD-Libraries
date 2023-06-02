@@ -199,6 +199,12 @@ public:
   // Override function from MutablePostOrderMappableContainer
   void PostOrderMap(MutableMapFunctor) override;
 
+  /* ************************************************************************ */
+
+  // AUXILIARY FOR HASHTABLE - Operators < and > just for working
+  bool operator > (const List&) const noexcept{ return true; }
+  bool operator < (const List&) const noexcept{ return true; }
+
 protected:
 
   // Auxiliary member functions (for PreOrderFoldableContainer & PostOrderFoldableContainer)

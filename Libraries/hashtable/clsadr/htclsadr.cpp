@@ -104,7 +104,7 @@ bool HashTableClsAdr<Data>::operator == (const HashTableClsAdr<Data>& otherHT) c
     if(this->size != otherHT.size){ return false; }
     if(this->size == 0){ return true; }
     for(ulong i = 0; i < capacity; i++){
-        for(ulong j = 0; j < table[i].size; j++){
+        for(ulong j = 0; j < table[i].Size(); j++){
             if(!otherHT.Exists(table[i][j])){ return false; }
         }
     }
@@ -123,7 +123,7 @@ bool HashTableClsAdr<Data>::operator != (const HashTableClsAdr<Data>& otherHT) c
 // Override function Insert (Copy of value)
 template <typename Data>
 bool HashTableClsAdr<Data>::Insert(const Data& element) noexcept{
-    if(table[HasKey(element)].Insert(element)){
+    if(table[HashKey(element)].Insert(element)){
         size++;
         return true;
     }
@@ -171,7 +171,7 @@ void HashTableClsAdr<Data>::Resize(ulong newCapacity) noexcept{
         HashTableClsAdr<Data> temp(newCapacity);
         temp.size = 0;
         for(ulong i = 0; i < this->capacity; i++){
-            for(ulong j = 0; j < this->table[i].size; i++){
+            for(ulong j = 0; j < this->table[i].Size(); i++){
                 temp.Insert(this->table[i][j]);
             }
         }

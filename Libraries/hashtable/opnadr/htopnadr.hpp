@@ -98,7 +98,7 @@ public:
   // Initializing vectors
   void DefaultVector(Vector<int>&);
   void DefaultVector(Vector<double>&);
-  void DefaultVector(Vector<string>&);
+  void DefaultVector(Vector<std::string>&);
 
 };
 

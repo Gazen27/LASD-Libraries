@@ -6,8 +6,6 @@
 
 #include <random>
 
-/* ************************************************************************** */
-
 #include "../container/dictionary.hpp"
 
 /* ************************************************************************** */
@@ -21,8 +19,7 @@ class Hashable {
 
 public:
 
-  ulong operator()(const Data&) const noexcept; // (concrete function should not throw exceptions)
-
+  ulong operator()(const Data&) const noexcept;
 private:
 
   ulong Random() noexcept;
@@ -32,7 +29,7 @@ private:
 /* ************************************************************************** */
 
 template <typename Data>
-class HashTable : public virtual ResizableContiner,
+class HashTable : public virtual ResizableContainer,
                   public virtual DictionaryContainer<Data>{
                   // Must extend ResizableContainer,
                   //             DictionaryContainer<Data>
@@ -44,6 +41,7 @@ private:
 protected:
 
   using DictionaryContainer<Data>::size;
+  
   Hashable<Data> hash;
   ulong capacity = 64;
 
