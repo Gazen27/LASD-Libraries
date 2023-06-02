@@ -64,6 +64,8 @@ void HashTableTest1();
 void HashTableTest2();
 void HashTableTest3();
 void HashTableTest4();
+void HashTableTest5();
+void HashTableTest6();
 
 /* ************************************************************************** */
 

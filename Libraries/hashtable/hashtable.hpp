@@ -20,9 +20,6 @@ class Hashable {
 public:
 
   ulong operator()(const Data&) const noexcept;
-private:
-
-  ulong Random() noexcept;
 
 };
 
@@ -67,6 +64,7 @@ protected:
 
   // Auxiliary member function
   ulong HashKey(const Data&) const noexcept;
+  ulong GreaterPower(ulong) const noexcept;
 
 };
 

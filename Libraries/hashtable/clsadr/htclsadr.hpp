@@ -27,6 +27,8 @@ protected:
   using HashTable<Data>::size;
   using HashTable<Data>::capacity;
   using HashTable<Data>::HashKey;
+  using HashTable<Data>::GreaterPower;
+  using HashTable<Data>::hash;
 
   Vector<List<Data>> table;
 

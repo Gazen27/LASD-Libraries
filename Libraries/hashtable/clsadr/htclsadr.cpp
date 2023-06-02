@@ -11,7 +11,7 @@ HashTableClsAdr<Data>::HashTableClsAdr(){ table = Vector<List<Data>>(capacity); 
 // Specific constructor #1
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(ulong newSize) noexcept{
-    capacity = newSize;
+    capacity = GreaterPower(newSize);
     table = Vector<List<Data>>(capacity);
 }
 
@@ -29,7 +29,7 @@ HashTableClsAdr<Data>::HashTableClsAdr(const MappableContainer<Data>& container)
 // Specific constructor #3
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(ulong newSize, const MappableContainer<Data>& container) noexcept{
-    capacity = newSize;
+    capacity = GreaterPower(newSize);
     table = Vector<List<Data>>(capacity);
     container.Map(
         [this](const Data& element){ this->Insert(element); }
@@ -50,7 +50,7 @@ HashTableClsAdr<Data>::HashTableClsAdr(MutableMappableContainer<Data>&& containe
 // Specific constructor #5
 template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(ulong newSize, MutableMappableContainer<Data>&& container) noexcept{
-    capacity = newSize;
+    capacity = GreaterPower(newSize);
     table = Vector<List<Data>>(capacity);
     container.Map(
         [this](Data& element){ this->Insert(std::move(element)); }
@@ -63,6 +63,7 @@ template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(const HashTableClsAdr<Data>& otherHT) noexcept{
     capacity = otherHT.capacity;
     size = otherHT.size;
+    hash = otherHT.hash;
     table = Vector<List<Data>>(otherHT.table);
 }
 
@@ -72,6 +73,7 @@ template <typename Data>
 HashTableClsAdr<Data>::HashTableClsAdr(HashTableClsAdr<Data>&& otherHT) noexcept{
     std::swap(capacity, otherHT.capacity);
     std::swap(size, otherHT.size);
+    std::swap(hash, otherHT.hash);
     table = Vector<List<Data>>(std::move(otherHT.table));
 }
 
@@ -81,7 +83,9 @@ template <typename Data>
 HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator = (const HashTableClsAdr<Data>& otherHT) noexcept{
     capacity = otherHT.capacity;
     size = otherHT.size;
-    table = Vector<List<Data>>(otherHT.table);
+    hash = otherHT.hash;
+    table = otherHT.table;
+    //table = Vector<List<Data>>(otherHT.table); // <<<< why did I do something so stupid?
     
     return *this;
 }
@@ -92,8 +96,8 @@ template <typename Data>
 HashTableClsAdr<Data>& HashTableClsAdr<Data>::operator = (HashTableClsAdr<Data>&& otherHT) noexcept{
     std::swap(capacity, otherHT.capacity);
     std::swap(size, otherHT.size);
+    std::swap(hash, otherHT.hash);
     std::swap(table, otherHT.table);
-
     return *this;
 }
 
@@ -166,7 +170,7 @@ bool HashTableClsAdr<Data>::Exists(const Data& element) const noexcept{
 template <typename Data>
 void HashTableClsAdr<Data>::Resize(ulong newCapacity) noexcept{
     if(newCapacity = capacity){ return; }
-    HashTableClsAdr<Data> temp(newCapacity);
+    HashTableClsAdr<Data> temp(GreaterPower(newCapacity));
     temp.size = 0;
     for(ulong i = 0; i < this->capacity; i++){
         for(ulong j = 0; j < this->table[i].Size(); i++){

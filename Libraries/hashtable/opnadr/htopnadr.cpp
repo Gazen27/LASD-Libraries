@@ -16,7 +16,7 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(){
 // Specific constructor #1
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity) noexcept{
-    capacity = newCapacity;
+    capacity = GreaterPower(newCapacity);
     table = Vector<Data>(capacity);
     slots = Vector<int>(capacity);
     DefaultVector(table);
@@ -27,49 +27,87 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity) noexcept{
 // Specific constructor #2
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const MappableContainer<Data>& container) noexcept{
-    //////////////////////////////// TODO
+    table = Vector<Data>(capacity);
+    slots = Vector<int>(capacity);
+    DefaultVector(table);
+    DefaultVector(slots);
+    container.Map(
+        [this](const Data& element){ this->Insert(element); }
+    );
 }
 
 
 // Specific constructor #3
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity, const MappableContainer<Data>& container) noexcept{
-    /////////////////////////////// TODO
+    capacity = GreaterPower(newCapacity);
+    table = Vector<Data>(capacity);
+    slots = Vector<int>(capacity);
+    DefaultVector(table);
+    DefaultVector(slots);
+    container.Map(
+        [this](const Data& element){ this->Insert(element); }
+    );
 }
 
 
 // Specific constructor #4
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(MutableMappableContainer<Data>&& container) noexcept{
-    ////////////////////////////// TODO
+    table = Vector<Data>(capacity);
+    slots = Vector<int>(capacity);
+    DefaultVector(table);
+    DefaultVector(slots);
+    container.Map(
+        [this](Data&& element){ this->Insert(std::move(element)); }
+    );
 }
 
 
 // Specific constructor #5
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity, MutableMappableContainer<Data>&& container) noexcept{
-    ////////////////////////////// TODO
+    capacity = GreaterPower(newCapacity);
+    table = Vector<Data>(capacity);
+    slots = Vector<int>(capacity);
+    DefaultVector(table);
+    DefaultVector(slots);
+    container.Map(
+        [this](Data&& element){ this->Insert(std::move(element)); }
+    );
 }
 
 
 // Copy constructor
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const HashTableOpnAdr<Data>& otherHT) noexcept{
-    ////////////////////////////// TODO
+    capacity = otherHT.capacity;
+    size = otherHT.size;
+    hash = otherHT.hash;
+    table = Vector<Data>(otherHT.table);
+    slots = Vector<int>(otherHT.slots);
 }
 
 
 // Move constructor
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(HashTableOpnAdr<Data>&& otherHT) noexcept{
-    ///////////////////////////// TODO
+    std::swap(capacity, otherHT);
+    std::swap(size, otherHT.size);
+    std::swap(hash, otherHT.hash);
+    table = Vector<Data>(std::move(otherHT.table));
+    slots = Vector<int>(std::move(otherHT.slots));
 }
 
 
 // Copy assignment
 template <typename Data>
 HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (const HashTableOpnAdr<Data>& otherHT) noexcept{
-    ///////////////////////////// TODO
+    capacity = otherHT.capacity;
+    size = otherHT.size;
+    hash = otherHT.hash;
+    table = otherHT.table;
+    slots = otherHT.slots;
     return *this;
 }
 
@@ -77,7 +115,11 @@ HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (const HashTableOpnAdr<
 // Move assignment
 template <typename Data>
 HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (HashTableOpnAdr<Data>&& otherHT) noexcept{
-    ///////////////////////////// TODO
+    std::swap(capacity, otherHT.capacity);
+    std::swap(size, otherHT.size);
+    std::swap(hash, otherHT.hash);
+    std::swap(table, otherHT.table);
+    std::swap(slots, otherHT.slots);
     return *this;
 }
 
@@ -85,7 +127,11 @@ HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (HashTableOpnAdr<Data>&
 // Operator ==
 template <typename Data>
 bool HashTableOpnAdr<Data>::operator == (const HashTableOpnAdr<Data>& otherHT) const noexcept{
-    ///////////////////////////// TODO
+    if(this->size != otherHT.size){ return false; }
+    if(this->size == 0){ return true; }
+    for(ulong i = 0; i < capacity; i ++){
+        if(!otherHT.Exists(this->table[i])){ return false; }
+    }
     return true;
 }
 

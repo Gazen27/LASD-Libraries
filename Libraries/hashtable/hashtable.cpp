@@ -4,6 +4,14 @@ namespace lasd {
 
 /* ************************************************************************** */
 
+// EXTERNAL - Random function
+inline ulong Random() noexcept{
+    ulong result;
+    std::default_random_engine randomGenerator(std::random_device{}());
+    std::uniform_int_distribution<uint> randomDist(1, 27457);
+    return result = randomDist(randomGenerator);
+}
+
 ////////////////////////////////////////////////////////////////////////// Hashable
 
 // Defining class for int type
@@ -55,22 +63,22 @@ class Hashable<std::string>{
         }
 };
 
-
-// AUXILIARY - Random function
-template <typename Data>
-ulong Hashable<Data>::Random() noexcept{
-    ulong result;
-    std::default_random_engine randomGenerator(std::random_device{}());
-    std::uniform_int_distribution<uint> randomDist(1, 27457);
-    return result = randomDist(randomGenerator);
-}
-
 ////////////////////////////////////////////////////////////////////////// HashTable
 
 // Defining function HashKey
 template <typename Data>
 ulong HashTable<Data>::HashKey(const Data& element) const noexcept{
     return (hash(element) % capacity);
+}
+
+
+// Defining function GreaterPower
+template <typename Data>
+ulong HashTable<Data>::GreaterPower(ulong number) const noexcept {
+
+    ulong pow = 1;
+    while (pow < number){ pow *= 3; }
+    return pow;
 }
 
 }

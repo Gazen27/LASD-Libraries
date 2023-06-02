@@ -10,4 +10,5 @@ g++ -O3 -std=c++20 -o main main.cpp \
   zlasdtest/exercise2b/simpletest.cpp zlasdtest/exercise2b/fulltest.cpp \
   zlasdtest/exercise3/simpletest.cpp zlasdtest/exercise3/fulltest.cpp \
   zmytest/allTest/vectest.cpp zmytest/allTest/listtest.cpp zmytest/allTest/stacktest.cpp zmytest/allTest/queuetest.cpp \
-  zmytest/allTest/binarytreetest.cpp zmytest/allTest/iteratortest.cpp zmytest/allTest/bsttest.cpp
+  zmytest/allTest/binarytreetest.cpp zmytest/allTest/iteratortest.cpp zmytest/allTest/bsttest.cpp \
+  zmytest/allTest/hashtabletest.cpp

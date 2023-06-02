@@ -5,7 +5,7 @@
 /* ************************************************************************** */
 
 #include "../hashtable.hpp"
-// #include ...
+#include "../../vector/vector.hpp"
 
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ protected:
 
   using HashTable<Data>::size;
   using HashTable<Data>::capacity;
+  using HashTable<Data>::HashKey;
+  using HashTable<Data>::GreaterPower;
+  using HashTable<Data>::hash;
 
   ulong skulled = 0;
 
   Vector<Data> table;
-  Vector<short> slots; // 0 - free slot // 1 - occuped slot // 2 - removed value
-                      // enumerations would be fine the same way (probably better)
+  Vector<int> slots; // 0 - free slot // 1 - occuped slot // 2 - removed value
+                       // enumerations would be fine the same way (probably better)
 
 public:
 
@@ -93,7 +96,6 @@ public:
   // type Find(argument) specifiers;
   // type FindEmpty(argument) specifiers;
   // type Remove(argument) specifiers;
-
 
   // Initializing vectors
   void DefaultVector(Vector<int>&);
