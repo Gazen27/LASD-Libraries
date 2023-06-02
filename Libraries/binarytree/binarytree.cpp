@@ -843,7 +843,7 @@ BTInOrderMutableIterator<Data>& BTInOrderMutableIterator<Data>::operator=( BTInO
 template<typename Data>
 bool BTInOrderMutableIterator<Data>::operator==(const BTInOrderMutableIterator<Data>& iterator ) const noexcept{
     
-    return(BTBreadthIterator<Data>::operator==(iterator));
+    return(BTInOrderIterator<Data>::operator==(iterator));
 }
 
 
