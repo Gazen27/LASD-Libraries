@@ -42,7 +42,7 @@ class Hashable<double>{
 template <>
 class Hashable<std::string>{
     private:
-        
+   
         ulong A = Random();
     
     public:

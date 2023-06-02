@@ -165,18 +165,15 @@ bool HashTableClsAdr<Data>::Exists(const Data& element) const noexcept{
 // Override function Resize
 template <typename Data>
 void HashTableClsAdr<Data>::Resize(ulong newCapacity) noexcept{
-    if(newCapacity > capacity){ capacity = newCapacity; }
-    else if(newCapacity = capacity){ return; }
-    else{
-        HashTableClsAdr<Data> temp(newCapacity);
-        temp.size = 0;
-        for(ulong i = 0; i < this->capacity; i++){
-            for(ulong j = 0; j < this->table[i].Size(); i++){
-                temp.Insert(this->table[i][j]);
-            }
+    if(newCapacity = capacity){ return; }
+    HashTableClsAdr<Data> temp(newCapacity);
+    temp.size = 0;
+    for(ulong i = 0; i < this->capacity; i++){
+        for(ulong j = 0; j < this->table[i].Size(); i++){
+            temp.Insert(this->table[i][j]);
         }
-        *this = std::move(temp);
     }
+    *this = std::move(temp);
 }
 
 
@@ -184,7 +181,7 @@ void HashTableClsAdr<Data>::Resize(ulong newCapacity) noexcept{
 template <typename Data>
 void HashTableClsAdr<Data>::Clear() noexcept{
     if(size == 0){ return; }
-    for(ulong i = 0; i < size; i++){ table[i].Clear(); }
+    for(ulong i = 0; i < capacity; i++){ table[i].Clear(); }
     size = 0;
 }
 
