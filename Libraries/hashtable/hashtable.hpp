@@ -63,7 +63,7 @@ public:
 
   // Comparison operators
   bool operator == (const HashTable&) const noexcept = delete;
-  bool operator == (const HashTable&) const noexcept = delete;
+  bool operator != (const HashTable&) const noexcept = delete;
 
 protected:
 

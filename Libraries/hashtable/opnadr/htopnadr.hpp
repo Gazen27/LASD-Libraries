@@ -26,75 +26,64 @@ protected:
   using HashTable<Data>::size;
   using HashTable<Data>::capacity;
 
-  Vector<Data> table(capacity);
-  Vector<short> flags(capacity); // 0 - free // 1 - not free // 2 - removed
+  ulong skulled = 0;
+
+  Vector<Data> table;
+  Vector<short> slots; // 0 - free slot // 1 - occuped slot // 2 - removed value
+                      // enumerations would be fine the same way (probably better)
 
 public:
 
   // Default constructor
-  // HashTableOpnAdr() specifiers;
+  HashTableOpnAdr();
 
-  /* ************************************************************************ */
+  // Specific constructor #1: HashTable of a given size
+  HashTableOpnAdr(ulong) noexcept;
 
-  // Specific constructors
-  // HashTableOpnAdr(argument) specifiers; // A hash table of a given size
-  // HashTableOpnAdr(argument) specifiers; // A hash table obtained from a MappableContainer
-  // HashTableOpnAdr(argument) specifiers; // A hash table of a given size obtained from a MappableContainer
-  // HashTableOpnAdr(argument) specifiers; // A hash table obtained from a MutableMappableContainer
-  // HashTableOpnAdr(argument) specifiers; // A hash table of a given size obtained from a MutableMappableContainer
+  // Specific constructor #2 and #3: HashTable obtained from a MappableContainer
+  HashTableOpnAdr(const MappableContainer<Data>&) noexcept;
+  HashTableOpnAdr(ulong, const MappableContainer<Data>&) noexcept;
 
-  /* ************************************************************************ */
+  // Specific constructor #4 and #5: HashTable obtained from a MutableMappableContainer
+  HashTableOpnAdr(MutableMappableContainer<Data>&&) noexcept;
+  HashTableOpnAdr(ulong, MutableMappableContainer<Data>&&) noexcept;
 
   // Copy constructor
-  // HashTableOpnAdr(argument) specifiers;
+  HashTableOpnAdr(const HashTableOpnAdr<Data>&) noexcept;
 
   // Move constructor
-  // HashTableOpnAdr(argument) specifiers;
-
-  /* ************************************************************************ */
+  HashTableOpnAdr(HashTableOpnAdr<Data>&&) noexcept;
 
   // Destructor
-  // ~HashTableOpnAdr() specifiers;
-
-  /* ************************************************************************ */
+  virtual ~HashTableOpnAdr() = default;
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  HashTableOpnAdr& operator = (const HashTableOpnAdr&) noexcept;
 
   // Move assignment
-  // type operator=(argument) specifiers;
-
-  /* ************************************************************************ */
+  HashTableOpnAdr& operator = (HashTableOpnAdr&&) noexcept;
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator == (const HashTableOpnAdr&) const noexcept;
+  bool operator != (const HashTableOpnAdr&) const noexcept;
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from DictionaryContainer)
-
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Copy of the value)
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (Move of the value)
-  // type Remove(argument) specifiers; // Override DictionaryContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from TestableContainer)
-
-  // type Exists(argument) specifiers; // Override TestableContainer member
+  // Override functions from DictionaryContainer
+  bool Insert(const Data&) noexcept override; // Copy of value
+  bool Insert(Data&&) noexcept override; // Move of value
+  bool Remove(const Data&) noexcept override;
 
   /* ************************************************************************ */
 
-  // Specific member functions (inherited from ResizableContainer)
+  // Override function from TestableContainer
+  bool Exists(const Data&) const noexcept override;
 
-  // type Resize(argument) specifiers; // Resize the hashtable to a given size
+  // Override function from ResizableContainer
+  void Resize(ulong) noexcept override;
 
-  /* ************************************************************************ */
-
-  // Specific member functions (inherited from ClearableContainer)
-
-  // type Clear() specifiers; // Override Container member
+  // Override function from ClearableContainer
+  void Clear() noexcept override;
 
 public:
 
@@ -104,6 +93,12 @@ public:
   // type Find(argument) specifiers;
   // type FindEmpty(argument) specifiers;
   // type Remove(argument) specifiers;
+
+
+  // Initializing vectors
+  void DefaultVector(Vector<int>&);
+  void DefaultVector(Vector<double>&);
+  void DefaultVector(Vector<string>&);
 
 };
 
