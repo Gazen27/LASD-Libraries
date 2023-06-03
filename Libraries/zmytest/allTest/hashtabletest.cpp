@@ -129,6 +129,10 @@ void HashTableTest2(){
         if(!table2.Exists(random)){ Hresult = Herror; }
         if(table1.Size() != 0){ Hresult = Herror; }
         if(table1.Exists(random)){ Hresult = Herror; }
+        table2.Remove(random);
+        if(table2.Exists(random)){ Hresult = Herror; }
+        if(table2.Size() != 100){ Hresult = Herror; }
+        if(table2.Remove(random)){ Hresult = Herror; }
 
     }
     catch(...){ Hresult = Herror; }
@@ -137,8 +141,55 @@ void HashTableTest2(){
 
 
 //Hashtable test 3:
-// ...
-void HashTableTest3(){}
+// testig CLOSED on STRING type
+void HashTableTest3(){
+
+    Hresult = Hcorrect;
+
+    try{
+
+        string find = "LASD";
+
+        lasd::HashTableClsAdr<string> table1;
+        lasd::HashTableClsAdr<string> table2(77);
+        
+        table1.Insert("erinhipernpg");
+        table1.Insert("@rgr##@@!!!");
+        table1.Insert(find);
+        table1.Insert("jtyrsrhshrh");
+        table1.Insert("12111111114354465htgerhd");
+        if(table1.Size() != 5){ Hresult = Herror; }
+        if(!table1.Exists(find)){ Hresult = Herror; }
+
+        table1.Remove(find);
+        if(table1.Size() != 4){ Hresult = Herror; }
+        if(table1.Exists(find)){ Hresult = Herror; }
+
+        table2 = std::move(table1);
+        for(int i = 0; i < 10; i++){ table2.Insert(find); }
+        if(table2.Size() != 5){ Hresult = Herror; }
+        if(!table2.Exists(find)){ Hresult = Herror; }
+        if(table2.Insert(find)){ Hresult = Herror; }
+        if(table1.Size() != 0){ Hresult = Herror; }
+
+        lasd::HashTableClsAdr<string> table3(table2);
+        table2.Clear();
+        table3.Resize(13);
+        table3.Insert(find);
+        table3.Insert(find);
+        table3.Insert(find);
+        if(table2.Size() != 0){ Hresult = Herror; }
+        if(table2.Exists(find)){ Hresult = Herror; }
+        if(table3.Size() != 5){ Hresult = Herror; }
+        if(!table3.Exists(find)){ Hresult = Herror; }
+        if(table3.Insert(find)){ Hresult = Herror; }
+        table3.Remove(find);
+        if(table3.Remove(find)){ Hresult = Herror; }
+
+    }
+    catch(...){ Hresult = Herror; }
+    cout << endl << "• Test 3: " << Hresult << RESET << endl;
+}
 
 
 //Hashtable test 4:
