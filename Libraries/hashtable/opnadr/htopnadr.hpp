@@ -92,9 +92,9 @@ public:
 
   // Auxiliary member functions
 
-  // type HashKey(argument) specifiers;
-  // type Find(argument) specifiers;
-  // type FindEmpty(argument) specifiers;
+  ulong Probing(const Data&, ulong) const noexcept;
+  ulong Find(const Data&) const noexcept;
+  ulong FindEmpty(const Data&) noexcept;
   // type Remove(argument) specifiers;
 
   // Initializing vectors
