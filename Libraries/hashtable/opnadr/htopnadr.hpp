@@ -32,7 +32,7 @@ protected:
   ulong skulled = 0;
 
   Vector<Data> table;
-  Vector<int> slots; // 0 - free slot // 1 - occuped slot // 2 - removed value
+  Vector<int> flags; // 0 - free slot // 1 - occuped slot // 2 - removed value
                        // enumerations would be fine the same way (probably better)
 
 public:

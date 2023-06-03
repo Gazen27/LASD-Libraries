@@ -7,9 +7,9 @@ namespace lasd {
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(){
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
 }
 
 
@@ -18,9 +18,9 @@ template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity) noexcept{
     capacity = GreaterPower(newCapacity);
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
 }
 
 
@@ -28,9 +28,9 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity) noexcept{
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(const MappableContainer<Data>& container) noexcept{
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
     container.Map(
         [this](const Data& element){ this->Insert(element); }
     );
@@ -42,9 +42,9 @@ template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity, const MappableContainer<Data>& container) noexcept{
     capacity = GreaterPower(newCapacity);
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
     container.Map(
         [this](const Data& element){ this->Insert(element); }
     );
@@ -55,9 +55,9 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity, const MappableContaine
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(MutableMappableContainer<Data>&& container) noexcept{
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
     container.Map(
         [this](Data&& element){ this->Insert(std::move(element)); }
     );
@@ -69,9 +69,9 @@ template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(ulong newCapacity, MutableMappableContainer<Data>&& container) noexcept{
     capacity = GreaterPower(newCapacity);
     table = Vector<Data>(capacity);
-    slots = Vector<int>(capacity);
+    flags = Vector<int>(capacity);
     DefaultVector(table);
-    DefaultVector(slots);
+    DefaultVector(flags);
     container.Map(
         [this](Data&& element){ this->Insert(std::move(element)); }
     );
@@ -85,7 +85,7 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(const HashTableOpnAdr<Data>& otherHT) noe
     size = otherHT.size;
     hash = otherHT.hash;
     table = Vector<Data>(otherHT.table);
-    slots = Vector<int>(otherHT.slots);
+    flags = Vector<int>(otherHT.flags);
 }
 
 
@@ -96,7 +96,7 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(HashTableOpnAdr<Data>&& otherHT) noexcept
     std::swap(size, otherHT.size);
     std::swap(hash, otherHT.hash);
     table = Vector<Data>(std::move(otherHT.table));
-    slots = Vector<int>(std::move(otherHT.slots));
+    flags = Vector<int>(std::move(otherHT.flags));
 }
 
 
@@ -107,7 +107,7 @@ HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (const HashTableOpnAdr<
     size = otherHT.size;
     hash = otherHT.hash;
     table = otherHT.table;
-    slots = otherHT.slots;
+    flags = otherHT.flags;
     return *this;
 }
 
@@ -119,7 +119,7 @@ HashTableOpnAdr<Data>& HashTableOpnAdr<Data>::operator = (HashTableOpnAdr<Data>&
     std::swap(size, otherHT.size);
     std::swap(hash, otherHT.hash);
     std::swap(table, otherHT.table);
-    std::swap(slots, otherHT.slots);
+    std::swap(flags, otherHT.flags);
     return *this;
 }
 
@@ -146,7 +146,12 @@ bool HashTableOpnAdr<Data>::operator != (const HashTableOpnAdr<Data>& otherHT) c
 // Defining function Insert (Copy of value)
 template <typename Data>
 bool HashTableOpnAdr<Data>::Insert(const Data& element) noexcept{
-    //////////////////////////// TODO
+    if(this->Exists(element)){ return false; }
+    if(size == capacity){ Resize(GreaterPower(capacity + 1)); }
+    ulong index = FindEmpty(HashKey(element));
+    table[index] = element;
+    size++;
+    flags[index] = 1;
     return true;
 }
 
@@ -154,7 +159,12 @@ bool HashTableOpnAdr<Data>::Insert(const Data& element) noexcept{
 // Defining function Insert (Move of value)
 template <typename Data>
 bool HashTableOpnAdr<Data>::Insert(Data&& element) noexcept{
-    //////////////////////////// TODO
+    if(this->Exists(element)){ return false; }
+    if(size == capacity){ Resize(GreaterPower(capacity + 1)); }
+    ulong index = FindEmpty(HashKey(element));
+    table[index] = std::move(element);
+    size++;
+    flags[index] = 1;
     return true;
 }
 
