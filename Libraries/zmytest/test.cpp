@@ -113,9 +113,9 @@ void mytest(){
   HashTableTest1();
   HashTableTest2();
   HashTableTest3();
-  //HashTableTest4(); 
-  //HashTableTest5();
-  //HashTableTest6();
+  HashTableTest4(); 
+  HashTableTest5();
+  HashTableTest6();
 
   /* ************************************************************************ */
 

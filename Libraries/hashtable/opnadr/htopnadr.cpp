@@ -92,11 +92,13 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(const HashTableOpnAdr<Data>& otherHT) noe
 // Move constructor
 template <typename Data>
 HashTableOpnAdr<Data>::HashTableOpnAdr(HashTableOpnAdr<Data>&& otherHT) noexcept{
-    std::swap(capacity, otherHT);
+    std::swap(capacity, otherHT.capacity);
     std::swap(size, otherHT.size);
     std::swap(hash, otherHT.hash);
-    table = Vector<Data>(std::move(otherHT.table));
-    flags = Vector<int>(std::move(otherHT.flags));
+    table = Vector<Data>(capacity);
+    flags = Vector<int>(capacity);
+    std::swap(table, otherHT.table);
+    std::swap(flags, otherHT.flags);
 }
 
 
