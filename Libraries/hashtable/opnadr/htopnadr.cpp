@@ -97,6 +97,8 @@ HashTableOpnAdr<Data>::HashTableOpnAdr(HashTableOpnAdr<Data>&& otherHT) noexcept
     std::swap(hash, otherHT.hash);
     table = Vector<Data>(capacity);
     flags = Vector<int>(capacity);
+    DefaultVector(table);
+    DefaultVector(flags);
     std::swap(table, otherHT.table);
     std::swap(flags, otherHT.flags);
 }
@@ -257,7 +259,6 @@ ulong HashTableOpnAdr<Data>::FindEmpty(const Data& element) noexcept{
     return capacity;
 }
 
-// AUXILIARY - function Remove
 
 /**************************    Initializing Vectors     **************************/
 

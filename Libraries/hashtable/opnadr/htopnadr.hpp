@@ -95,7 +95,6 @@ public:
   ulong Probing(const Data&, ulong) const noexcept;
   ulong Find(const Data&) const noexcept;
   ulong FindEmpty(const Data&) noexcept;
-  // type Remove(argument) specifiers;
 
   // Initializing vectors
   void DefaultVector(Vector<int>&);
