@@ -130,7 +130,7 @@ bool HashTableOpnAdr<Data>::operator == (const HashTableOpnAdr<Data>& otherHT) c
     if(this->size != otherHT.size){ return false; }
     if(this->size == 0){ return true; }
     for(ulong i = 0; i < capacity; i ++){
-        if(!otherHT.Exists(this->table[i])){ return false; }
+        if(flags[i] == 1 && !otherHT.Exists(this->table[i])){ return false; }
     }
     return true;
 }
@@ -146,9 +146,10 @@ bool HashTableOpnAdr<Data>::operator != (const HashTableOpnAdr<Data>& otherHT) c
 // Defining function Insert (Copy of value)
 template <typename Data>
 bool HashTableOpnAdr<Data>::Insert(const Data& element) noexcept{
-    if(this->Exists(element)){ return false; } // QUI PROBLEMA
+    if(this->Exists(element)){ return false; }
     if(size == capacity - 1){ Resize(capacity + 1); }
     ulong index = FindEmpty(element);
+    if(index == capacity){ return false; }
     table[index] = element;
     size++;
     flags[index] = 1;
@@ -162,6 +163,7 @@ bool HashTableOpnAdr<Data>::Insert(Data&& element) noexcept{
     if(this->Exists(element)){ return false; }
     if(size == capacity - 1){ Resize(capacity + 1); }
     ulong index = FindEmpty(element);
+    if(index == capacity){ return false; }
     table[index] = std::move(element);
     size++;
     flags[index] = 1;
@@ -172,7 +174,11 @@ bool HashTableOpnAdr<Data>::Insert(Data&& element) noexcept{
 // Defining function Remove
 template <typename Data>
 bool HashTableOpnAdr<Data>::Remove(const Data& element) noexcept{
-    //////////////////////////// TODO
+    if(size == 0){ return false; }
+    ulong index = Find(element);
+    if(index == capacity){ return false; }
+    flags[index] = 2;
+    size--;
     return true;
 }
 
@@ -195,7 +201,7 @@ void HashTableOpnAdr<Data>::Resize(ulong newCapacity) noexcept{
     HashTableOpnAdr<Data> temp(GreaterPower(newCapacity));
     temp.size = 0;
     for(ulong i = 0; i < this->capacity; i++){
-        temp.Insert(this->table[i]);
+        if(this->flags[i] == 1){ temp.Insert(this->table[i]); }       
     }
     *this = std::move(temp);
 }
@@ -214,7 +220,7 @@ void HashTableOpnAdr<Data>::Clear() noexcept{
 // AUXILIARY - function Probing
 template <typename Data>
 ulong HashTableOpnAdr<Data>::Probing(const Data& element, ulong check) const noexcept{
-    ulong index = HashKey(element) + ((check * (check+1)/3) % capacity);
+    ulong index = (HashKey(element) + (check * (check + 1 )) / 2) % capacity;
     return index;
 }
 
@@ -242,7 +248,7 @@ ulong HashTableOpnAdr<Data>::FindEmpty(const Data& element) noexcept{
         index = Probing(element, check);
         if(flags[index] == 0 || flags[index] == 2){ return index; }
         else{
-            if(table[index] == element || flags[index] == 1){ return capacity; }
+            if(table[index] == element && flags[index] == 1){ return capacity; }
             else{ check++; }
         }
     }

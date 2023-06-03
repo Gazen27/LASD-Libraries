@@ -77,7 +77,7 @@ template <typename Data>
 ulong HashTable<Data>::GreaterPower(ulong number) const noexcept {
 
     ulong pow = 1;
-    while (pow < number){ pow *= 3; }
+    while (pow < number){ pow *= 2; }
     return pow;
 }
 
