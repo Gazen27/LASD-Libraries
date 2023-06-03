@@ -74,7 +74,8 @@ HashTableClsAdr<Data>::HashTableClsAdr(HashTableClsAdr<Data>&& otherHT) noexcept
     std::swap(capacity, otherHT.capacity);
     std::swap(size, otherHT.size);
     std::swap(hash, otherHT.hash);
-    table = Vector<List<Data>>(std::move(otherHT.table));
+    table = Vector<List<Data>>(capacity);
+    std::swap(table, otherHT.table);
 }
 
 

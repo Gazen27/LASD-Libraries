@@ -111,7 +111,7 @@ void mytest(){
   cout << endl;
   cout << BOLDCYAN << "+++ HashTable test +++" << RESET << endl;
   HashTableTest1();
-  //HashTableTest2();
+  HashTableTest2();
   //HashTableTest3();
   //HashTableTest4(); 
   //HashTableTest5();
